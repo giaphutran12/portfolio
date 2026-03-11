@@ -3,10 +3,7 @@
 import cn from 'clsx'
 import { useEffect, useRef } from 'react'
 
-// ---------------------------------------------------------------------------
-// Perlin 2D Noise — ported from AntoineW/AW-2025-Portfolio Noise.js
-// Self-contained, seedable, no npm dependency (~109 lines original)
-// ---------------------------------------------------------------------------
+// Perlin 2D noise — ported from AntoineW/AW-2025-Portfolio Noise.js (seedable, self-contained)
 
 class Grad {
   x: number
@@ -129,10 +126,6 @@ class Noise {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 interface Point {
   x: number
   y: number
@@ -161,10 +154,6 @@ interface NoiseWavesProps {
   waveAmplitudeY?: number
   className?: string
 }
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
 
 export function NoiseWaves({
   color = 'currentColor',
@@ -195,7 +184,6 @@ export function NoiseWaves({
   const isPausedRef = useRef(true)
   const boundingRef = useRef({ left: 0, top: 0, width: 0, height: 0 })
 
-  // Instantiate noise once (useRef pattern for React Compiler)
   if (!noiseRef.current) {
     noiseRef.current = new Noise(Math.random())
   }
@@ -207,7 +195,6 @@ export function NoiseWaves({
 
     const noise = noiseRef.current!
 
-    // --- Sizing -----------------------------------------------------------
     function setSize() {
       const rect = container!.getBoundingClientRect()
       boundingRef.current = {
@@ -220,11 +207,9 @@ export function NoiseWaves({
       svg!.setAttribute('height', String(boundingRef.current.height))
     }
 
-    // --- Grid setup -------------------------------------------------------
     function setLines() {
       const { width, height } = boundingRef.current
 
-      // Clear existing
       for (const path of pathsRef.current) {
         path.remove()
       }
@@ -265,13 +250,11 @@ export function NoiseWaves({
       }
     }
 
-    // --- Point displacement -----------------------------------------------
     function movePoints(time: number) {
       const mouse = mouseRef.current
 
       for (const points of linesRef.current) {
         for (const p of points) {
-          // Noise-driven wave
           const move =
             noise.perlin2(
               (p.x + time * 0.0125) * 0.002,
@@ -280,7 +263,7 @@ export function NoiseWaves({
           p.wave.x = Math.cos(move) * waveAmplitudeX
           p.wave.y = Math.sin(move) * waveAmplitudeY
 
-          // Mouse spring physics
+          // Spring physics: force = cos/sin(angle) * falloff * dist * velocity * 0.00065
           const dx = p.x - mouse.sx
           const dy = p.y - mouse.sy
           const dist = Math.hypot(dx, dy)
@@ -294,26 +277,19 @@ export function NoiseWaves({
             p.cursor.vy += Math.sin(mouse.a) * f * limit * mouse.vs * 0.00065
           }
 
-          // Spring tension
+          // tension: 0.005, friction: 0.925, clamp: ±100
           p.cursor.vx += (0 - p.cursor.x) * 0.005
           p.cursor.vy += (0 - p.cursor.y) * 0.005
-
-          // Friction
           p.cursor.vx *= 0.925
           p.cursor.vy *= 0.925
-
-          // Apply velocity
           p.cursor.x += p.cursor.vx * 2
           p.cursor.y += p.cursor.vy * 2
-
-          // Clamp
           p.cursor.x = Math.min(100, Math.max(-100, p.cursor.x))
           p.cursor.y = Math.min(100, Math.max(-100, p.cursor.y))
         }
       }
     }
 
-    // --- Coordinate helper ------------------------------------------------
     function moved(point: Point, withCursorForce: boolean) {
       let x = point.x + point.wave.x + (withCursorForce ? point.cursor.x : 0)
       let y = point.y + point.wave.y + (withCursorForce ? point.cursor.y : 0)
@@ -322,7 +298,6 @@ export function NoiseWaves({
       return { x, y }
     }
 
-    // --- SVG path drawing -------------------------------------------------
     function drawLines() {
       const lines = linesRef.current
       const paths = pathsRef.current
@@ -342,17 +317,14 @@ export function NoiseWaves({
       }
     }
 
-    // --- Animation loop ---------------------------------------------------
     function tick(time: number) {
       if (isPausedRef.current) return
 
       const mouse = mouseRef.current
 
-      // Smooth mouse movement
       mouse.sx += (mouse.x - mouse.sx) * 0.1
       mouse.sy += (mouse.y - mouse.sy) * 0.1
 
-      // Mouse velocity
       const dx = mouse.x - mouse.lx
       const dy = mouse.y - mouse.ly
       const dist = Math.hypot(dx, dy)
@@ -361,11 +333,9 @@ export function NoiseWaves({
       mouse.vs += (dist - mouse.vs) * 0.1
       mouse.vs = Math.min(100, mouse.vs)
 
-      // Last position
       mouse.lx = mouse.x
       mouse.ly = mouse.y
 
-      // Angle
       mouse.a = Math.atan2(dy, dx)
 
       movePoints(time)
@@ -374,7 +344,6 @@ export function NoiseWaves({
       rafRef.current = requestAnimationFrame(tick)
     }
 
-    // --- Input handlers ---------------------------------------------------
     function onMouseMove(e: MouseEvent) {
       updateMousePosition(e.clientX, e.clientY)
     }
@@ -399,16 +368,13 @@ export function NoiseWaves({
       }
     }
 
-    // --- Bootstrap ---------------------------------------------------------
     setSize()
     setLines()
     drawLines()
 
-    // Start animation
     isPausedRef.current = false
     rafRef.current = requestAnimationFrame(tick)
 
-    // IntersectionObserver — pause when off-screen
     const intersectionObs = new IntersectionObserver(
       (entries) => {
         const entry = entries[0]
@@ -424,7 +390,6 @@ export function NoiseWaves({
     )
     intersectionObs.observe(container)
 
-    // ResizeObserver — rebuild grid on resize
     const resizeObs = new ResizeObserver(() => {
       setSize()
       setLines()
@@ -434,11 +399,9 @@ export function NoiseWaves({
     })
     resizeObs.observe(container)
 
-    // Global input
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('touchmove', onTouchMove, { passive: true })
 
-    // --- Cleanup -----------------------------------------------------------
     return () => {
       cancelAnimationFrame(rafRef.current)
       intersectionObs.disconnect()
