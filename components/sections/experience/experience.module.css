@@ -1,7 +1,12 @@
 .experience {
   background-color: var(--color-primary);
   color: var(--color-secondary);
-  padding: 120px 0;
+  overflow: hidden;
+  padding: 80px 0;
+
+  @media (--desktop) {
+    padding: 120px 0;
+  }
 }
 
 .inner {
@@ -11,7 +16,11 @@
 }
 
 .headingWrapper {
-  margin-bottom: 80px;
+  margin-bottom: 48px;
+
+  @media (--desktop) {
+    margin-bottom: 80px;
+  }
 }
 
 .heading {

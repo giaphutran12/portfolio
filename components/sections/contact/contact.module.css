@@ -1,6 +1,7 @@
 .contact {
   background-color: var(--color-primary);
   color: var(--color-secondary);
+  overflow: hidden;
 }
 
 .heading {
@@ -16,24 +17,29 @@
 }
 
 .link {
-  color: var(--color-secondary);
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 0.25rem;
+  align-items: center;
   border-bottom: 1px solid transparent;
+  color: var(--color-secondary);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 0.5rem 0.25rem;
+  position: relative;
+  text-decoration: none;
   transition:
     border-color 0.3s ease,
     color 0.3s ease;
 }
 
-.link:hover {
-  color: var(--color-contrast);
-  border-bottom-color: var(--color-contrast);
+@media (--hover) {
+  .link:hover {
+    border-bottom-color: var(--color-contrast);
+    color: var(--color-contrast);
+  }
 }
 
 .copyright {
   color: var(--color-secondary);
+  margin-top: 1rem;
   opacity: 0.6;
   text-align: center;
-  margin-top: 1rem;
 }

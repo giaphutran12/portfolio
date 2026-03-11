@@ -20,7 +20,7 @@ export default async function Home() {
   ])
 
   return (
-    <Wrapper theme="dark" lenis={{}}>
+    <Wrapper theme="dark" lenis={{}} webgl>
       <Hero name={siteConfig.name} tagline={siteConfig.tagline} />
       <Projects projects={projects as Project[]} />
       <Experience experiences={experiences as ExperienceType[]} />

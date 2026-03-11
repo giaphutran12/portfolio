@@ -41,3 +41,9 @@ The project uses vanilla GSAP + `useEffect` + `gsap.context()`. No `@gsap/react`
 - Use `@media (--reduced-motion)` for motion reduction (postcss-preset-env handles the custom media query)
 - `var(--color-primary)`, `var(--color-secondary)`, `var(--color-contrast)` are the design system tokens
 - `color-mix(in srgb, var(--color-secondary) 50%, transparent)` for muted text colors
+
+## WebGL image transition pattern
+- For custom transitions, keep uniforms inside a class-based `ShaderMaterial` and expose typed setters (`texture1`, `texture2`, `displacementTexture`, `progress`) to avoid React-driven re-instantiation.
+- Drive hover animations with `gsap.to(progressRef.current, { value, duration: 1.2, ease: 'power2.inOut' })` and sync to shader uniforms inside `useFrame()` for zero React re-renders.
+- Use a GLSL `coverUv` helper with image and plane resolution uniforms to preserve image aspect ratio in DOM-synced planes.
+- For single-image cards, feed the same texture into both samplers and blend in a small zoom term in shader space while still applying displacement UV offsets.

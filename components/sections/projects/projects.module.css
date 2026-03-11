@@ -55,7 +55,15 @@
 
 .imageArea {
   aspect-ratio: 16 / 9;
+  isolation: isolate;
   position: relative;
+  width: 100%;
+}
+
+.imageEffect {
+  height: 100%;
+  inset: 0;
+  position: absolute;
   width: 100%;
 }
 

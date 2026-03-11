@@ -18,7 +18,7 @@ export function Contact({
       id="contact"
       className={cn(
         s.contact,
-        'flex flex-col items-center justify-center gap-12 px-4 py-80'
+        'flex flex-col items-center justify-center gap-12 px-4 dt:py-80 py-16'
       )}
       data-testid="contact-section"
     >

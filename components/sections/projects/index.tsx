@@ -1,80 +1,121 @@
 import cn from 'clsx'
+import { ImageTransition } from '@/components/effects/image-transition'
+import type { Project as SanityProject } from '@/integrations/sanity/fetch'
 import s from './projects.module.css'
 import { ProjectsHeading } from './projects-heading'
 
-interface Project {
-  _id: string
+interface ProjectCard {
+  id: string
   title: string
   description: string
   techStack: string[]
-  slug?: { current: string }
-  image?: { asset?: { url: string } }
-  liveUrl?: string
-  githubUrl?: string
-  order?: number
+  gradient: string
+  imageSrc: string
 }
 
 interface ProjectsProps {
-  projects?: Project[]
+  projects?: SanityProject[]
 }
 
-const defaultProjects: Project[] = [
+function toGradientDataUrl(colorA: string, colorB: string) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${colorA}"/><stop offset="100%" stop-color="${colorB}"/></linearGradient></defs><rect width="1600" height="900" fill="url(#g)"/></svg>`
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
+}
+
+const fallbackProjects: ProjectCard[] = [
   {
-    _id: 'x-recommendation-algo',
+    id: 'x-recommendation-algo',
     title: 'X Recommendation Algorithm',
     description:
       'A machine learning pipeline that reverse-engineers content recommendation patterns on X, surfacing insights into algorithmic bias and engagement optimization.',
+    gradient:
+      'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
     techStack: ['Python', 'TensorFlow', 'FastAPI'],
+    imageSrc: toGradientDataUrl('#78350f', '#7c2d12'),
   },
   {
-    _id: 'viet-bike-scout',
+    id: 'viet-bike-scout',
     title: 'Viet Bike Scout',
     description:
       'Real-time motorcycle marketplace aggregator for Vietnam, scraping and normalizing listings across platforms with intelligent price trend analysis.',
+    gradient:
+      'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['React Native', 'Expo', 'TypeScript'],
+    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
   },
   {
-    _id: 'autoresearch-macos',
+    id: 'autoresearch-macos',
     title: 'AutoResearch macOS',
     description:
       'An AI-powered research assistant for macOS that autonomously browses, reads, and synthesizes information from multiple sources into structured reports.',
+    gradient:
+      'linear-gradient(135deg, rgb(30 58 138 / 0.4) 0%, rgb(49 46 129 / 0.35) 100%)',
     techStack: ['Swift', 'macOS', 'LLM'],
+    imageSrc: toGradientDataUrl('#1e3a8a', '#312e81'),
   },
   {
-    _id: 'stocktwits-clone-2',
+    id: 'stocktwits-clone-2',
     title: 'StockTwits Clone',
     description:
       'A real-time social trading platform with live market data, sentiment analysis, and community-driven stock discussions powered by WebSocket streams.',
+    gradient:
+      'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
     techStack: ['Next.js', 'PostgreSQL', 'WebSocket'],
+    imageSrc: toGradientDataUrl('#581c87', '#831843'),
   },
 ]
 
-const gradients = [
-  'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
-  'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
-  'linear-gradient(135deg, rgb(30 58 138 / 0.4) 0%, rgb(49 46 129 / 0.35) 100%)',
-  'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
-]
+const defaultProjectCard: ProjectCard = {
+  id: 'fallback',
+  title: 'Fallback Project',
+  description: 'Fallback project description.',
+  techStack: [],
+  gradient:
+    'linear-gradient(135deg, rgb(30 58 138 / 0.4) 0%, rgb(49 46 129 / 0.35) 100%)',
+  imageSrc: toGradientDataUrl('#1e3a8a', '#312e81'),
+}
 
-export function Projects({ projects = defaultProjects }: ProjectsProps) {
-  const displayProjects = projects.length > 0 ? projects : defaultProjects
+function mapProjects(projects?: SanityProject[]): ProjectCard[] {
+  if (!projects || projects.length === 0) {
+    return fallbackProjects
+  }
+
+  return projects.map((project, index) => {
+    const fallback =
+      fallbackProjects[index % fallbackProjects.length]! ?? defaultProjectCard
+
+    return {
+      id: project._id,
+      title: project.title,
+      description: project.description,
+      techStack: project.techStack,
+      gradient: fallback.gradient,
+      imageSrc: project.image?.asset?.url || fallback.imageSrc,
+    }
+  })
+}
+
+export function Projects({ projects }: ProjectsProps) {
+  const projectCards = mapProjects(projects)
 
   return (
     <section id="projects" className={s.section} data-testid="projects-section">
       <div className="dr-layout-block">
         <ProjectsHeading />
         <div className={s.grid}>
-          {displayProjects.map((project, index) => (
+          {projectCards.map((project) => (
             <article
-              key={project._id}
+              key={project.id}
               className={s.card}
-              data-project-id={project._id}
+              data-project-id={project.id}
             >
-              <div
-                aria-hidden="true"
-                className={s.imageArea}
-                style={{ background: gradients[index % gradients.length] }}
-              />
+              <div aria-hidden="true" className={s.imageArea}>
+                <ImageTransition
+                  className={s.imageEffect || undefined}
+                  imageSrc={project.imageSrc}
+                  style={{ background: project.gradient }}
+                />
+              </div>
               <div className={s.content}>
                 <h3 className={cn(s.cardTitle, 'heading-md')}>
                   {project.title}

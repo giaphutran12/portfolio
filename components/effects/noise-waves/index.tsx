@@ -372,6 +372,28 @@ export function NoiseWaves({
     setLines()
     drawLines()
 
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
+    if (prefersReducedMotion) {
+      const resizeObs = new ResizeObserver(() => {
+        setSize()
+        setLines()
+        drawLines()
+      })
+      resizeObs.observe(container)
+
+      return () => {
+        resizeObs.disconnect()
+        for (const path of pathsRef.current) {
+          path.remove()
+        }
+        pathsRef.current = []
+        linesRef.current = []
+      }
+    }
+
     isPausedRef.current = false
     rafRef.current = requestAnimationFrame(tick)
 
