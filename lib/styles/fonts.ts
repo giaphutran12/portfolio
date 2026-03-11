@@ -1,3 +1,4 @@
+import { Cormorant_Garamond, Syne } from 'next/font/google'
 import localFont from 'next/font/local'
 
 const mono = localFont({
@@ -22,7 +23,24 @@ const mono = localFont({
   ],
 })
 
-const fonts = [mono]
+const display = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--next-font-display',
+  preload: true,
+})
+
+const body = Syne({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--next-font-body',
+  preload: true,
+})
+
+const fonts = [mono, display, body]
 const fontsVariable = fonts.map((font) => font.variable).join(' ')
 
 export { fontsVariable }

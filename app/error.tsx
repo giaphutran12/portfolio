@@ -16,7 +16,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
   }, [error])
 
   return (
-    <Wrapper theme="light" className="font-mono" webgl>
+    <Wrapper theme="dark" className="font-mono" webgl>
       <div className="dr-gap-y-24 my-auto flex flex-col items-center justify-center uppercase">
         <h1 className="mb-4 font-bold text-4xl">Something went wrong</h1>
         <p className="mb-6 text-gray-600 text-lg">

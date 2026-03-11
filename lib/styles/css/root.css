@@ -41,13 +41,9 @@
 	--ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 	--ease-gleasing: cubic-bezier(0.4, 0, 0, 1);
 	
-	--color-black: #000000;
-	--color-white: #ffffff;
-	--color-red: #e30613;
-	--color-blue: #0070f3;
-	--color-green: #00ff88;
-	--color-purple: #7928ca;
-	--color-pink: #ff0080;
+	--color-background: #0a0a08;
+	--color-text: #e8e3d9;
+	--color-gold: #c8a97e;
 	
 	@variant dt {
     --device-width: 1440;
