@@ -1,0 +1,95 @@
+.experience {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  padding: 120px 0;
+}
+
+.inner {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 clamp(24px, 5vw, 80px);
+}
+
+.headingWrapper {
+  margin-bottom: 80px;
+}
+
+.heading {
+  color: var(--color-secondary);
+}
+
+.timeline {
+  --timeline-pad: 32px;
+  --dot-size: 8px;
+
+  padding-left: var(--timeline-pad);
+  position: relative;
+}
+
+.timeline::before {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-contrast) 8%,
+    var(--color-contrast) 92%,
+    transparent
+  );
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+
+.entry {
+  opacity: 0;
+  padding-bottom: 56px;
+  position: relative;
+
+  @media (--reduced-motion) {
+    opacity: 1;
+  }
+}
+
+.entry:last-child {
+  padding-bottom: 0;
+}
+
+.entryDot {
+  background-color: var(--color-contrast);
+  border-radius: 50%;
+  height: var(--dot-size);
+  left: calc(-1 * var(--timeline-pad) - var(--dot-size) / 2);
+  position: absolute;
+  top: 14px;
+  width: var(--dot-size);
+}
+
+.entryDot[data-current="true"] {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-contrast) 30%, transparent),
+    0 0 14px color-mix(in srgb, var(--color-contrast) 60%, transparent);
+}
+
+.date {
+  color: var(--color-contrast);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.company {
+  color: var(--color-secondary);
+  margin-bottom: 4px;
+}
+
+.role {
+  color: color-mix(in srgb, var(--color-secondary) 65%, transparent);
+  margin-bottom: 14px;
+}
+
+.description {
+  color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  max-width: 560px;
+}
