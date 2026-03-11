@@ -1,92 +1,97 @@
 'use client'
 
 import cn from 'clsx'
-import { usePathname } from 'next/navigation'
-import { Link } from '@/components/ui/link'
+import { useLenis } from 'lenis/react'
+import { useEffect, useState } from 'react'
+import s from './header.module.css'
 
-// Navigation links - customize for your project
-const LINKS = [
-  { href: '/', label: 'home' },
-  { href: '/#features', label: 'features' },
-  {
-    href: 'https://github.com/darkroomengineering/satus',
-    label: 'github',
-    external: true,
-  },
+const NAV_LINKS = [
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
 ] as const
 
-// Example pages demonstrating integrations
-const EXAMPLES = [
-  { href: '/components', label: 'components' },
-  { href: '/r3f', label: 'r3f' },
-  { href: '/sanity', label: 'sanity' },
-  { href: '/shopify', label: 'shopify' },
-  { href: '/hubspot', label: 'hubspot' },
-]
-
 export function Header() {
-  const pathname = usePathname()
-  const isExamplePage = EXAMPLES.some(
-    (ex) => pathname === ex.href || pathname.startsWith(`${ex.href}/`)
-  )
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const lenis = useLenis()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleNavClick = (sectionId: string) => {
+    if (lenis) {
+      lenis.scrollTo(`#${sectionId}`, {
+        offset: 0,
+        duration: 1.2,
+        easing: (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
+      })
+    }
+    setIsMobileMenuOpen(false)
+  }
 
   return (
-    <nav className="fixed top-safe left-safe z-2 flex flex-col font-mono dt:text-[11px] text-[10px] uppercase">
-      {/* Root level: Logo + current path */}
-      <h1 className="dt:text-[13px] text-[12px]">
-        Satūs<span className="opacity-50">{pathname}</span>
-      </h1>
+    <header
+      className={cn(s.header, isScrolled && s.isScrolled)}
+      data-testid="nav-header"
+    >
+      <div className={s.container}>
+        <div className={s.logo}>
+          <span className={s.logoText}>ET</span>
+        </div>
 
-      {/* Level 1: Main navigation */}
-      <ul className="dr-pl-12 mt-1 flex flex-col gap-px">
-        {LINKS.map((link) => {
-          const isExternal = 'external' in link && link.external
-          return (
-            <li key={link.href} className="flex items-center gap-1">
-              <span className="w-2 opacity-50">
-                {pathname === link.href ? '›' : ''}
-              </span>
-              <Link
-                href={link.href}
-                className="link"
-                {...(isExternal && {
-                  target: '_blank',
-                  rel: 'noopener noreferrer',
-                })}
-              >
-                {link.label}
-                {isExternal && '↗'}
-              </Link>
-            </li>
-          )
-        })}
-        {/* Examples with nested level 2 */}
-        <li className="flex flex-col">
-          <div className="flex items-center gap-1">
-            <span className="w-2 opacity-50">{isExamplePage ? '›' : ''}</span>
-            <span>examples</span>
-          </div>
-          {/* Level 2: Examples sub-navigation */}
-          <ul className="dr-pl-12 mt-px flex flex-col gap-px">
-            {EXAMPLES.map((link) => (
-              <li key={link.href} className="flex items-center gap-1">
-                <span className="w-2 opacity-50">
-                  {pathname === link.href ? '›' : ''}
-                </span>
-                <Link
-                  href={link.href}
-                  className={cn(
-                    'link transition-opacity hover:opacity-100',
-                    pathname === link.href ? 'opacity-100' : 'opacity-40'
-                  )}
+        <nav className={s.navDesktop}>
+          <ul className={s.navList}>
+            {NAV_LINKS.map((link) => (
+              <li key={link.id}>
+                <button
+                  onClick={() => handleNavClick(link.id)}
+                  className={s.navLink}
+                  type="button"
                 >
                   {link.label}
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
-        </li>
-      </ul>
-    </nav>
+        </nav>
+
+        <button
+          className={s.hamburger}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          type="button"
+          aria-label="Toggle navigation menu"
+        >
+          <span className={cn(s.hamburgerLine, s.line1)} />
+          <span className={cn(s.hamburgerLine, s.line2)} />
+          <span className={cn(s.hamburgerLine, s.line3)} />
+        </button>
+      </div>
+
+      {isMobileMenuOpen && (
+        <nav className={s.navMobile}>
+          <ul className={s.navListMobile}>
+            {NAV_LINKS.map((link) => (
+              <li key={link.id}>
+                <button
+                  onClick={() => handleNavClick(link.id)}
+                  className={s.navLinkMobile}
+                  type="button"
+                >
+                  {link.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </header>
   )
 }

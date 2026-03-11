@@ -1,0 +1,39 @@
+.contact {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+.heading {
+  color: var(--color-secondary);
+  text-align: center;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.link {
+  color: var(--color-secondary);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.link:hover {
+  color: var(--color-contrast);
+  border-bottom-color: var(--color-contrast);
+}
+
+.copyright {
+  color: var(--color-secondary);
+  opacity: 0.6;
+  text-align: center;
+  margin-top: 1rem;
+}
