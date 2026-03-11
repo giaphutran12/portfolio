@@ -55,7 +55,7 @@ export function OptionalFeatures() {
       {/* GSAP Runtime - always included (lightweight) */}
       <GSAPRuntime />
       {/* WebGL/WebGPU Canvas - lazy loaded, only mounts when <Wrapper webgl> is used */}
-      <LazyGlobalCanvas />
+      <LazyGlobalCanvas forceWebGL />
       {/* Development tools - only in development */}
       {isDevelopment && <OrchestraTools />}
     </>

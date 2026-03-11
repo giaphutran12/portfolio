@@ -29,6 +29,8 @@
 .heading {
   color: var(--color-secondary);
   margin-bottom: 40px;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 
   @media (--desktop) {
     margin-bottom: 64px;
