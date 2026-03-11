@@ -1,0 +1,64 @@
+.hero {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+.background {
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+}
+
+.name {
+  color: var(--color-secondary);
+}
+
+.subtitle {
+  color: var(--color-contrast);
+  letter-spacing: 0.15em;
+  opacity: 0;
+  text-transform: uppercase;
+
+  @media (--reduced-motion) {
+    opacity: 1;
+  }
+}
+
+.scrollIndicator {
+  opacity: 0;
+
+  @media (--reduced-motion) {
+    opacity: 1;
+  }
+}
+
+.scrollText {
+  color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.scrollLine {
+  animation: scrollPulse 1.8s ease-in-out infinite;
+  background: linear-gradient(to bottom, var(--color-secondary), transparent);
+  height: 48px;
+  width: 1px;
+
+  @media (--reduced-motion) {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(-5px);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translateY(5px);
+  }
+}
