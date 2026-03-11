@@ -7,7 +7,14 @@ import { useEffect, useRef } from 'react'
 import { SplitText } from '@/components/effects/split-text'
 import s from './about.module.css'
 
-export function About() {
+interface AboutProps {
+  aboutText?: string
+}
+
+const defaultAboutText =
+  "I'm a full-stack developer based in Houston, TX, with a passion for building products that live at the intersection of design and engineering. I believe the best digital experiences are those that feel inevitable — where every interaction is considered, every pixel earns its place.\n\nMy work spans the full stack: from architecting scalable backend systems to obsessing over the micro-animations that make an interface feel alive. I care deeply about performance, accessibility, and the craft of writing code that is as maintainable as it is expressive.\n\nWhen I'm not shipping products, I'm exploring the edges of what the web can do — experimenting with WebGL, generative art, and the rare moments when technology becomes poetry."
+
+export function About({ aboutText = defaultAboutText }: AboutProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<{
     getSplitText: () => import('gsap/SplitText').SplitText | null
@@ -15,6 +22,8 @@ export function About() {
     splittedText: import('gsap/SplitText').SplitText | null
   } | null>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
+
+  const paragraphs = aboutText.split('\n\n').filter((p) => p.trim())
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -83,28 +92,20 @@ export function About() {
         </h2>
 
         <div ref={bodyRef} className={cn(s.body)}>
-          <p className={cn(s.paragraph, 'body-lg')}>
-            I&apos;m a full-stack developer based in Houston, TX, with a passion
-            for building products that live at the intersection of design and
-            engineering. I believe the best digital experiences are those that
-            feel <span className={cn(s.accent)}>inevitable</span> — where every
-            interaction is considered, every pixel earns its place.
-          </p>
-
-          <p className={cn(s.paragraph, 'body-lg')}>
-            My work spans the full stack: from architecting scalable backend
-            systems to obsessing over the micro-animations that make an
-            interface feel alive. I care deeply about performance,
-            accessibility, and the craft of writing code that is as maintainable
-            as it is expressive.
-          </p>
-
-          <p className={cn(s.paragraph, 'body-lg')}>
-            When I&apos;m not shipping products, I&apos;m exploring the edges of
-            what the web can do — experimenting with WebGL, generative art, and
-            the rare moments when{' '}
-            <span className={cn(s.accent)}>technology becomes poetry</span>.
-          </p>
+          {paragraphs.map((paragraph) => (
+            <p key={paragraph} className={cn(s.paragraph, 'body-lg')}>
+              {paragraph.split(/(\*\*[^*]+\*\*)/g).map((part) => {
+                if (part.startsWith('**') && part.endsWith('**')) {
+                  return (
+                    <span key={part} className={cn(s.accent)}>
+                      {part.slice(2, -2)}
+                    </span>
+                  )
+                }
+                return part
+              })}
+            </p>
+          ))}
         </div>
       </div>
     </section>

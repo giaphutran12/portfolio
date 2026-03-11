@@ -11,7 +11,15 @@ const ANIM_DELAY = 0.3
 const ANIM_DURATION = 1.5
 const ANIM_END = ANIM_DELAY + ANIM_DURATION
 
-export function Hero() {
+interface HeroProps {
+  name?: string
+  tagline?: string
+}
+
+export function Hero({
+  name = 'Edward Tran',
+  tagline = 'Full-Stack Developer',
+}: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLSpanElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
@@ -38,7 +46,7 @@ export function Hero() {
           chars: 'アイウエオカキクケコサシスセソタチツテト!@#$%&',
           revealDelay: 0.5,
           speed: 0.4,
-          text: 'Edward Tran',
+          text: name,
         },
       })
 
@@ -58,7 +66,7 @@ export function Hero() {
     })
 
     return () => ctx.revert()
-  }, [])
+  }, [name])
 
   return (
     <section
@@ -81,9 +89,9 @@ export function Hero() {
 
       <div className="relative z-10 flex flex-col items-center gap-4 px-4 text-center">
         <h1 className={cn(s.name, 'heading-xl')} data-testid="hero-name">
-          <span className="sr-only">Edward Tran</span>
+          <span className="sr-only">{name}</span>
           <span aria-hidden="true" ref={nameRef}>
-            Edward Tran
+            {name}
           </span>
         </h1>
 
@@ -92,7 +100,7 @@ export function Hero() {
           className={cn(s.subtitle, 'body-lg')}
           data-testid="hero-subtitle"
         >
-          Full-Stack Developer
+          {tagline}
         </p>
       </div>
 

@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react'
 import s from './experience.module.css'
 
 interface ExperienceEntry {
+  _id?: string
   company: string
   role: string
   startDate: string
@@ -16,8 +17,13 @@ interface ExperienceEntry {
   description: string
 }
 
-const EXPERIENCES: ExperienceEntry[] = [
+interface ExperienceProps {
+  experiences?: ExperienceEntry[]
+}
+
+const defaultExperiences: ExperienceEntry[] = [
   {
+    _id: 'company-a',
     company: 'Company A',
     role: 'Senior Full-Stack Developer',
     startDate: '2024-01',
@@ -27,6 +33,7 @@ const EXPERIENCES: ExperienceEntry[] = [
       'Building scalable web applications with React, Next.js, and Node.js. Leading architecture decisions and mentoring junior developers across the team.',
   },
   {
+    _id: 'company-b',
     company: 'Company B',
     role: 'Full-Stack Developer',
     startDate: '2022-06',
@@ -36,6 +43,7 @@ const EXPERIENCES: ExperienceEntry[] = [
       'Developed and maintained production features for a high-traffic SaaS platform. Improved core web vitals by 40% through performance optimization work.',
   },
   {
+    _id: 'company-c',
     company: 'Company C',
     role: 'Software Engineering Intern',
     startDate: '2021-05',
@@ -84,11 +92,16 @@ function formatDateRange(
   return `${start} — ${end}`
 }
 
-export function Experience() {
+export function Experience({
+  experiences = defaultExperiences,
+}: ExperienceProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const timelineRef = useRef<HTMLDivElement>(null)
   const entryRefs = useRef<Array<HTMLDivElement | null>>([])
+
+  const displayExperiences =
+    experiences.length > 0 ? experiences : defaultExperiences
 
   useEffect(() => {
     gsap.registerPlugin(GSAPSplitText, ScrollTrigger)
@@ -167,9 +180,9 @@ export function Experience() {
         </div>
 
         <div ref={timelineRef} className={cn(s.timeline)}>
-          {EXPERIENCES.map((entry, i) => (
+          {displayExperiences.map((entry, i) => (
             <div
-              key={entry.company}
+              key={entry._id || entry.company}
               ref={(el) => {
                 entryRefs.current[i] = el
               }}

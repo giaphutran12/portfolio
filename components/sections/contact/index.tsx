@@ -2,7 +2,17 @@ import cn from 'clsx'
 import { Link } from '@/components/ui/link'
 import s from './contact.module.css'
 
-export function Contact() {
+interface ContactProps {
+  email?: string
+  githubUrl?: string
+  linkedinUrl?: string
+}
+
+export function Contact({
+  email = 'edward@edwardtran.ca',
+  githubUrl = 'https://github.com/edwardtran',
+  linkedinUrl = 'https://linkedin.com/in/edwardtran',
+}: ContactProps) {
   return (
     <section
       id="contact"
@@ -15,14 +25,11 @@ export function Contact() {
       <h2 className={cn(s.heading, 'heading-lg')}>Let's Connect</h2>
 
       <div className={cn(s.links, 'flex flex-col items-center gap-6')}>
-        <Link
-          href="mailto:edward@edwardtran.ca"
-          className={cn(s.link, 'body-lg')}
-        >
+        <Link href={`mailto:${email}`} className={cn(s.link, 'body-lg')}>
           Email
         </Link>
         <Link
-          href="https://github.com/edwardtran"
+          href={githubUrl}
           className={cn(s.link, 'body-lg')}
           target="_blank"
           rel="noopener noreferrer"
@@ -30,7 +37,7 @@ export function Contact() {
           GitHub
         </Link>
         <Link
-          href="https://linkedin.com/in/edwardtran"
+          href={linkedinUrl}
           className={cn(s.link, 'body-lg')}
           target="_blank"
           rel="noopener noreferrer"
