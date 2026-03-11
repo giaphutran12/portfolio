@@ -97,3 +97,90 @@ export const articleByIdQuery = groq`
     _updatedAt
   }
 `
+
+// Project queries
+export const allProjectsQuery = groq`
+  *[_type == "project"] | order(order asc) {
+    _id,
+    title,
+    slug,
+    description,
+    techStack,
+    image,
+    liveUrl,
+    githubUrl,
+    order,
+    _updatedAt
+  }
+`
+
+export const projectQuery = groq`
+  *[_type == "project" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    description,
+    techStack,
+    image,
+    liveUrl,
+    githubUrl,
+    order,
+    _updatedAt
+  }
+`
+
+export const projectByIdQuery = groq`
+  *[_type == "project" && _id == $id][0] {
+    _id,
+    title,
+    slug,
+    description,
+    techStack,
+    image,
+    liveUrl,
+    githubUrl,
+    order,
+    _updatedAt
+  }
+`
+
+// Experience queries
+export const allExperienceQuery = groq`
+  *[_type == "experience"] | order(startDate desc) {
+    _id,
+    company,
+    role,
+    startDate,
+    endDate,
+    current,
+    description,
+    _updatedAt
+  }
+`
+
+export const experienceByIdQuery = groq`
+  *[_type == "experience" && _id == $id][0] {
+    _id,
+    company,
+    role,
+    startDate,
+    endDate,
+    current,
+    description,
+    _updatedAt
+  }
+`
+
+// Site Config query
+export const siteConfigQuery = groq`
+  *[_type == "siteConfig"][0] {
+    _id,
+    name,
+    tagline,
+    aboutText,
+    email,
+    githubUrl,
+    linkedinUrl,
+    _updatedAt
+  }
+`
