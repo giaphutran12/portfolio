@@ -1,0 +1,107 @@
+================================================================================
+HERO SECTION ANIMATION AUDIT — EXECUTIVE SUMMARY
+================================================================================
+
+AUDIT DATE: March 11, 2026
+STATUS: CRITICAL ISSUES FOUND — NO ANIMATIONS WORKING
+SEVERITY: 🔴 BLOCKS ALL ANIMATIONS
+
+================================================================================
+ROOT CAUSE ANALYSIS
+================================================================================
+
+The Hero section animations are completely broken due to 5 CRITICAL issues:
+
+1. GSAPRuntime is NOT mounted in app/layout.tsx
+   → GSAP ticker not synced with Tempus RAF
+   → Animations fire at wrong times or not at all
+
+2. ScrambleTextPlugin registered INSIDE useEffect (not module-level)
+   → Plugin may not be available when animation runs
+   → React Compiler may batch effects, causing timing issues
+
+3. gsap.context() called WITHOUT scope reference
+   → Animations not properly isolated to section
+   → May target wrong elements or fail silently
+
+4. Refs used WITHOUT null checks
+   → If refs not populated, animations target null
+   → Fail silently with no error messages
+
+5. ScrambleTextPlugin is PREMIUM (not in free GSAP 3.14.2)
+   → Plugin registration fails silently
+   → No error message, just no animation
+
+================================================================================
+ISSUES BY SEVERITY
+================================================================================
+
+CRITICAL (Blocks Animation):
+  ✗ GSAPRuntime not mounted
+  ✗ ScrambleTextPlugin registered in useEffect
+  ✗ gsap.context() missing scope
+  ✗ Refs may be null
+  ✗ ScrambleTextPlugin unavailable in free GSAP
+
+WARNINGS (May Cause Problems):
+  ⚠ CSS opacity conflicts with GSAP
+  ⚠ Reduced motion handling inconsistent
+  ⚠ AnimatedGradient WebGL not verified
+  ⚠ Missing useEffect dependency
+
+VERIFIED WORKING:
+  ✓ ScrollLine CSS animation
+  ✓ Lenis smooth scroll integration
+  ✓ React Compiler compatibility
+  ✓ CSS module imports
+
+================================================================================
+QUICK FIX CHECKLIST
+================================================================================
+
+Priority 1 (Must Fix):
+  [ ] Mount GSAPRuntime in app/layout.tsx
+  [ ] Move gsap.registerPlugin() to module level
+  [ ] Pass sectionRef.current to gsap.context()
+  [ ] Verify ScrambleTextPlugin availability (may need TextPlugin instead)
+
+Priority 2 (Should Fix):
+  [ ] Remove CSS opacity: 0 from subtitle/scrollIndicator
+  [ ] Align reduced motion handling in CSS and JS
+  [ ] Verify GlobalCanvas is mounted in app/layout.tsx
+  [ ] Update useEffect dependency array
+
+Priority 3 (Nice to Have):
+  [ ] Add null checks to ref animations
+  [ ] Use selector-based targeting instead of refs
+  [ ] Add error handling for missing plugins
+
+================================================================================
+FILES TO MODIFY
+================================================================================
+
+1. app/layout.tsx
+   → Import and render GSAPRuntime
+
+2. components/sections/hero/index.tsx
+   → Move gsap.registerPlugin() to module level
+   → Pass sectionRef.current to gsap.context()
+   → Update useEffect dependency array
+   → Add null checks to ref animations
+
+3. components/sections/hero/hero.module.css
+   → Remove opacity: 0 from .subtitle and .scrollIndicator
+   → Align reduced motion behavior with JavaScript
+
+4. app/layout.tsx (verify)
+   → Check if GlobalCanvas is mounted for AnimatedGradient
+
+================================================================================
+DETAILED AUDIT REPORT
+================================================================================
+
+See: .sisyphus/notepads/hero-audit/audit-report.md
+See: .sisyphus/notepads/hero-audit/issues.md
+See: .sisyphus/notepads/hero-audit/learnings.md
+
+================================================================================

@@ -2,6 +2,7 @@ import cn from 'clsx'
 import { ImageTransition } from '@/components/effects/image-transition'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
 import s from './projects.module.css'
+import { ProjectsGrid } from './projects-grid'
 import { ProjectsHeading } from './projects-heading'
 
 interface ProjectCard {
@@ -102,7 +103,7 @@ export function Projects({ projects }: ProjectsProps) {
     <section id="projects" className={s.section} data-testid="projects-section">
       <div className="dr-layout-block">
         <ProjectsHeading />
-        <div className={s.grid}>
+        <ProjectsGrid className={s.grid}>
           {projectCards.map((project) => (
             <article
               key={project.id}
@@ -133,7 +134,7 @@ export function Projects({ projects }: ProjectsProps) {
               </div>
             </article>
           ))}
-        </div>
+        </ProjectsGrid>
       </div>
     </section>
   )

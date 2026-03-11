@@ -47,3 +47,9 @@ The project uses vanilla GSAP + `useEffect` + `gsap.context()`. No `@gsap/react`
 - Drive hover animations with `gsap.to(progressRef.current, { value, duration: 1.2, ease: 'power2.inOut' })` and sync to shader uniforms inside `useFrame()` for zero React re-renders.
 - Use a GLSL `coverUv` helper with image and plane resolution uniforms to preserve image aspect ratio in DOM-synced planes.
 - For single-image cards, feed the same texture into both samplers and blend in a small zoom term in shader space while still applying displacement UV offsets.
+
+## Animation + WebGL fixes (2026-03-11)
+- Lenis root mode needs `syncScrollTrigger` enabled at the call site (`Wrapper`) so `LenisScrollTriggerSync` mounts and drives `ScrollTrigger.update()` each Lenis frame.
+- For custom raw GLSL `ShaderMaterial` pipelines in this project, forcing WebGL at `OptionalFeatures -> LazyGlobalCanvas` is the safe short-term fix to avoid WebGPU `NodeMaterial` compatibility errors.
+- Keep setup transform regexes resilient to JSX prop additions (e.g. `<LazyGlobalCanvas forceWebGL />`) by matching optional component props.
+- `word-break: keep-all` + `overflow-wrap: break-word` on the About heading resolves mid-word wraps like `exper-iences` without regressing long-word safety.

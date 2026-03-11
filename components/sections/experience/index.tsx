@@ -119,23 +119,26 @@ export function Experience({
 
       if (heading) {
         headingSplit = GSAPSplitText.create(heading, {
+          mask: 'words',
           type: 'words',
           wordsClass: 'word',
         })
 
-        gsap.set(headingSplit.words, { opacity: 0, y: 24 })
-        gsap.to(headingSplit.words, {
-          duration: 0.9,
-          ease: 'power2.out',
-          opacity: 1,
-          scrollTrigger: {
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-            trigger: heading,
-          },
-          stagger: 0.06,
-          y: 0,
-        })
+        gsap.fromTo(
+          headingSplit.words,
+          { y: '110%' },
+          {
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              trigger: heading,
+            },
+            stagger: 0.06,
+            y: '0%',
+          }
+        )
       }
 
       const entries = entryRefs.current.filter(
@@ -153,7 +156,7 @@ export function Experience({
             toggleActions: 'play none none none',
             trigger: timelineRef.current,
           },
-          stagger: 0.15,
+          stagger: 0.25,
           y: 0,
         })
       }

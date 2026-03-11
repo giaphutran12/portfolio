@@ -36,21 +36,24 @@ export function About({ aboutText = defaultAboutText }: AboutProps) {
 
     const ctx = gsap.context(() => {
       const splitInstance = headingRef.current?.getSplitText()
-      const chars = splitInstance?.chars
+      const words = splitInstance?.words
 
-      if (chars && chars.length > 0) {
-        gsap.from(chars, {
-          duration: 0.6,
-          ease: 'power2.out',
-          opacity: 0,
-          scrollTrigger: {
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-            trigger: sectionRef.current,
-          },
-          stagger: 0.02,
-          y: 20,
-        })
+      if (words && words.length > 0) {
+        gsap.fromTo(
+          words,
+          { y: '110%' },
+          {
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+              trigger: sectionRef.current,
+            },
+            stagger: 0.08,
+            y: '0%',
+          }
+        )
       }
 
       if (bodyRef.current) {
@@ -86,7 +89,7 @@ export function About({ aboutText = defaultAboutText }: AboutProps) {
         <div className={cn(s.divider)} aria-hidden="true" />
 
         <h2 className={cn(s.heading, 'heading-lg')}>
-          <SplitText ref={headingRef} as="span" type="chars" mask>
+          <SplitText ref={headingRef} as="span" type="words" mask>
             Crafting digital experiences with intention.
           </SplitText>
         </h2>

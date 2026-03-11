@@ -74,7 +74,7 @@ export function Hero({
       id="hero"
       className={cn(
         s.hero,
-        'relative flex h-dvh flex-col items-center justify-center overflow-hidden'
+        'relative flex h-dvh flex-col items-center overflow-hidden'
       )}
     >
       <AnimatedGradient
@@ -87,7 +87,7 @@ export function Hero({
         speed={0.5}
       />
 
-      <div className="relative z-10 flex flex-col items-center gap-4 px-4 text-center">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
         <h1 className={cn(s.name, 'heading-xl')} data-testid="hero-name">
           <span className="sr-only">{name}</span>
           <span aria-hidden="true" ref={nameRef}>
@@ -109,7 +109,7 @@ export function Hero({
         aria-hidden="true"
         className={cn(
           s.scrollIndicator,
-          'absolute bottom-8 flex flex-col items-center gap-2'
+          'absolute bottom-[max(24px,calc(env(safe-area-inset-bottom)+16px))] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2'
         )}
       >
         <span className={cn(s.scrollText, 'label')}>Scroll</span>

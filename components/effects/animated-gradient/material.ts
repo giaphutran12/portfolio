@@ -65,7 +65,7 @@ export class AnimatedGradientMaterial extends MeshBasicMaterial {
       uColorsTexture: { value: null },
       uOffset: { value: radial ? Math.random() * 1000 : 0 },
       uQuantize: { value: quantize },
-      uFlowmap: { value: flowmap?.uniform?.value ?? null },
+      uFlowmap: flowmap?.uniform ?? { value: null },
       uDpr: { value: 1 },
     }
 
@@ -138,7 +138,7 @@ export class AnimatedGradientMaterial extends MeshBasicMaterial {
 
       # ifdef USE_FLOWMAP
         vec4 flow = texture2D(uFlowmap, fragCoord / (uResolution.xy * uDpr));
-        flow *= 0.0025;
+        flow *= 0.02;
 
         screenUV += flow.rg;
       # endif
