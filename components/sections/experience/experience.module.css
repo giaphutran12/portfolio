@@ -41,6 +41,74 @@
   color: var(--color-secondary);
 }
 
+.otherContent {
+  display: grid;
+  gap: 24px;
+  margin-top: 32px;
+
+  @media (--desktop) {
+    gap: 28px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 48px;
+  }
+}
+
+.otherEntry {
+  padding: 16px 0;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-contrast) 15%, transparent);
+}
+
+.otherEntry:last-child {
+  border-bottom: none;
+}
+
+@media (--desktop) {
+  .otherEntry {
+    border-bottom: none;
+    padding: 0;
+  }
+}
+
+.otherCompany {
+  color: var(--color-secondary);
+  margin-bottom: 2px;
+}
+
+.otherRole {
+  color: var(--color-contrast);
+  margin-bottom: 8px;
+}
+
+.otherDescription {
+  color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+}
+
+.activitiesLine {
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-contrast) 15%, transparent);
+  color: color-mix(in srgb, var(--color-secondary) 40%, transparent);
+  letter-spacing: 0.05em;
+  margin-top: 40px;
+  padding-top: 24px;
+  text-transform: uppercase;
+}
+
+.timelineScroll {
+  max-height: 500px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-contrast) transparent;
+}
+
+@media (max-width: 799px) {
+  .timelineScroll {
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
 .timeline {
   --timeline-pad: 32px;
   --dot-size: 8px;

@@ -238,30 +238,36 @@ export function Experience({
       </Marquee>
 
       <div className={cn(s.inner)}>
-        <div ref={timelineRef} className={cn(s.timeline)}>
-          {displayExperiences.map((entry, i) => (
-            <div
-              key={entry._id || entry.company}
-              ref={(el) => {
-                entryRefs.current[i] = el
-              }}
-              className={cn(s.entry)}
-            >
+        <div data-lenis-prevent className={s.timelineScroll}>
+          <div ref={timelineRef} className={cn(s.timeline)}>
+            {displayExperiences.map((entry, i) => (
               <div
-                className={cn(s.entryDot)}
-                data-current={entry.current ? 'true' : undefined}
-              />
+                key={entry._id || entry.company}
+                ref={(el) => {
+                  entryRefs.current[i] = el
+                }}
+                className={cn(s.entry)}
+              >
+                <div
+                  className={cn(s.entryDot)}
+                  data-current={entry.current ? 'true' : undefined}
+                />
 
-              <h3 className={cn(s.company, 'heading-md')}>{entry.company}</h3>
-              <p className={cn(s.role, 'body-lg')}>{entry.role}</p>
-              <p className={cn(s.date, 'label')}>
-                {formatDateRange(entry.startDate, entry.endDate, entry.current)}
-              </p>
-              <p className={cn(s.description, 'body-sm')}>
-                {entry.description}
-              </p>
-            </div>
-          ))}
+                <h3 className={cn(s.company, 'heading-md')}>{entry.company}</h3>
+                <p className={cn(s.role, 'body-lg')}>{entry.role}</p>
+                <p className={cn(s.date, 'label')}>
+                  {formatDateRange(
+                    entry.startDate,
+                    entry.endDate,
+                    entry.current
+                  )}
+                </p>
+                <p className={cn(s.description, 'body-sm')}>
+                  {entry.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -352,6 +358,63 @@ export function Experience({
           </Link>
         </div>
       </Marquee>
+
+      <div className={cn(s.inner)}>
+        <div className={s.otherContent}>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Smart Math BC</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              Founder · Jan 2019–Present
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+              I pitch and sell to moms. I teach kids to do math. Your kid will
+              improve in Math after 1 month, or your money back.
+            </p>
+          </div>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Costco</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              Cashier · Oct 2023–Sep 2025
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+              I pitch costco mastercard. 50%+ close rate on qualified prospects.
+            </p>
+          </div>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Thai by Thai</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              Server · Jun 2022–Sep 2022
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+              I talk to difficult customers without crying.
+            </p>
+          </div>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>MTU Aero Engines</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              Gas Turbine Technician Intern · May 2022–Jun 2022
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+              I help taking apart a HUGE airplane engine and putting it back
+              together.
+            </p>
+          </div>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Naka Bistro</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              Food Prep · Jan 2021–Apr 2021
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+              I handle 10+ orders at a time. The kitchen was busy as heck.
+            </p>
+          </div>
+        </div>
+
+        <p className={cn(s.activitiesLine, 'label')}>
+          4+ Medium blogs on AI experiments · youth leader – VEYM (6yrs) ·
+          vancouver.dev campus ambassador (2yrs) · AI Tinkerers member
+        </p>
+      </div>
     </section>
   )
 }
