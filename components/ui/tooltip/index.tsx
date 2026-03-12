@@ -38,12 +38,20 @@ type TooltipProps = {
   side?: 'top' | 'right' | 'bottom' | 'left'
   /** Additional class for the popup */
   className?: string
+  /** Delay in ms before showing (default: 600) */
+  delay?: number
 }
 
-function Tooltip({ content, children, side = 'top', className }: TooltipProps) {
+function Tooltip({
+  content,
+  children,
+  side = 'top',
+  className,
+  delay,
+}: TooltipProps) {
   return (
     <BaseTooltip.Provider>
-      <BaseTooltip.Root>
+      <BaseTooltip.Root {...(delay !== undefined ? { delay } : {})}>
         <BaseTooltip.Trigger
           render={(triggerProps) => {
             // If child is a valid element, clone it with trigger props

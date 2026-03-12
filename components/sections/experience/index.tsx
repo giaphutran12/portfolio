@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react'
 import { Image } from '@/components/ui/image'
 import { Link } from '@/components/ui/link'
 import { Marquee } from '@/components/ui/marquee'
+import { Tooltip } from '@/components/ui/tooltip'
 import s from './experience.module.css'
 
 interface ExperienceEntry {
@@ -198,42 +199,70 @@ export function Experience({
 
       <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
         <div className={s.logoTrack}>
-          <Link href="https://headstarter.co" target="_blank">
-            <Image
-              src="/company-logo/work-experience/headstarter.png"
-              alt="Headstarter"
-              width={623}
-              height={211}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://tinyfish.ai" target="_blank">
-            <Image
-              src="/company-logo/work-experience/tinyfish.png"
-              alt="Tinyfish"
-              width={478}
-              height={105}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://buildlaunchiterate.ca" target="_blank">
-            <Image
-              src="/company-logo/work-experience/bli.png"
-              alt="BLI"
-              width={800}
-              height={260}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://douglascollege.ca" target="_blank">
-            <Image
-              src="/company-logo/work-experience/douglas-college-white-text.png"
-              alt="Douglas College"
-              width={800}
-              height={260}
-              className={s.logo}
-            />
-          </Link>
+          <Tooltip
+            content="I ship hard projects"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://headstarter.co" target="_blank">
+              <Image
+                src="/company-logo/work-experience/headstarter.png"
+                alt="Headstarter"
+                width={623}
+                height={211}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="i get paid for building and posting"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://tinyfish.ai" target="_blank">
+              <Image
+                src="/company-logo/work-experience/tinyfish.png"
+                alt="Tinyfish"
+                width={478}
+                height={105}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="i ship AI apps faster than you"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://buildlaunchiterate.ca" target="_blank">
+              <Image
+                src="/company-logo/work-experience/bli.png"
+                alt="BLI"
+                width={800}
+                height={260}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="I revamp a work day management app for 117+ IT staffs"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://douglascollege.ca" target="_blank">
+              <Image
+                src="/company-logo/work-experience/douglas-college-white-text.png"
+                alt="Douglas College"
+                width={800}
+                height={260}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
         </div>
       </Marquee>
 
@@ -281,81 +310,137 @@ export function Experience({
 
       <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
         <div className={s.logoTrack}>
-          <Link
-            href="https://www.linkedin.com/company/smart-math-bc"
-            target="_blank"
+          <Tooltip
+            content="I pitch and sell to moms. I teach kids to do math"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
           >
-            <Image
-              src="/company-logo/other-experience/smart-math.png"
-              alt="Smart Math BC"
-              width={800}
-              height={260}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://www.costco.ca" target="_blank">
-            <Image
-              src="/company-logo/other-experience/costco.png"
-              alt="Costco"
-              width={1280}
-              height={459}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="#" target="_blank">
-            <Image
-              src="/company-logo/other-experience/thai-by-thai.png"
-              alt="Thai by Thai"
-              width={691}
-              height={361}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://www.mtu.de" target="_blank">
-            <Image
-              src="/company-logo/other-experience/mtu.png"
-              alt="MTU Aero Engines"
-              width={1280}
-              height={622}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="#" target="_blank">
-            <Image
-              src="/company-logo/other-experience/naka-bistro.png"
-              alt="Naka Bistro"
-              width={225}
-              height={225}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://veym.net" target="_blank">
-            <Image
-              src="/company-logo/other-experience/veym.png"
-              alt="VEYM"
-              width={800}
-              height={260}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://vancouver.dev" target="_blank">
-            <Image
-              src="/company-logo/other-experience/vancouver.dev.png"
-              alt="Vancouver Dev"
-              width={1128}
-              height={191}
-              className={s.logo}
-            />
-          </Link>
-          <Link href="https://aitinkerers.org" target="_blank">
-            <Image
-              src="/company-logo/other-experience/ai-tinkerers.png"
-              alt="AI Tinkerers"
-              width={1181}
-              height={211}
-              className={s.logo}
-            />
-          </Link>
+            <Link
+              href="https://www.linkedin.com/company/smart-math-bc"
+              target="_blank"
+            >
+              <Image
+                src="/company-logo/other-experience/smart-math.png"
+                alt="Smart Math BC"
+                width={800}
+                height={260}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="I pitch costco mastercard. 50%+ close rate"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://www.costco.ca" target="_blank">
+              <Image
+                src="/company-logo/other-experience/costco.png"
+                alt="Costco"
+                width={1280}
+                height={459}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="I talk to difficult customers without crying"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="#" target="_blank">
+              <Image
+                src="/company-logo/other-experience/thai-by-thai.png"
+                alt="Thai by Thai"
+                width={691}
+                height={361}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="I help taking apart a HUGE airplane engine"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://www.mtu.de" target="_blank">
+              <Image
+                src="/company-logo/other-experience/mtu.png"
+                alt="MTU Aero Engines"
+                width={1280}
+                height={622}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="I handle 10+ orders at a time"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="#" target="_blank">
+              <Image
+                src="/company-logo/other-experience/naka-bistro.png"
+                alt="Naka Bistro"
+                width={225}
+                height={225}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="youth leader (6yrs)"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://veym.net" target="_blank">
+              <Image
+                src="/company-logo/other-experience/veym.png"
+                alt="VEYM"
+                width={800}
+                height={260}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="campus ambassador (2yrs)"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://vancouver.dev" target="_blank">
+              <Image
+                src="/company-logo/other-experience/vancouver.dev.png"
+                alt="Vancouver Dev"
+                width={1128}
+                height={191}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip
+            content="AI Tinkerers member"
+            side="bottom"
+            className={s.tooltipPopup!}
+            delay={100}
+          >
+            <Link href="https://aitinkerers.org" target="_blank">
+              <Image
+                src="/company-logo/other-experience/ai-tinkerers.png"
+                alt="AI Tinkerers"
+                width={1181}
+                height={211}
+                className={s.logo}
+              />
+            </Link>
+          </Tooltip>
         </div>
       </Marquee>
 
