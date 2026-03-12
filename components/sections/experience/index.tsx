@@ -217,13 +217,20 @@ export function Experience({
           </Link>
           <Link href="https://douglascollege.ca" target="_blank">
             <Image
-              src="/company-logo/douglas-college.png"
+              src="/company-logo/douglas-college-white.png"
               alt="Douglas College"
               width={120}
               height={40}
               className={s.logo}
             />
           </Link>
+          <Image
+            src="/company-logo/smart-math-no-bg.png"
+            alt="Smart Math BC"
+            width={120}
+            height={40}
+            className={s.logo}
+          />
         </div>
       </Marquee>
 
