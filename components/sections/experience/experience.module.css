@@ -114,6 +114,10 @@
   }
 }
 
+.logoMarquee > div {
+  flex-shrink: 0;
+}
+
 .logoTrack {
   align-items: center;
   display: flex;
