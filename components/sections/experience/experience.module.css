@@ -105,7 +105,6 @@
 
 .logoMarquee {
   background-color: color-mix(in srgb, var(--color-primary), white 8%);
-  border-radius: 8px;
   margin-bottom: 48px;
   padding: 24px 0;
 
@@ -119,7 +118,7 @@
   align-items: center;
   display: flex;
   gap: 64px;
-  padding: 0 32px;
+  padding-right: 64px;
 }
 
 .logo {

@@ -69,7 +69,15 @@ export function ImageTransition({
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       ref={setRef}
-      style={isWebGL ? { ...style, background: 'transparent' } : style}
+      style={
+        isWebGL
+          ? {
+              ...style,
+              backgroundColor: 'transparent',
+              backgroundImage: 'none',
+            }
+          : style
+      }
     >
       <WebGLTunnel>
         <WebGLImageTransition
