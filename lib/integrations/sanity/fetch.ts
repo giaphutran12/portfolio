@@ -151,34 +151,44 @@ function getDefaultProjects(): Project[] {
 function getDefaultExperience(): Experience[] {
   return [
     {
-      _id: 'company-a',
-      company: 'Company A',
-      role: 'Senior Full-Stack Developer',
-      startDate: '2024-01',
+      _id: 'bli',
+      company: 'Build Launch Iterate',
+      role: 'Software Engineer',
+      startDate: '2025-08',
       endDate: null,
       current: true,
       description:
-        'Building scalable web applications with React, Next.js, and Node.js. Leading architecture decisions and mentoring junior developers across the team.',
+        'Audited backend auth, secured 7 unprotected API routes, and enforced RLS across 15 CRM tables. Built a Loan Proposal Generator to save brokers 2h/day. Rebuilt company website to convert 3x better and load 2x faster.',
     },
     {
-      _id: 'company-b',
-      company: 'Company B',
-      role: 'Full-Stack Developer',
-      startDate: '2022-06',
-      endDate: '2024-01',
-      current: false,
+      _id: 'tinyfish',
+      company: 'TinyFish',
+      role: 'Software Engineering + Growth Intern',
+      startDate: '2026-03',
+      endDate: null,
+      current: true,
       description:
-        'Developed and maintained production features for a high-traffic SaaS platform. Improved core web vitals by 40% through performance optimization work.',
+        "Shipped 1-2 apps/week using TinyFish browser agents to automate what scrapers can't — logins, paywalls, multi-step forms. Built Viet Bike Scout — parallel browser agents scraping 18+ rental shops with real-time pricing.",
     },
     {
-      _id: 'company-c',
-      company: 'Company C',
-      role: 'Software Engineering Intern',
-      startDate: '2021-05',
-      endDate: '2022-05',
+      _id: 'headstarter',
+      company: 'Headstarter',
+      role: 'Software Engineer Resident',
+      startDate: '2025-07',
+      endDate: null,
+      current: true,
+      description:
+        'Built 5+ AI engineering and fullstack projects in a fast-paced team. Implemented LLM-chaining, hyperparameter tuning, and fine-tuning on 5+ models. Coached by Google ML, Two Sigma, Tesla, and Figma engineers.',
+    },
+    {
+      _id: 'douglas-college',
+      company: 'Douglas College',
+      role: 'Software Engineer Intern',
+      startDate: '2024-04',
+      endDate: '2024-12',
       current: false,
       description:
-        'Contributed to the development of internal tooling and customer-facing features. Shipped multiple projects from design to production.',
+        'Built and maintained White Board ITS, a work day management web app used by 117 IT staffs. Deployed 11 new features, reducing task delegation time by 75% for daily users.',
     },
   ]
 }
@@ -190,11 +200,11 @@ function getDefaultSiteConfig(): SiteConfig {
   return {
     _id: 'site-config',
     name: 'Edward Tran',
-    tagline: 'Full-Stack Developer',
+    tagline: 'AI Engineer',
     aboutText:
-      "I'm a full-stack developer based in Houston, TX, with a passion for building products that live at the intersection of design and engineering.",
-    email: 'edward@edwardtran.ca',
-    githubUrl: 'https://github.com/edwardtran',
-    linkedinUrl: 'https://linkedin.com/in/edwardtran',
+      'AI Engineer who ships. Not "I watched a tutorial" ships. **Production apps, real users, actual problems solved.** Based in Vancouver, BC — transferred from Douglas College to SFU.\n\nFull-stack + AI focus — from backend auth to WebGL. TypeScript, Python, Next.js. Ships fast.\n\nBeyond code — founded **Smart Math BC** (7 yrs), VEYM youth leader (6 yrs), 4+ Medium blogs on AI.',
+    email: 'giaphutran012@gmail.com',
+    githubUrl: 'https://github.com/giaphutran12',
+    linkedinUrl: 'https://linkedin.com/in/edwardtran123',
   }
 }
