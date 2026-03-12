@@ -104,14 +104,14 @@
 }
 
 .logoMarquee {
-  border-top: 1px solid
-    color-mix(in srgb, var(--color-secondary) 10%, transparent);
-  margin-top: 64px;
-  padding: 32px 0;
+  background-color: color-mix(in srgb, var(--color-primary), white 8%);
+  border-radius: 8px;
+  margin-bottom: 48px;
+  padding: 24px 0;
 
   @media (--desktop) {
-    margin-top: 80px;
-    padding: 40px 0;
+    margin-bottom: 64px;
+    padding: 28px 0;
   }
 }
 
@@ -124,7 +124,7 @@
 
 .logo {
   flex-shrink: 0;
-  height: 72px;
+  height: 40px;
   object-fit: contain;
   opacity: 0.7;
   transition: opacity 0.3s ease;
