@@ -1,0 +1,48 @@
+$ biome check && tsgo --noEmit && bun test
+components/effects/image-transition/index.tsx format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+    70 70 │         onPointerLeave={() => setHovered(false)}
+    71 71 │         ref={setRef}
+    72    │ - ······style={
+    73    │ - ········isWebGL·?·{·...style,·background:·'transparent'·}·:·style
+    74    │ - ······}
+       72 │ + ······style={isWebGL·?·{·...style,·background:·'transparent'·}·:·style}
+    75 73 │       >
+    76 74 │         <WebGLTunnel>
+  
+
+components/sections/hero/index.tsx:112:11 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━
+
+  × These CSS classes should be sorted.
+  
+    110 │         className={cn(
+    111 │           s.scrollIndicator,
+  > 112 │           'absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 mb-6'
+        │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    113 │         )}
+    114 │       >
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Sort the classes.
+  
+    110 110 │           className={cn(
+    111 111 │             s.scrollIndicator,
+    112     │ - ··········'absolute·bottom-20·left-1/2·z-10·flex·-translate-x-1/2·flex-col·items-center·gap-2·mb-6'
+        112 │ + ··········'absolute·bottom-20·left-1/2·z-10·mb-6·flex·-translate-x-1/2·flex-col·items-center·gap-2'
+    113 113 │           )}
+    114 114 │         >
+  
+
+Checked 255 files in 2s. No fixes applied.
+Found 2 errors.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+
+error: script "check" exited with code 1
