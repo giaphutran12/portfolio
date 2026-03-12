@@ -12,6 +12,7 @@ interface ProjectCard {
   techStack: string[]
   gradient: string
   imageSrc: string
+  hoverImageSrc?: string
 }
 
 interface ProjectsProps {
@@ -32,7 +33,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
     techStack: ['Python', 'TensorFlow', 'FastAPI'],
-    imageSrc: toGradientDataUrl('#78350f', '#7c2d12'),
+    imageSrc: '/project-pic/x-rec/x-rec1.png',
+    hoverImageSrc: '/project-pic/x-rec/X-REC2.png',
   },
   {
     id: 'viet-bike-scout',
@@ -62,7 +64,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
     techStack: ['Next.js', 'PostgreSQL', 'WebSocket'],
-    imageSrc: toGradientDataUrl('#581c87', '#831843'),
+    imageSrc: '/project-pic/stolk/stolk1.png',
+    hoverImageSrc: '/project-pic/stolk/stolk2.png',
   },
 ]
 
@@ -85,7 +88,7 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
     const fallback =
       fallbackProjects[index % fallbackProjects.length]! ?? defaultProjectCard
 
-    return {
+    const result: ProjectCard = {
       id: project._id,
       title: project.title,
       description: project.description,
@@ -93,6 +96,12 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
       gradient: fallback.gradient,
       imageSrc: project.image?.asset?.url || fallback.imageSrc,
     }
+
+    if (fallback.hoverImageSrc) {
+      result.hoverImageSrc = fallback.hoverImageSrc
+    }
+
+    return result
   })
 }
 
@@ -112,9 +121,17 @@ export function Projects({ projects }: ProjectsProps) {
             >
               <div aria-hidden="true" className={s.imageArea}>
                 <ImageTransition
-                  className={s.imageEffect || undefined}
+                  className={s.imageEffect}
+                  style={{
+                    background: project.gradient,
+                    backgroundImage: `url(${project.imageSrc})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                  }}
                   imageSrc={project.imageSrc}
-                  style={{ background: project.gradient }}
+                  {...(project.hoverImageSrc
+                    ? { hoverImageSrc: project.hoverImageSrc }
+                    : {})}
                 />
               </div>
               <div className={s.content}>
