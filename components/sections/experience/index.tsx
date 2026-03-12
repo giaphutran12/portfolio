@@ -5,6 +5,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText as GSAPSplitText } from 'gsap/SplitText'
 import { useEffect, useRef } from 'react'
+import { Image } from '@/components/ui/image'
+import { Marquee } from '@/components/ui/marquee'
 import s from './experience.module.css'
 
 interface ExperienceEntry {
@@ -208,6 +210,46 @@ export function Experience({
           ))}
         </div>
       </div>
+
+      <Marquee repeat={3} speed={0.5} pauseOnHover className={s.logoMarquee}>
+        <div className={s.logoTrack}>
+          <Image
+            src="/company-logo/headstarter.png"
+            alt="Headstarter"
+            width={120}
+            height={40}
+            className={s.logo}
+          />
+          <Image
+            src="/company-logo/tinyfish.png"
+            alt="Tinyfish"
+            width={120}
+            height={40}
+            className={s.logo}
+          />
+          <Image
+            src="/company-logo/bli.svg"
+            alt="BLI"
+            width={120}
+            height={40}
+            className={s.logo}
+          />
+          <Image
+            src="/company-logo/douglas-college.png"
+            alt="Douglas College"
+            width={120}
+            height={40}
+            className={s.logo}
+          />
+          <Image
+            src="/company-logo/smart-math-bc.png"
+            alt="Smart Math BC"
+            width={120}
+            height={40}
+            className={s.logo}
+          />
+        </div>
+      </Marquee>
     </section>
   )
 }

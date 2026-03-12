@@ -102,3 +102,35 @@
   color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
   max-width: 560px;
 }
+
+.logoMarquee {
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  margin-top: 64px;
+  padding: 32px 0;
+
+  @media (--desktop) {
+    margin-top: 80px;
+    padding: 40px 0;
+  }
+}
+
+.logoTrack {
+  align-items: center;
+  display: flex;
+  gap: 48px;
+  padding: 0 24px;
+}
+
+.logo {
+  filter: grayscale(1) brightness(1.5);
+  height: 36px;
+  object-fit: contain;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  width: auto;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
