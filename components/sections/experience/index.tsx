@@ -26,34 +26,44 @@ interface ExperienceProps {
 
 const defaultExperiences: ExperienceEntry[] = [
   {
-    _id: 'company-a',
-    company: 'Company A',
-    role: 'Senior Full-Stack Developer',
-    startDate: '2024-01',
+    _id: 'bli',
+    company: 'Build Launch Iterate',
+    role: 'Software Engineer',
+    startDate: '2025-08',
     endDate: null,
     current: true,
     description:
-      'Building scalable web applications with React, Next.js, and Node.js. Leading architecture decisions and mentoring junior developers across the team.',
+      'Audited backend auth, secured 7 unprotected API routes, and enforced RLS across 15 CRM tables. Built a Loan Proposal Generator to save brokers 2h/day. Rebuilt company website to convert 3x better and load 2x faster.',
   },
   {
-    _id: 'company-b',
-    company: 'Company B',
-    role: 'Full-Stack Developer',
-    startDate: '2022-06',
-    endDate: '2024-01',
-    current: false,
+    _id: 'tinyfish',
+    company: 'TinyFish',
+    role: 'Software Engineering + Growth Intern',
+    startDate: '2026-03',
+    endDate: null,
+    current: true,
     description:
-      'Developed and maintained production features for a high-traffic SaaS platform. Improved core web vitals by 40% through performance optimization work.',
+      "Shipped 1-2 apps/week using TinyFish browser agents to automate what scrapers can't — logins, paywalls, multi-step forms. Built Viet Bike Scout — parallel browser agents scraping 18+ rental shops with real-time pricing.",
   },
   {
-    _id: 'company-c',
-    company: 'Company C',
-    role: 'Software Engineering Intern',
-    startDate: '2021-05',
-    endDate: '2022-05',
+    _id: 'headstarter',
+    company: 'Headstarter',
+    role: 'Software Engineer Resident',
+    startDate: '2025-07',
+    endDate: null,
+    current: true,
+    description:
+      'Built 5+ AI engineering and fullstack projects in a fast-paced team. Implemented LLM-chaining, hyperparameter tuning, and fine-tuning on 5+ models. Coached by Google ML, Two Sigma, Tesla, and Figma engineers.',
+  },
+  {
+    _id: 'douglas-college',
+    company: 'Douglas College',
+    role: 'Software Engineer Intern',
+    startDate: '2024-04',
+    endDate: '2024-12',
     current: false,
     description:
-      'Contributed to the development of internal tooling and customer-facing features. Shipped multiple projects from design to production.',
+      'Built and maintained White Board ITS, a work day management web app used by 117 IT staffs. Deployed 11 new features, reducing task delegation time by 75% for daily users.',
   },
 ]
 
@@ -190,16 +200,16 @@ export function Experience({
         <div className={s.logoTrack}>
           <Link href="https://headstarter.co" target="_blank">
             <Image
-              src="/company-logo/headstarter.png"
+              src="/company-logo/work-experience/headstarter.png"
               alt="Headstarter"
-              width={386}
-              height={130}
+              width={623}
+              height={211}
               className={s.logo}
             />
           </Link>
           <Link href="https://tinyfish.ai" target="_blank">
             <Image
-              src="/company-logo/tinyfish.png"
+              src="/company-logo/work-experience/tinyfish.png"
               alt="Tinyfish"
               width={478}
               height={105}
@@ -208,31 +218,19 @@ export function Experience({
           </Link>
           <Link href="https://buildlaunchiterate.ca" target="_blank">
             <Image
-              src="/company-logo/bli.svg"
+              src="/company-logo/work-experience/bli.png"
               alt="BLI"
-              width={240}
-              height={180}
+              width={800}
+              height={260}
               className={s.logo}
             />
           </Link>
           <Link href="https://douglascollege.ca" target="_blank">
             <Image
-              src="/company-logo/douglas-college-white.png"
+              src="/company-logo/work-experience/douglas-college-white-text.png"
               alt="Douglas College"
-              width={1763}
-              height={1158}
-              className={s.logo}
-            />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/company/smart-math-bc"
-            target="_blank"
-          >
-            <Image
-              src="/company-logo/smart-math-no-bg.png"
-              alt="Smart Math BC"
-              width={1044}
-              height={1016}
+              width={800}
+              height={260}
               className={s.logo}
             />
           </Link>
@@ -266,6 +264,94 @@ export function Experience({
           ))}
         </div>
       </div>
+
+      <div className={cn(s.inner)}>
+        <div className={cn(s.otherHeadingWrapper)}>
+          <h3 className={cn(s.otherHeading, 'heading-md')}>
+            Other Experiences
+          </h3>
+        </div>
+      </div>
+
+      <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
+        <div className={s.logoTrack}>
+          <Link
+            href="https://www.linkedin.com/company/smart-math-bc"
+            target="_blank"
+          >
+            <Image
+              src="/company-logo/other-experience/smart-math.png"
+              alt="Smart Math BC"
+              width={800}
+              height={260}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="https://www.costco.ca" target="_blank">
+            <Image
+              src="/company-logo/other-experience/costco.png"
+              alt="Costco"
+              width={1280}
+              height={459}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="#" target="_blank">
+            <Image
+              src="/company-logo/other-experience/thai-by-thai.png"
+              alt="Thai by Thai"
+              width={691}
+              height={361}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="https://www.mtu.de" target="_blank">
+            <Image
+              src="/company-logo/other-experience/mtu.png"
+              alt="MTU Aero Engines"
+              width={1280}
+              height={622}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="#" target="_blank">
+            <Image
+              src="/company-logo/other-experience/naka-bistro.png"
+              alt="Naka Bistro"
+              width={225}
+              height={225}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="https://veym.net" target="_blank">
+            <Image
+              src="/company-logo/other-experience/veym.png"
+              alt="VEYM"
+              width={800}
+              height={260}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="https://vancouver.dev" target="_blank">
+            <Image
+              src="/company-logo/other-experience/vancouver.dev.png"
+              alt="Vancouver Dev"
+              width={1128}
+              height={191}
+              className={s.logo}
+            />
+          </Link>
+          <Link href="https://aitinkerers.org" target="_blank">
+            <Image
+              src="/company-logo/other-experience/ai-tinkerers.png"
+              alt="AI Tinkerers"
+              width={1181}
+              height={211}
+              className={s.logo}
+            />
+          </Link>
+        </div>
+      </Marquee>
     </section>
   )
 }

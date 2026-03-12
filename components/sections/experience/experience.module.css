@@ -27,6 +27,20 @@
   color: var(--color-secondary);
 }
 
+.otherHeadingWrapper {
+  margin-top: 64px;
+  margin-bottom: 32px;
+
+  @media (--desktop) {
+    margin-top: 80px;
+    margin-bottom: 48px;
+  }
+}
+
+.otherHeading {
+  color: var(--color-secondary);
+}
+
 .timeline {
   --timeline-pad: 32px;
   --dot-size: 8px;
