@@ -111,7 +111,7 @@ export function Wrapper({
       <Canvas root={webgl}>
         <main
           id="main-content"
-          className={cn('relative flex grow flex-col', className)}
+          className={cn('relative z-20 flex grow flex-col', className)}
           {...props}
         >
           {children}

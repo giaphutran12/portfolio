@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { type ComponentProps, type CSSProperties, useState } from 'react'
+import { useDeviceDetection } from '@/hooks/use-device-detection'
 import { WebGLTunnel } from '@/webgl/components/tunnel'
 import { useWebGLElement } from '@/webgl/hooks/use-webgl-element'
 
@@ -59,6 +60,7 @@ export function ImageTransition({
   ...props
 }: ImageTransitionProps) {
   const { setRef, rect, isVisible } = useWebGLElement<HTMLDivElement>()
+  const { isWebGL } = useDeviceDetection()
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -67,7 +69,7 @@ export function ImageTransition({
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       ref={setRef}
-      style={style}
+      style={isWebGL ? { ...style, background: 'transparent' } : style}
     >
       <WebGLTunnel>
         <WebGLImageTransition

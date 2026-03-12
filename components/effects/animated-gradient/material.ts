@@ -138,7 +138,7 @@ export class AnimatedGradientMaterial extends MeshBasicMaterial {
 
       # ifdef USE_FLOWMAP
         vec4 flow = texture2D(uFlowmap, fragCoord / (uResolution.xy * uDpr));
-        flow *= 0.02;
+        flow *= 0.06;
 
         screenUV += flow.rg;
       # endif

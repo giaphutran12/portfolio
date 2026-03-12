@@ -92,11 +92,11 @@ export function useFluidSim() {
     sheet,
     'fluid simulation',
     {
-      density: types.number(0.98, { range: [0, 1], nudgeMultiplier: 0.01 }),
-      velocity: types.number(1, { range: [0, 1], nudgeMultiplier: 0.01 }),
-      pressure: types.number(0.5, { range: [0, 1], nudgeMultiplier: 0.01 }),
-      curl: types.number(0, { range: [0, 100], nudgeMultiplier: 1 }),
-      radius: types.number(0.5, { range: [0, 1], nudgeMultiplier: 0.01 }),
+      density: types.number(0.99, { range: [0, 1], nudgeMultiplier: 0.01 }),
+      velocity: types.number(0.995, { range: [0, 1], nudgeMultiplier: 0.01 }),
+      pressure: types.number(0.8, { range: [0, 1], nudgeMultiplier: 0.01 }),
+      curl: types.number(32, { range: [0, 100], nudgeMultiplier: 1 }),
+      radius: types.number(1, { range: [0, 1], nudgeMultiplier: 0.01 }),
     },
     {
       onValuesChange: ({

@@ -442,7 +442,7 @@ export function NoiseWaves({
   return (
     <div
       ref={containerRef}
-      className={cn('pointer-events-none fixed inset-0 z-0', className)}
+      className={cn('pointer-events-none fixed inset-0 z-10', className)}
       aria-hidden="true"
     >
       <svg ref={svgRef} className="block h-full w-full" />

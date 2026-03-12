@@ -109,7 +109,7 @@ export function Hero({
         aria-hidden="true"
         className={cn(
           s.scrollIndicator,
-          'absolute bottom-[max(24px,calc(env(safe-area-inset-bottom)+16px))] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2'
+          'absolute bottom-20 left-1/2 z-10 mb-6 flex -translate-x-1/2 flex-col items-center gap-2'
         )}
       >
         <span className={cn(s.scrollText, 'label')}>Scroll</span>
