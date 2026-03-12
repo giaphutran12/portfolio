@@ -205,15 +205,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://headstarter.co" target="_blank">
-              <Image
-                src="/company-logo/work-experience/headstarter.png"
-                alt="Headstarter"
-                width={623}
-                height={211}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://headstarter.co" target="_blank">
+                <Image
+                  src="/company-logo/work-experience/headstarter.png"
+                  alt="Headstarter"
+                  width={623}
+                  height={211}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="i get paid for building and posting"
@@ -221,15 +223,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://tinyfish.ai" target="_blank">
-              <Image
-                src="/company-logo/work-experience/tinyfish.png"
-                alt="Tinyfish"
-                width={478}
-                height={105}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://tinyfish.ai" target="_blank">
+                <Image
+                  src="/company-logo/work-experience/tinyfish.png"
+                  alt="Tinyfish"
+                  width={478}
+                  height={105}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="i ship AI apps faster than you"
@@ -237,15 +241,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://buildlaunchiterate.ca" target="_blank">
-              <Image
-                src="/company-logo/work-experience/bli.png"
-                alt="BLI"
-                width={800}
-                height={260}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://buildlaunchiterate.ca" target="_blank">
+                <Image
+                  src="/company-logo/work-experience/bli.png"
+                  alt="BLI"
+                  width={800}
+                  height={260}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="I revamp a work day management app for 117+ IT staffs"
@@ -253,50 +259,46 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://douglascollege.ca" target="_blank">
-              <Image
-                src="/company-logo/work-experience/douglas-college-white-text.png"
-                alt="Douglas College"
-                width={800}
-                height={260}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://douglascollege.ca" target="_blank">
+                <Image
+                  src="/company-logo/work-experience/douglas-college-white-text.png"
+                  alt="Douglas College"
+                  width={800}
+                  height={260}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
         </div>
       </Marquee>
 
       <div className={cn(s.inner)}>
-        <div data-lenis-prevent className={s.timelineScroll}>
-          <div ref={timelineRef} className={cn(s.timeline)}>
-            {displayExperiences.map((entry, i) => (
+        <div ref={timelineRef} className={cn(s.timeline)}>
+          {displayExperiences.map((entry, i) => (
+            <div
+              key={entry._id || entry.company}
+              ref={(el) => {
+                entryRefs.current[i] = el
+              }}
+              className={cn(s.entry)}
+            >
               <div
-                key={entry._id || entry.company}
-                ref={(el) => {
-                  entryRefs.current[i] = el
-                }}
-                className={cn(s.entry)}
-              >
-                <div
-                  className={cn(s.entryDot)}
-                  data-current={entry.current ? 'true' : undefined}
-                />
+                className={cn(s.entryDot)}
+                data-current={entry.current ? 'true' : undefined}
+              />
 
-                <h3 className={cn(s.company, 'heading-md')}>{entry.company}</h3>
-                <p className={cn(s.role, 'body-lg')}>{entry.role}</p>
-                <p className={cn(s.date, 'label')}>
-                  {formatDateRange(
-                    entry.startDate,
-                    entry.endDate,
-                    entry.current
-                  )}
-                </p>
-                <p className={cn(s.description, 'body-sm')}>
-                  {entry.description}
-                </p>
-              </div>
-            ))}
-          </div>
+              <h3 className={cn(s.company, 'heading-md')}>{entry.company}</h3>
+              <p className={cn(s.role, 'body-lg')}>{entry.role}</p>
+              <p className={cn(s.date, 'label')}>
+                {formatDateRange(entry.startDate, entry.endDate, entry.current)}
+              </p>
+              <p className={cn(s.description, 'body-sm')}>
+                {entry.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -316,18 +318,20 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link
-              href="https://www.linkedin.com/company/smart-math-bc"
-              target="_blank"
-            >
-              <Image
-                src="/company-logo/other-experience/smart-math.png"
-                alt="Smart Math BC"
-                width={800}
-                height={260}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link
+                href="https://www.linkedin.com/company/smart-math-bc"
+                target="_blank"
+              >
+                <Image
+                  src="/company-logo/other-experience/smart-math.png"
+                  alt="Smart Math BC"
+                  width={800}
+                  height={260}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="I pitch costco mastercard. 50%+ close rate"
@@ -335,15 +339,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://www.costco.ca" target="_blank">
-              <Image
-                src="/company-logo/other-experience/costco.png"
-                alt="Costco"
-                width={1280}
-                height={459}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://www.costco.ca" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/costco.png"
+                  alt="Costco"
+                  width={1280}
+                  height={459}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="I talk to difficult customers without crying"
@@ -351,15 +357,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="#" target="_blank">
-              <Image
-                src="/company-logo/other-experience/thai-by-thai.png"
-                alt="Thai by Thai"
-                width={691}
-                height={361}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="#" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/thai-by-thai.png"
+                  alt="Thai by Thai"
+                  width={691}
+                  height={361}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="I help taking apart a HUGE airplane engine"
@@ -367,15 +375,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://www.mtu.de" target="_blank">
-              <Image
-                src="/company-logo/other-experience/mtu.png"
-                alt="MTU Aero Engines"
-                width={1280}
-                height={622}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://www.mtu.de" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/mtu.png"
+                  alt="MTU Aero Engines"
+                  width={1280}
+                  height={622}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="I handle 10+ orders at a time"
@@ -383,15 +393,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="#" target="_blank">
-              <Image
-                src="/company-logo/other-experience/naka-bistro.png"
-                alt="Naka Bistro"
-                width={225}
-                height={225}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="#" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/naka-bistro.png"
+                  alt="Naka Bistro"
+                  width={225}
+                  height={225}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="youth leader (6yrs)"
@@ -399,15 +411,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://veym.net" target="_blank">
-              <Image
-                src="/company-logo/other-experience/veym.png"
-                alt="VEYM"
-                width={800}
-                height={260}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://veym.net" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/veym.png"
+                  alt="VEYM"
+                  width={800}
+                  height={260}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="campus ambassador (2yrs)"
@@ -415,15 +429,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://vancouver.dev" target="_blank">
-              <Image
-                src="/company-logo/other-experience/vancouver.dev.png"
-                alt="Vancouver Dev"
-                width={1128}
-                height={191}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://vancouver.dev" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/vancouver.dev.png"
+                  alt="Vancouver Dev"
+                  width={1128}
+                  height={191}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
           <Tooltip
             content="AI Tinkerers member"
@@ -431,15 +447,17 @@ export function Experience({
             className={s.tooltipPopup!}
             delay={100}
           >
-            <Link href="https://aitinkerers.org" target="_blank">
-              <Image
-                src="/company-logo/other-experience/ai-tinkerers.png"
-                alt="AI Tinkerers"
-                width={1181}
-                height={211}
-                className={s.logo}
-              />
-            </Link>
+            <span className={s.logoTrigger}>
+              <Link href="https://aitinkerers.org" target="_blank">
+                <Image
+                  src="/company-logo/other-experience/ai-tinkerers.png"
+                  alt="AI Tinkerers"
+                  width={1181}
+                  height={211}
+                  className={s.logo}
+                />
+              </Link>
+            </span>
           </Tooltip>
         </div>
       </Marquee>

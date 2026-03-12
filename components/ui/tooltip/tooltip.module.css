@@ -1,3 +1,7 @@
+.positioner {
+  z-index: 9999;
+}
+
 .popup {
   background-color: var(--color-secondary);
   color: var(--color-primary);

@@ -107,10 +107,7 @@ export function Hero({
       <div
         ref={scrollIndicatorRef}
         aria-hidden="true"
-        className={cn(
-          s.scrollIndicator,
-          'absolute bottom-20 left-1/2 z-10 mb-6 flex -translate-x-1/2 flex-col items-center gap-2'
-        )}
+        className={cn(s.scrollIndicator, 'flex flex-col items-center gap-2')}
       >
         <span className={cn(s.scrollText, 'label')}>Scroll</span>
         <div className={cn(s.scrollLine)} />

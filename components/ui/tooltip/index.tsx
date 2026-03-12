@@ -65,7 +65,11 @@ function Tooltip({
           }}
         />
         <BaseTooltip.Portal>
-          <BaseTooltip.Positioner side={side} sideOffset={8}>
+          <BaseTooltip.Positioner
+            side={side}
+            sideOffset={8}
+            {...(s.positioner && { className: s.positioner })}
+          >
             <BaseTooltip.Popup
               {...(cn(s.popup, className) && {
                 className: cn(s.popup, className),
@@ -92,7 +96,9 @@ const Positioner = ({
   ...props
 }: ComponentProps<typeof BaseTooltip.Positioner>) => (
   <BaseTooltip.Positioner
-    {...(className && { className })}
+    {...(cn(s.positioner, className) && {
+      className: cn(s.positioner, className),
+    })}
     sideOffset={sideOffset}
     {...props}
   />

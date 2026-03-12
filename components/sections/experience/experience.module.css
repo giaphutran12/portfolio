@@ -94,21 +94,6 @@
   text-transform: uppercase;
 }
 
-.timelineScroll {
-  max-height: 500px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-contrast) transparent;
-}
-
-@media (max-width: 799px) {
-  .timelineScroll {
-    max-height: none;
-    overflow-y: visible;
-  }
-}
-
 .timeline {
   --timeline-pad: 32px;
   --dot-size: 8px;
@@ -220,6 +205,10 @@
   opacity: 1;
 }
 
+.logoTrigger {
+  display: inline-flex;
+}
+
 .tooltipPopup {
   clip-path: circle(100%);
   transition:
@@ -231,4 +220,10 @@
 .tooltipPopup[data-ending-style] {
   clip-path: circle(0%);
   opacity: 0;
+}
+
+.tooltipPopup[data-open][data-starting-style] {
+  clip-path: circle(100%);
+  opacity: 1;
+  transform: scale(1);
 }
