@@ -12,7 +12,7 @@ interface AboutProps {
 }
 
 const defaultAboutText =
-  "I'm a full-stack developer based in Houston, TX, with a passion for building products that live at the intersection of design and engineering. I believe the best digital experiences are those that feel inevitable — where every interaction is considered, every pixel earns its place.\n\nMy work spans the full stack: from architecting scalable backend systems to obsessing over the micro-animations that make an interface feel alive. I care deeply about performance, accessibility, and the craft of writing code that is as maintainable as it is expressive.\n\nWhen I'm not shipping products, I'm exploring the edges of what the web can do — experimenting with WebGL, generative art, and the rare moments when technology becomes poetry."
+  "**AI Engineer who ships.** Not \"I watched a tutorial\" ships. Production apps, real users, actual problems solved. Based in Vancouver, BC — studying Computer Science at Douglas College, transferring to SFU. 4x honour roll, 1x Dean's List.\n\nI build across the full stack and the AI stack — from auditing backend auth and enforcing RLS across 15 CRM tables, to training two-tower neural networks in PyTorch and shipping LLM-chaining pipelines. **TypeScript, Python, Next.js, and whatever gets the job done.** I ship 1-2 apps a week at TinyFish, and I've pushed 163+ commits in 7-day sprints at Headstarter.\n\nBeyond code — I founded **Smart Math BC** 7 years ago and still run it. Youth leader at VEYM for 6 years. I write about AI experiments on Medium. I don't just build software, I build things that matter to real people."
 
 export function About({ aboutText = defaultAboutText }: AboutProps) {
   const sectionRef = useRef<HTMLElement>(null)
@@ -90,7 +90,7 @@ export function About({ aboutText = defaultAboutText }: AboutProps) {
 
         <h2 className={cn(s.heading, 'heading-lg')}>
           <SplitText ref={headingRef} as="span" type="words" mask>
-            Crafting digital experiences with intention.
+            I build things that work.
           </SplitText>
         </h2>
 
