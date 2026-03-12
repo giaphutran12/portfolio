@@ -137,3 +137,8 @@
 .logo:hover {
   opacity: 1;
 }
+
+.logoTall {
+  composes: logo;
+  height: 56px;
+}

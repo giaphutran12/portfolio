@@ -228,8 +228,8 @@ export function Experience({
             src="/company-logo/smart-math-no-bg.png"
             alt="Smart Math BC"
             width={120}
-            height={40}
-            className={s.logo}
+            height={56}
+            className={s.logoTall}
           />
         </div>
       </Marquee>
