@@ -67,6 +67,46 @@ const fallbackProjects: ProjectCard[] = [
     imageSrc: '/project-pic/stolk/stolk1.png',
     hoverImageSrc: '/project-pic/stolk/stolk2.png',
   },
+  {
+    id: 'self-improving-prompt',
+    title: 'Self-Improving Prompt Engine',
+    description:
+      'CI/CD for prompts — evaluate, analyze failures, auto-improve in a closed loop. Averaged +42% score lift on 10K+ prompts with multi-agent pipeline.',
+    gradient:
+      'linear-gradient(135deg, rgb(6 95 70 / 0.4) 0%, rgb(17 94 89 / 0.35) 100%)',
+    techStack: ['FastAPI', 'Redis', 'Gemini'],
+    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
+  },
+  {
+    id: 'lovable-clone',
+    title: 'Lovable Clone',
+    description:
+      'Full-stack Lovable clone — AI code gen, sandboxed preview, auth, payments, background jobs, type safety, and postgres all wired up.',
+    gradient:
+      'linear-gradient(135deg, rgb(109 40 217 / 0.4) 0%, rgb(76 29 149 / 0.35) 100%)',
+    techStack: ['Next.js', 'tRPC', 'E2B Sandbox'],
+    imageSrc: toGradientDataUrl('#6d28d9', '#4c1d95'),
+  },
+  {
+    id: 'ai-customer-support',
+    title: 'AI Customer Support Agent',
+    description:
+      'Context-aware AI support for fintech — Firecrawl scraping, Pinecone vector search, VAPI voice calls, Gemini embeddings. Reduced resource use by 80%.',
+    gradient:
+      'linear-gradient(135deg, rgb(190 18 60 / 0.4) 0%, rgb(136 19 55 / 0.35) 100%)',
+    techStack: ['Firecrawl', 'Pinecone', 'VAPI'],
+    imageSrc: toGradientDataUrl('#be123c', '#881337'),
+  },
+  {
+    id: 'serverless-style-transfer',
+    title: 'Serverless Image Style Transfer',
+    description:
+      'Transform image styles on WebGPU using Rust and WebAssembly in the browser, reducing server-side cost by 95%. Zero backend required.',
+    gradient:
+      'linear-gradient(135deg, rgb(217 119 6 / 0.4) 0%, rgb(180 83 9 / 0.35) 100%)',
+    techStack: ['Rust', 'WebAssembly', 'WebGPU'],
+    imageSrc: toGradientDataUrl('#d97706', '#b45309'),
+  },
 ]
 
 const defaultProjectCard: ProjectCard = {

@@ -142,6 +142,42 @@ function getDefaultProjects(): Project[] {
       techStack: ['Next.js', 'PostgreSQL', 'WebSocket'],
       order: 4,
     },
+    {
+      _id: 'self-improving-prompt',
+      title: 'Self-Improving Prompt Engine',
+      slug: { current: 'self-improving-prompt' },
+      description:
+        'CI/CD for prompts — evaluate, analyze failures, auto-improve in a closed loop. Averaged +42% score lift on 10K+ prompts with multi-agent pipeline.',
+      techStack: ['FastAPI', 'Redis', 'Gemini'],
+      order: 5,
+    },
+    {
+      _id: 'lovable-clone',
+      title: 'Lovable Clone',
+      slug: { current: 'lovable-clone' },
+      description:
+        'Full-stack Lovable clone — AI code gen, sandboxed preview, auth, payments, background jobs, type safety, and postgres all wired up.',
+      techStack: ['Next.js', 'tRPC', 'E2B Sandbox'],
+      order: 6,
+    },
+    {
+      _id: 'ai-customer-support',
+      title: 'AI Customer Support Agent',
+      slug: { current: 'ai-customer-support' },
+      description:
+        'Context-aware AI support for fintech — Firecrawl scraping, Pinecone vector search, VAPI voice calls, Gemini embeddings. Reduced resource use by 80%.',
+      techStack: ['Firecrawl', 'Pinecone', 'VAPI'],
+      order: 7,
+    },
+    {
+      _id: 'serverless-style-transfer',
+      title: 'Serverless Image Style Transfer',
+      slug: { current: 'serverless-style-transfer' },
+      description:
+        'Transform image styles on WebGPU using Rust and WebAssembly in the browser, reducing server-side cost by 95%. Zero backend required.',
+      techStack: ['Rust', 'WebAssembly', 'WebGPU'],
+      order: 8,
+    },
   ]
 }
 
