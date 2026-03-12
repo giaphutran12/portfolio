@@ -203,7 +203,7 @@ export function Experience({
             content="I ship hard projects"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://headstarter.co" target="_blank">
@@ -221,7 +221,7 @@ export function Experience({
             content="i get paid for building and posting"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://tinyfish.ai" target="_blank">
@@ -239,7 +239,7 @@ export function Experience({
             content="i ship AI apps faster than you"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://buildlaunchiterate.ca" target="_blank">
@@ -257,7 +257,7 @@ export function Experience({
             content="I revamp a work day management app for 117+ IT staffs"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://douglascollege.ca" target="_blank">
@@ -316,7 +316,7 @@ export function Experience({
             content="I pitch and sell to moms. I teach kids to do math"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link
@@ -337,7 +337,7 @@ export function Experience({
             content="I pitch costco mastercard. 50%+ close rate"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://www.costco.ca" target="_blank">
@@ -355,7 +355,7 @@ export function Experience({
             content="I talk to difficult customers without crying"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="#" target="_blank">
@@ -373,7 +373,7 @@ export function Experience({
             content="I help taking apart a HUGE airplane engine"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://www.mtu.de" target="_blank">
@@ -391,7 +391,7 @@ export function Experience({
             content="I handle 10+ orders at a time"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="#" target="_blank">
@@ -409,7 +409,7 @@ export function Experience({
             content="youth leader (6yrs)"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://veym.net" target="_blank">
@@ -427,7 +427,7 @@ export function Experience({
             content="campus ambassador (2yrs)"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://vancouver.dev" target="_blank">
@@ -445,7 +445,7 @@ export function Experience({
             content="AI Tinkerers member"
             side="bottom"
             className={s.tooltipPopup!}
-            delay={100}
+            delay={0}
           >
             <span className={s.logoTrigger}>
               <Link href="https://aitinkerers.org" target="_blank">
