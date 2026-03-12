@@ -192,8 +192,9 @@ export function Experience({
             <Image
               src="/company-logo/headstarter.png"
               alt="Headstarter"
-              width={120}
+              width={124}
               height={40}
+              style={{ width: 124, height: 40 }}
               className={s.logo}
             />
           </Link>
@@ -201,8 +202,9 @@ export function Experience({
             <Image
               src="/company-logo/tinyfish.png"
               alt="Tinyfish"
-              width={120}
+              width={155}
               height={40}
+              style={{ width: 155, height: 40 }}
               className={s.logo}
             />
           </Link>
@@ -210,8 +212,9 @@ export function Experience({
             <Image
               src="/company-logo/bli.svg"
               alt="BLI"
-              width={120}
+              width={81}
               height={40}
+              style={{ width: 81, height: 40 }}
               className={s.logo}
             />
           </Link>
@@ -219,17 +222,19 @@ export function Experience({
             <Image
               src="/company-logo/douglas-college-white.png"
               alt="Douglas College"
-              width={120}
+              width={87}
               height={40}
+              style={{ width: 87, height: 40 }}
               className={s.logo}
             />
           </Link>
           <Image
             src="/company-logo/smart-math-no-bg.png"
             alt="Smart Math BC"
-            width={120}
-            height={56}
-            className={s.logoTall}
+            width={71}
+            height={40}
+            style={{ width: 71, height: 40 }}
+            className={s.logo}
           />
         </div>
       </Marquee>
