@@ -49,21 +49,21 @@ export function HoverImageReveal({
     tx: { previous: 0, current: 0, amt: 0.08 },
     ty: { previous: 0, current: 0, amt: 0.08 },
   })
+  const preloadedRef = useRef(false)
   const lastTapTimeRef = useRef(0)
   const isTouchRef = useRef(false)
 
   useEffect(() => {
     setIsMounted(true)
 
-    const img = new window.Image()
-    img.src = src
-
     return () => {
       setIsMounted(false)
     }
-  }, [src])
+  }, [])
 
   useEffect(() => {
+    preloadedRef.current = false
+
     const wrapperEl = wrapperRef.current
     if (!wrapperEl) return
 
@@ -227,6 +227,12 @@ export function HoverImageReveal({
     }
 
     function handleMouseEnter(event: MouseEvent) {
+      if (!preloadedRef.current) {
+        const img = new window.Image()
+        img.src = src
+        preloadedRef.current = true
+      }
+
       const currentWrapper = wrapperRef.current
       const previewEl = previewRef.current
       if (!(previewEl && currentWrapper)) return
@@ -257,6 +263,12 @@ export function HoverImageReveal({
     }
 
     function handleTouchStart(event: TouchEvent) {
+      if (!preloadedRef.current) {
+        const img = new window.Image()
+        img.src = src
+        preloadedRef.current = true
+      }
+
       event.preventDefault()
 
       const now = Date.now()
@@ -393,7 +405,7 @@ export function HoverImageReveal({
         gsap.killTweensOf(previewEl)
       }
     }
-  }, [])
+  }, [src])
 
   return (
     <>

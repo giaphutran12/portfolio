@@ -11,7 +11,7 @@ const mono = localFont({
   ],
   display: 'swap',
   variable: '--next-font-mono',
-  preload: true,
+  preload: false,
   adjustFontFallback: 'Arial',
   fallback: [
     'ui-monospace',
@@ -37,7 +37,7 @@ const body = Syne({
   weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--next-font-body',
-  preload: true,
+  preload: false,
 })
 
 const fonts = [mono, display, body]
