@@ -1,5 +1,6 @@
 .hero {
   color: var(--color-secondary);
+  min-height: 100dvh;
 }
 
 .background {

@@ -1,7 +1,14 @@
 .contact {
   background-color: var(--color-primary);
   color: var(--color-secondary);
+  min-height: 200px;
   overflow: hidden;
+}
+
+@media (--desktop) {
+  .contact {
+    min-height: 260px;
+  }
 }
 
 .heading {

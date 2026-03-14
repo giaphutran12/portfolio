@@ -30,6 +30,7 @@ const display = Cormorant_Garamond({
   display: 'swap',
   variable: '--next-font-display',
   preload: true,
+  adjustFontFallback: true,
 })
 
 const body = Syne({
@@ -38,6 +39,7 @@ const body = Syne({
   display: 'swap',
   variable: '--next-font-body',
   preload: false,
+  adjustFontFallback: true,
 })
 
 const fonts = [mono, display, body]

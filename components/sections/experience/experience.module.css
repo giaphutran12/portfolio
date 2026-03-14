@@ -1,10 +1,12 @@
 .experience {
   background-color: var(--color-primary);
   color: var(--color-secondary);
+  min-height: 500px;
   overflow: hidden;
   padding: 80px 0;
 
   @media (--desktop) {
+    min-height: 560px;
     padding: 120px 0;
   }
 }
