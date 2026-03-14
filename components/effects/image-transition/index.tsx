@@ -60,8 +60,9 @@ export function ImageTransition({
   ...props
 }: ImageTransitionProps) {
   const { setRef, rect, isVisible } = useWebGLElement<HTMLDivElement>()
-  const { isWebGL } = useDeviceDetection()
+  const { hasGPU, isMobile } = useDeviceDetection()
   const [hovered, setHovered] = useState(false)
+  const shouldRenderWebGL = hasGPU && !isMobile
 
   return (
     <div
@@ -70,7 +71,7 @@ export function ImageTransition({
       onPointerLeave={() => setHovered(false)}
       ref={setRef}
       style={
-        isWebGL
+        shouldRenderWebGL
           ? {
               ...style,
               backgroundColor: 'transparent',
@@ -79,14 +80,16 @@ export function ImageTransition({
           : style
       }
     >
-      <WebGLTunnel>
-        <WebGLImageTransition
-          hovered={hovered}
-          rect={toDOMRect(rect)}
-          visible={isVisible}
-          {...props}
-        />
-      </WebGLTunnel>
+      {shouldRenderWebGL ? (
+        <WebGLTunnel>
+          <WebGLImageTransition
+            hovered={hovered}
+            rect={toDOMRect(rect)}
+            visible={isVisible}
+            {...props}
+          />
+        </WebGLTunnel>
+      ) : null}
     </div>
   )
 }

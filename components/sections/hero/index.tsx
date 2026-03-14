@@ -34,38 +34,49 @@ export function Hero({
 
     if (prefersReducedMotion) return
 
+    let rafId = 0
+    let nestedRafId = 0
+
     const ctx = gsap.context(() => {
       gsap.set(subtitleRef.current, { opacity: 0 })
       gsap.set(scrollIndicatorRef.current, { opacity: 0 })
 
-      gsap.to(nameRef.current, {
-        delay: ANIM_DELAY,
-        duration: ANIM_DURATION,
-        ease: 'power2.out',
-        scrambleText: {
-          chars: 'アイウエオカキクケコサシスセソタチツテト!@#$%&',
-          revealDelay: 0.5,
-          speed: 0.4,
-          text: name,
-        },
-      })
+      rafId = requestAnimationFrame(() => {
+        nestedRafId = requestAnimationFrame(() => {
+          gsap.to(nameRef.current, {
+            delay: ANIM_DELAY,
+            duration: ANIM_DURATION,
+            ease: 'power2.out',
+            scrambleText: {
+              chars: 'アイウエオカキクケコサシスセソタチツテト!@#$%&',
+              revealDelay: 0.5,
+              speed: 0.4,
+              text: name,
+            },
+          })
 
-      gsap.to(subtitleRef.current, {
-        delay: ANIM_END,
-        duration: 0.8,
-        ease: 'power2.out',
-        opacity: 1,
-      })
+          gsap.to(subtitleRef.current, {
+            delay: ANIM_END,
+            duration: 0.8,
+            ease: 'power2.out',
+            opacity: 1,
+          })
 
-      gsap.to(scrollIndicatorRef.current, {
-        delay: ANIM_END + 0.3,
-        duration: 0.8,
-        ease: 'power2.out',
-        opacity: 1,
+          gsap.to(scrollIndicatorRef.current, {
+            delay: ANIM_END + 0.3,
+            duration: 0.8,
+            ease: 'power2.out',
+            opacity: 1,
+          })
+        })
       })
     })
 
-    return () => ctx.revert()
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      if (nestedRafId) cancelAnimationFrame(nestedRafId)
+      ctx.revert()
+    }
   }, [name])
 
   return (
