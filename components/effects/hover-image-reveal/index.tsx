@@ -8,6 +8,9 @@ import { Image } from '@/components/ui/image'
 import { lerp } from '@/utils/math'
 import s from './hover-image-reveal.module.css'
 
+// Module-level: ensures only one preview is active across all instances
+let dismissActivePreview: (() => void) | null = null
+
 interface HoverImageRevealProps {
   src: string
   alt: string
@@ -148,6 +151,9 @@ export function HoverImageReveal({
 
       if (prefersReducedMotionRef.current) {
         gsap.set(previewEl, { opacity: 0, scale: 0.85 })
+        if (dismissActivePreview === hidePreview) {
+          dismissActivePreview = null
+        }
         return
       }
 
@@ -157,6 +163,10 @@ export function HoverImageReveal({
         duration: 0.2,
         ease: 'power2.in',
       })
+
+      if (dismissActivePreview === hidePreview) {
+        dismissActivePreview = null
+      }
     }
 
     function render() {
@@ -288,10 +298,18 @@ export function HoverImageReveal({
         y = logoRect.bottom + 12
       }
 
+      // Dismiss any other instance's active preview first
+      if (dismissActivePreview) {
+        dismissActivePreview()
+      }
+
       isHoveredRef.current = true
 
       gsap.set(previewEl, { x, y })
       showPreview()
+
+      // Register this instance as the active preview
+      dismissActivePreview = hidePreview
 
       if (documentTapHandler) {
         document.removeEventListener('touchstart', documentTapHandler)
@@ -325,8 +343,25 @@ export function HoverImageReveal({
     window.addEventListener('resize', handleResize)
     reducedMotionQuery.addEventListener('change', handleReducedMotionChange)
 
+    const intersectionObs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (!entry) return
+
+        if (!entry.isIntersecting && isHoveredRef.current) {
+          hidePreview()
+        }
+      },
+      { threshold: 0 }
+    )
+    intersectionObs.observe(wrapperEl)
+
     return () => {
       stopRenderLoop()
+
+      if (dismissActivePreview === hidePreview) {
+        dismissActivePreview = null
+      }
 
       if (isTouchRef.current) {
         wrapperEl.removeEventListener('touchstart', handleTouchStart)
@@ -346,6 +381,8 @@ export function HoverImageReveal({
         'change',
         handleReducedMotionChange
       )
+
+      intersectionObs.disconnect()
 
       const previewEl = previewRef.current
       if (previewEl) {
