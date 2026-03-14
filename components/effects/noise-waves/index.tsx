@@ -251,6 +251,7 @@ export function NoiseWaves({
 
     function movePoints(time: number) {
       const mouse = mouseRef.current
+      const isMobileViewport = boundingRef.current.width < 800
 
       for (const points of linesRef.current) {
         for (const p of points) {
@@ -265,7 +266,7 @@ export function NoiseWaves({
           const dx = p.x - mouse.sx
           const dy = p.y - mouse.sy
           const dist = Math.hypot(dx, dy)
-          const limit = Math.max(400, mouse.vs)
+          const limit = Math.max(isMobileViewport ? 150 : 400, mouse.vs)
 
           if (dist < limit) {
             const s = 1 - dist / limit
@@ -274,7 +275,7 @@ export function NoiseWaves({
             const pushX = (p.x - mouse.sx) / (dist || 1)
             const pushY = (p.y - mouse.sy) / (dist || 1)
             const velocityBoost = 1 + mouse.vs * 0.02
-            const baseForce = f * 25 * velocityBoost
+            const baseForce = f * (isMobileViewport ? 10 : 25) * velocityBoost
 
             p.cursor.vx += pushX * baseForce
             p.cursor.vy += pushY * baseForce
@@ -319,7 +320,16 @@ export function NoiseWaves({
       }
     }
 
+    let lastTickTime = 0
+    const FRAME_INTERVAL = 1000 / 30
+
     function tick(time: number) {
+      if (time - lastTickTime < FRAME_INTERVAL) {
+        rafRef.current = requestAnimationFrame(tick)
+        return
+      }
+      lastTickTime = time
+
       const mouse = mouseRef.current
 
       mouse.sx += (mouse.x - mouse.sx) * 0.1
