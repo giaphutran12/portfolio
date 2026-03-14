@@ -46,6 +46,8 @@ export function HoverImageReveal({
     tx: { previous: 0, current: 0, amt: 0.08 },
     ty: { previous: 0, current: 0, amt: 0.08 },
   })
+  const lastTapTimeRef = useRef(0)
+  const isTouchRef = useRef(false)
 
   useEffect(() => {
     setIsMounted(true)
@@ -66,6 +68,11 @@ export function HoverImageReveal({
       '(prefers-reduced-motion: reduce)'
     )
     prefersReducedMotionRef.current = reducedMotionQuery.matches
+
+    isTouchRef.current =
+      'ontouchstart' in window || navigator.maxTouchPoints > 0
+
+    let documentTapHandler: ((e: TouchEvent) => void) | null = null
 
     function handleReducedMotionChange(event: MediaQueryListEvent) {
       prefersReducedMotionRef.current = event.matches
@@ -107,6 +114,49 @@ export function HoverImageReveal({
         width: bounds.width || previewSizeRef.current.width,
         height: bounds.height || previewSizeRef.current.height,
       }
+    }
+
+    function showPreview() {
+      const previewEl = previewRef.current
+      if (!previewEl) return
+
+      gsap.killTweensOf(previewEl)
+      previewEl.style.willChange = 'transform'
+
+      if (prefersReducedMotionRef.current) {
+        gsap.set(previewEl, { opacity: 1, scale: 1 })
+        return
+      }
+
+      gsap.to(previewEl, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        ease: 'power2.out',
+      })
+    }
+
+    function hidePreview() {
+      const previewEl = previewRef.current
+      if (!previewEl) return
+
+      isHoveredRef.current = false
+      stopRenderLoop()
+
+      gsap.killTweensOf(previewEl)
+      previewEl.style.willChange = ''
+
+      if (prefersReducedMotionRef.current) {
+        gsap.set(previewEl, { opacity: 0, scale: 0.85 })
+        return
+      }
+
+      gsap.to(previewEl, {
+        opacity: 0,
+        scale: 0.85,
+        duration: 0.2,
+        ease: 'power2.in',
+      })
     }
 
     function render() {
@@ -169,8 +219,7 @@ export function HoverImageReveal({
     function handleMouseEnter(event: MouseEvent) {
       const currentWrapper = wrapperRef.current
       const previewEl = previewRef.current
-      if (!previewEl) return
-      if (!currentWrapper) return
+      if (!(previewEl && currentWrapper)) return
 
       triggerBoundsRef.current = currentWrapper.getBoundingClientRect()
       updatePreviewSize()
@@ -179,55 +228,85 @@ export function HoverImageReveal({
       isHoveredRef.current = true
       firstCycleRef.current = true
 
-      gsap.killTweensOf(previewEl)
-      previewEl.style.willChange = 'transform'
-
       if (prefersReducedMotionRef.current) {
         gsap.set(previewEl, {
-          opacity: 1,
-          scale: 1,
           x: renderedStylesRef.current.tx.current,
           y: renderedStylesRef.current.ty.current,
         })
-
-        return
       }
 
-      gsap.to(previewEl, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.3,
-        ease: 'power2.out',
-      })
+      showPreview()
 
-      scheduleRender()
+      if (!prefersReducedMotionRef.current) {
+        scheduleRender()
+      }
     }
 
     function handleMouseLeave() {
-      const previewEl = previewRef.current
-      if (!previewEl) return
+      hidePreview()
+    }
 
-      isHoveredRef.current = false
-      stopRenderLoop()
+    function handleTouchStart(event: TouchEvent) {
+      event.preventDefault()
 
-      gsap.killTweensOf(previewEl)
-      previewEl.style.willChange = ''
+      const now = Date.now()
 
-      if (prefersReducedMotionRef.current) {
-        gsap.set(previewEl, {
-          opacity: 0,
-          scale: 0.85,
-        })
-
+      if (now - lastTapTimeRef.current < 300) {
+        const linkEl = wrapperRef.current?.querySelector('a')
+        if (linkEl) {
+          const href = linkEl.getAttribute('href')
+          if (href) {
+            window.open(href, '_blank')
+          }
+        }
+        hidePreview()
+        lastTapTimeRef.current = 0
         return
       }
 
-      gsap.to(previewEl, {
-        opacity: 0,
-        scale: 0.85,
-        duration: 0.2,
-        ease: 'power2.in',
-      })
+      lastTapTimeRef.current = now
+
+      if (isHoveredRef.current) {
+        hidePreview()
+        return
+      }
+
+      const currentWrapper = wrapperRef.current
+      const previewEl = previewRef.current
+      if (!(previewEl && currentWrapper)) return
+
+      updatePreviewSize()
+
+      const logoRect = currentWrapper.getBoundingClientRect()
+      const pw = previewSizeRef.current.width
+      const ph = previewSizeRef.current.height
+
+      const x = logoRect.left + logoRect.width / 2 - pw / 2
+      let y = logoRect.top - ph - 12
+
+      if (y < 0) {
+        y = logoRect.bottom + 12
+      }
+
+      isHoveredRef.current = true
+
+      gsap.set(previewEl, { x, y })
+      showPreview()
+
+      if (documentTapHandler) {
+        document.removeEventListener('touchstart', documentTapHandler)
+      }
+
+      function handleDocumentTap(e: TouchEvent) {
+        if (!wrapperRef.current?.contains(e.target as Node)) {
+          hidePreview()
+        }
+        document.removeEventListener('touchstart', handleDocumentTap)
+        documentTapHandler = null
+      }
+
+      documentTapHandler = handleDocumentTap
+      document.addEventListener('touchstart', handleDocumentTap)
     }
 
     function handleResize() {
@@ -235,18 +314,33 @@ export function HoverImageReveal({
       updatePreviewSize()
     }
 
-    wrapperEl.addEventListener('mouseenter', handleMouseEnter)
-    wrapperEl.addEventListener('mousemove', handleMouseMove)
-    wrapperEl.addEventListener('mouseleave', handleMouseLeave)
+    if (isTouchRef.current) {
+      wrapperEl.addEventListener('touchstart', handleTouchStart)
+    } else {
+      wrapperEl.addEventListener('mouseenter', handleMouseEnter)
+      wrapperEl.addEventListener('mousemove', handleMouseMove)
+      wrapperEl.addEventListener('mouseleave', handleMouseLeave)
+    }
+
     window.addEventListener('resize', handleResize)
     reducedMotionQuery.addEventListener('change', handleReducedMotionChange)
 
     return () => {
       stopRenderLoop()
 
-      wrapperEl.removeEventListener('mouseenter', handleMouseEnter)
-      wrapperEl.removeEventListener('mousemove', handleMouseMove)
-      wrapperEl.removeEventListener('mouseleave', handleMouseLeave)
+      if (isTouchRef.current) {
+        wrapperEl.removeEventListener('touchstart', handleTouchStart)
+      } else {
+        wrapperEl.removeEventListener('mouseenter', handleMouseEnter)
+        wrapperEl.removeEventListener('mousemove', handleMouseMove)
+        wrapperEl.removeEventListener('mouseleave', handleMouseLeave)
+      }
+
+      if (documentTapHandler) {
+        document.removeEventListener('touchstart', documentTapHandler)
+        documentTapHandler = null
+      }
+
       window.removeEventListener('resize', handleResize)
       reducedMotionQuery.removeEventListener(
         'change',
