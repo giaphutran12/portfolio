@@ -1,0 +1,278 @@
+'use client'
+
+import { gsap } from 'gsap'
+import type { ReactNode } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { Image } from '@/components/ui/image'
+import { lerp } from '@/utils/math'
+import s from './hover-image-reveal.module.css'
+
+interface HoverImageRevealProps {
+  src: string
+  alt: string
+  children: ReactNode
+}
+
+interface RenderedAxis {
+  previous: number
+  current: number
+  amt: number
+}
+
+interface RenderedStyles {
+  tx: RenderedAxis
+  ty: RenderedAxis
+}
+
+const CURSOR_OFFSET_X = 20
+const CURSOR_OFFSET_Y = -20
+
+export function HoverImageReveal({
+  src,
+  alt,
+  children,
+}: HoverImageRevealProps) {
+  const wrapperRef = useRef<HTMLSpanElement>(null)
+  const previewRef = useRef<HTMLDivElement>(null)
+  const rafIdRef = useRef(0)
+  const firstCycleRef = useRef(false)
+  const isHoveredRef = useRef(false)
+  const prefersReducedMotionRef = useRef(false)
+  const triggerBoundsRef = useRef<DOMRect | null>(null)
+  const previewSizeRef = useRef({ width: 400, height: 250 })
+  const [isMounted, setIsMounted] = useState(false)
+  const renderedStylesRef = useRef<RenderedStyles>({
+    tx: { previous: 0, current: 0, amt: 0.08 },
+    ty: { previous: 0, current: 0, amt: 0.08 },
+  })
+
+  useEffect(() => {
+    setIsMounted(true)
+
+    const img = new window.Image()
+    img.src = src
+
+    return () => {
+      setIsMounted(false)
+    }
+  }, [src])
+
+  useEffect(() => {
+    const wrapperEl = wrapperRef.current
+    if (!wrapperEl) return
+
+    const reducedMotionQuery = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    )
+    prefersReducedMotionRef.current = reducedMotionQuery.matches
+
+    function handleReducedMotionChange(event: MediaQueryListEvent) {
+      prefersReducedMotionRef.current = event.matches
+    }
+
+    function scheduleRender() {
+      if (rafIdRef.current !== 0) return
+
+      rafIdRef.current = requestAnimationFrame(render)
+    }
+
+    function stopRenderLoop() {
+      if (rafIdRef.current === 0) return
+
+      cancelAnimationFrame(rafIdRef.current)
+      rafIdRef.current = 0
+    }
+
+    function setCurrentPosition(clientX: number, clientY: number) {
+      const styles = renderedStylesRef.current
+      const x = clientX - previewSizeRef.current.width / 2 + CURSOR_OFFSET_X
+      const y = clientY - previewSizeRef.current.height / 2 + CURSOR_OFFSET_Y
+
+      styles.tx.current = x
+      styles.ty.current = y
+
+      if (prefersReducedMotionRef.current) {
+        styles.tx.previous = x
+        styles.ty.previous = y
+      }
+    }
+
+    function updatePreviewSize() {
+      const previewEl = previewRef.current
+      if (!previewEl) return
+
+      const bounds = previewEl.getBoundingClientRect()
+      previewSizeRef.current = {
+        width: bounds.width || previewSizeRef.current.width,
+        height: bounds.height || previewSizeRef.current.height,
+      }
+    }
+
+    function render() {
+      rafIdRef.current = 0
+
+      if (!isHoveredRef.current) return
+
+      const previewEl = previewRef.current
+      if (!previewEl) return
+
+      const styles = renderedStylesRef.current
+
+      if (firstCycleRef.current) {
+        styles.tx.previous = styles.tx.current
+        styles.ty.previous = styles.ty.current
+        firstCycleRef.current = false
+      } else {
+        styles.tx.previous = lerp(
+          styles.tx.previous,
+          styles.tx.current,
+          styles.tx.amt
+        )
+        styles.ty.previous = lerp(
+          styles.ty.previous,
+          styles.ty.current,
+          styles.ty.amt
+        )
+      }
+
+      gsap.set(previewEl, {
+        x: styles.tx.previous,
+        y: styles.ty.previous,
+      })
+
+      scheduleRender()
+    }
+
+    function handleMouseMove(event: MouseEvent) {
+      const triggerBounds = triggerBoundsRef.current
+      if (!triggerBounds) return
+
+      const clampedClientX =
+        triggerBounds.left + (event.clientX - triggerBounds.left)
+      const clampedClientY =
+        triggerBounds.top + (event.clientY - triggerBounds.top)
+
+      setCurrentPosition(clampedClientX, clampedClientY)
+
+      if (prefersReducedMotionRef.current) {
+        const previewEl = previewRef.current
+        if (!previewEl) return
+
+        gsap.set(previewEl, {
+          x: renderedStylesRef.current.tx.current,
+          y: renderedStylesRef.current.ty.current,
+        })
+      }
+    }
+
+    function handleMouseEnter(event: MouseEvent) {
+      const currentWrapper = wrapperRef.current
+      const previewEl = previewRef.current
+      if (!previewEl) return
+      if (!currentWrapper) return
+
+      triggerBoundsRef.current = currentWrapper.getBoundingClientRect()
+      updatePreviewSize()
+      setCurrentPosition(event.clientX, event.clientY)
+
+      isHoveredRef.current = true
+      firstCycleRef.current = true
+
+      gsap.killTweensOf(previewEl)
+      previewEl.style.willChange = 'transform'
+
+      if (prefersReducedMotionRef.current) {
+        gsap.set(previewEl, {
+          opacity: 1,
+          scale: 1,
+          x: renderedStylesRef.current.tx.current,
+          y: renderedStylesRef.current.ty.current,
+        })
+
+        return
+      }
+
+      gsap.to(previewEl, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        ease: 'power2.out',
+      })
+
+      scheduleRender()
+    }
+
+    function handleMouseLeave() {
+      const previewEl = previewRef.current
+      if (!previewEl) return
+
+      isHoveredRef.current = false
+      stopRenderLoop()
+
+      gsap.killTweensOf(previewEl)
+      previewEl.style.willChange = ''
+
+      if (prefersReducedMotionRef.current) {
+        gsap.set(previewEl, {
+          opacity: 0,
+          scale: 0.85,
+        })
+
+        return
+      }
+
+      gsap.to(previewEl, {
+        opacity: 0,
+        scale: 0.85,
+        duration: 0.2,
+        ease: 'power2.in',
+      })
+    }
+
+    function handleResize() {
+      triggerBoundsRef.current = null
+      updatePreviewSize()
+    }
+
+    wrapperEl.addEventListener('mouseenter', handleMouseEnter)
+    wrapperEl.addEventListener('mousemove', handleMouseMove)
+    wrapperEl.addEventListener('mouseleave', handleMouseLeave)
+    window.addEventListener('resize', handleResize)
+    reducedMotionQuery.addEventListener('change', handleReducedMotionChange)
+
+    return () => {
+      stopRenderLoop()
+
+      wrapperEl.removeEventListener('mouseenter', handleMouseEnter)
+      wrapperEl.removeEventListener('mousemove', handleMouseMove)
+      wrapperEl.removeEventListener('mouseleave', handleMouseLeave)
+      window.removeEventListener('resize', handleResize)
+      reducedMotionQuery.removeEventListener(
+        'change',
+        handleReducedMotionChange
+      )
+
+      const previewEl = previewRef.current
+      if (previewEl) {
+        gsap.killTweensOf(previewEl)
+      }
+    }
+  }, [])
+
+  return (
+    <>
+      <span ref={wrapperRef} className={s.root}>
+        {children}
+      </span>
+      {isMounted
+        ? createPortal(
+            <div ref={previewRef} className={s.preview} aria-hidden="true">
+              <Image src={src} alt={alt} fill className={s.previewImage} />
+            </div>,
+            document.body
+          )
+        : null}
+    </>
+  )
+}
