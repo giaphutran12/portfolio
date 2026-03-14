@@ -324,7 +324,11 @@ export function HoverImageReveal({
       }
 
       documentTapHandler = handleDocumentTap
-      document.addEventListener('touchstart', handleDocumentTap)
+      // Delay registration to next tick so the current touchstart event
+      // doesn't immediately fire and consume this one-time handler
+      requestAnimationFrame(() => {
+        document.addEventListener('touchstart', handleDocumentTap)
+      })
     }
 
     function handleResize() {
