@@ -5,10 +5,10 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText as GSAPSplitText } from 'gsap/SplitText'
 import { useEffect, useRef } from 'react'
+import { HoverImageReveal } from '@/components/effects/hover-image-reveal'
 import { Image } from '@/components/ui/image'
 import { Link } from '@/components/ui/link'
 import { Marquee } from '@/components/ui/marquee'
-import { Tooltip } from '@/components/ui/tooltip'
 import s from './experience.module.css'
 
 interface ExperienceEntry {
@@ -199,11 +199,9 @@ export function Experience({
 
       <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
         <div className={s.logoTrack}>
-          <Tooltip
-            content="I ship hard projects"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          <HoverImageReveal
+            src="/hover-previews/headstarter.png"
+            alt="Headstarter preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://headstarter.co" target="_blank">
@@ -216,12 +214,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="i get paid for building and posting"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/tinyfish.png"
+            alt="Tinyfish preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://tinyfish.ai" target="_blank">
@@ -234,13 +230,8 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="i ship AI apps faster than you"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
-          >
+          </HoverImageReveal>
+          <HoverImageReveal src="/hover-previews/bli.png" alt="BLI preview">
             <span className={s.logoTrigger}>
               <Link href="https://buildlaunchiterate.ca" target="_blank">
                 <Image
@@ -252,12 +243,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="I revamp a work day management app for 117+ IT staffs"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/douglas-college.png"
+            alt="Douglas College preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://douglascollege.ca" target="_blank">
@@ -270,7 +259,7 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
+          </HoverImageReveal>
         </div>
       </Marquee>
 
@@ -312,11 +301,9 @@ export function Experience({
 
       <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
         <div className={s.logoTrack}>
-          <Tooltip
-            content="I pitch and sell to moms. I teach kids to do math"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          <HoverImageReveal
+            src="/hover-previews/smart-math-bc.png"
+            alt="Smart Math BC preview"
           >
             <span className={s.logoTrigger}>
               <Link
@@ -332,12 +319,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="I pitch costco mastercard. 50%+ close rate"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/costco.png"
+            alt="Costco preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://www.costco.ca" target="_blank">
@@ -350,12 +335,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="I talk to difficult customers without crying"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/thai-by-thai.png"
+            alt="Thai by Thai preview"
           >
             <span className={s.logoTrigger}>
               <Link href="#" target="_blank">
@@ -368,12 +351,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="I help taking apart a HUGE airplane engine"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/mtu-aero.png"
+            alt="MTU Aero preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://www.mtu.de" target="_blank">
@@ -386,12 +367,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="I handle 10+ orders at a time"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/naka-bistro.png"
+            alt="Naka Bistro preview"
           >
             <span className={s.logoTrigger}>
               <Link href="#" target="_blank">
@@ -404,13 +383,8 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="youth leader (6yrs)"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
-          >
+          </HoverImageReveal>
+          <HoverImageReveal src="/hover-previews/veym.png" alt="VEYM preview">
             <span className={s.logoTrigger}>
               <Link href="https://veym.net" target="_blank">
                 <Image
@@ -422,12 +396,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="campus ambassador (2yrs)"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/vancouver-dev.png"
+            alt="Vancouver Dev preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://vancouver.dev" target="_blank">
@@ -440,12 +412,10 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
-          <Tooltip
-            content="AI Tinkerers member"
-            side="bottom"
-            className={s.tooltipPopup!}
-            delay={0}
+          </HoverImageReveal>
+          <HoverImageReveal
+            src="/hover-previews/ai-tinkerers.png"
+            alt="AI Tinkerers preview"
           >
             <span className={s.logoTrigger}>
               <Link href="https://aitinkerers.org" target="_blank">
@@ -458,7 +428,7 @@ export function Experience({
                 />
               </Link>
             </span>
-          </Tooltip>
+          </HoverImageReveal>
         </div>
       </Marquee>
 

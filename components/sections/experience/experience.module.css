@@ -208,22 +208,3 @@
 .logoTrigger {
   display: inline-flex;
 }
-
-.tooltipPopup {
-  clip-path: circle(100%);
-  transition:
-    clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.3s ease;
-}
-
-.tooltipPopup[data-starting-style],
-.tooltipPopup[data-ending-style] {
-  clip-path: circle(0%);
-  opacity: 0;
-}
-
-.tooltipPopup[data-open][data-starting-style] {
-  clip-path: circle(100%);
-  opacity: 1;
-  transform: scale(1);
-}
