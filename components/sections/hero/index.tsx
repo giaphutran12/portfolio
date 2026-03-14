@@ -18,7 +18,7 @@ interface HeroProps {
 
 export function Hero({
   name = 'Edward Tran',
-  tagline = 'Full-Stack Developer',
+  tagline = 'AI Engineer. Ships Code.',
 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLSpanElement>(null)

@@ -29,10 +29,10 @@ const fallbackProjects: ProjectCard[] = [
     id: 'x-recommendation-algo',
     title: 'X Recommendation Algorithm',
     description:
-      'A machine learning pipeline that reverse-engineers content recommendation patterns on X, surfacing insights into algorithmic bias and engagement optimization.',
+      "Reverse-engineered X's recommendation engine to expose algorithmic bias and engagement patterns. Built a ML pipeline that decoded what makes content viral, then proved it.",
     gradient:
       'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
-    techStack: ['Python', 'TensorFlow', 'FastAPI'],
+    techStack: ['Next.js', 'PyTorch', 'ONNX', 'Supabase'],
     imageSrc: '/project-pic/x-rec/x-rec1.png',
     hoverImageSrc: '/project-pic/x-rec/X-REC2.png',
   },
@@ -40,17 +40,17 @@ const fallbackProjects: ProjectCard[] = [
     id: 'viet-bike-scout',
     title: 'Viet Bike Scout',
     description:
-      'Real-time motorcycle marketplace aggregator for Vietnam, scraping and normalizing listings across platforms with intelligent price trend analysis.',
+      'Real-time motorcycle marketplace aggregator for Vietnam. Scrapes 5+ platforms, normalizes chaos into clean data, and surfaces price trends before the market moves.',
     gradient:
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
-    techStack: ['React Native', 'Expo', 'TypeScript'],
+    techStack: ['Next.js', 'Supabase', 'Zod'],
     imageSrc: toGradientDataUrl('#065f46', '#115e59'),
   },
   {
     id: 'autoresearch-macos',
     title: 'AutoResearch macOS',
     description:
-      'An AI-powered research assistant for macOS that autonomously browses, reads, and synthesizes information from multiple sources into structured reports.',
+      'AI research assistant that actually works. Point it at a topic, it browses, reads, synthesizes. Turns 10 hours of research into structured reports in minutes.',
     gradient:
       'linear-gradient(135deg, rgb(30 58 138 / 0.4) 0%, rgb(49 46 129 / 0.35) 100%)',
     techStack: ['Swift', 'macOS', 'LLM'],
@@ -60,10 +60,10 @@ const fallbackProjects: ProjectCard[] = [
     id: 'stocktwits-clone-2',
     title: 'StockTwits Clone',
     description:
-      'A real-time social trading platform with live market data, sentiment analysis, and community-driven stock discussions powered by WebSocket streams.',
+      'Real-time social trading platform. Live market data, sentiment analysis, WebSocket-powered feeds. Built for traders who want to see what the crowd is thinking before they trade.',
     gradient:
       'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
-    techStack: ['Next.js', 'PostgreSQL', 'WebSocket'],
+    techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
     imageSrc: '/project-pic/stolk/stolk1.png',
     hoverImageSrc: '/project-pic/stolk/stolk2.png',
   },
@@ -71,27 +71,27 @@ const fallbackProjects: ProjectCard[] = [
     id: 'self-improving-prompt',
     title: 'Self-Improving Prompt Engine',
     description:
-      'CI/CD for prompts — evaluate, analyze failures, auto-improve in a closed loop. Averaged +42% score lift on 10K+ prompts with multi-agent pipeline.',
+      'CI/CD for prompts. Evaluate, fail, improve, repeat. Averaged +42% score lift across 10K+ prompts using multi-agent feedback loops. Prompts that get better on their own.',
     gradient:
       'linear-gradient(135deg, rgb(6 95 70 / 0.4) 0%, rgb(17 94 89 / 0.35) 100%)',
-    techStack: ['FastAPI', 'Redis', 'Gemini'],
+    techStack: ['Next.js', 'Mermaid.js', 'shadcn/ui'],
     imageSrc: toGradientDataUrl('#065f46', '#115e59'),
   },
   {
     id: 'lovable-clone',
     title: 'Lovable Clone',
     description:
-      'Full-stack Lovable clone — AI code gen, sandboxed preview, auth, payments, background jobs, type safety, and postgres all wired up.',
+      'Full-stack AI code generator. Sandboxed preview, auth, payments, background jobs, type safety, Postgres. Everything wired. Everything works.',
     gradient:
       'linear-gradient(135deg, rgb(109 40 217 / 0.4) 0%, rgb(76 29 149 / 0.35) 100%)',
-    techStack: ['Next.js', 'tRPC', 'E2B Sandbox'],
+    techStack: ['Next.js', 'Prisma', 'E2B', 'Inngest'],
     imageSrc: toGradientDataUrl('#6d28d9', '#4c1d95'),
   },
   {
     id: 'ai-customer-support',
     title: 'AI Customer Support Agent',
     description:
-      'Context-aware AI support for fintech — Firecrawl scraping, Pinecone vector search, VAPI voice calls, Gemini embeddings. Reduced resource use by 80%.',
+      'Context-aware support agent for fintech. Scrapes docs with Firecrawl, searches with Pinecone, handles calls with VAPI. Reduced support overhead by 80%.',
     gradient:
       'linear-gradient(135deg, rgb(190 18 60 / 0.4) 0%, rgb(136 19 55 / 0.35) 100%)',
     techStack: ['Firecrawl', 'Pinecone', 'VAPI'],
@@ -101,10 +101,10 @@ const fallbackProjects: ProjectCard[] = [
     id: 'serverless-style-transfer',
     title: 'Serverless Image Style Transfer',
     description:
-      'Transform image styles on WebGPU using Rust and WebAssembly in the browser, reducing server-side cost by 95%. Zero backend required.',
+      'Transform image styles in the browser using Rust and WASM. Zero backend. 95% cost reduction. Runs entirely on the client.',
     gradient:
       'linear-gradient(135deg, rgb(217 119 6 / 0.4) 0%, rgb(180 83 9 / 0.35) 100%)',
-    techStack: ['Rust', 'WebAssembly', 'WebGPU'],
+    techStack: ['Rust', 'WebAssembly', 'ONNX'],
     imageSrc: toGradientDataUrl('#d97706', '#b45309'),
   },
 ]

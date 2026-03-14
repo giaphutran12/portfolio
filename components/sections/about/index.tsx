@@ -12,7 +12,7 @@ interface AboutProps {
 }
 
 const defaultAboutText =
-  "**AI Engineer who ships.** Not \"I watched a tutorial\" ships. Production apps, real users, actual problems solved. Based in Vancouver, BC — studying Computer Science at Douglas College, transferring to SFU. 4x honour roll, 1x Dean's List.\n\nI build across the full stack and the AI stack — from auditing backend auth and enforcing RLS across 15 CRM tables, to training two-tower neural networks in PyTorch and shipping LLM-chaining pipelines. **TypeScript, Python, Next.js, and whatever gets the job done.** I ship 1-2 apps a week at TinyFish, and I've pushed 163+ commits in 7-day sprints at Headstarter.\n\nBeyond code — I founded **Smart Math BC** 7 years ago and still run it. Youth leader at VEYM for 6 years. I write about AI experiments on Medium. I don't just build software, I build things that matter to real people."
+  "**AI engineer who ships production code, not tutorials.** Full stack, AI stack, whatever stack gets the job done. TypeScript, Python, Next.js. Based in Vancouver, studying CS at Douglas College, transferring to SFU.\n\n**I've audited backend auth across 15 CRM tables, trained two-tower neural networks in PyTorch, and shipped LLM pipelines that actually work.** At TinyFish, I push 1-2 apps a week. At Headstarter, I hit 163+ commits in 7-day sprints.\n\n**Founded Smart Math BC 7 years ago and still run it.** Youth leader at VEYM for 6 years. I write about AI experiments on Medium. I don't just build software. I build things that matter."
 
 export function About({ aboutText = defaultAboutText }: AboutProps) {
   const sectionRef = useRef<HTMLElement>(null)
