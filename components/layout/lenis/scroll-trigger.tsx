@@ -1,5 +1,5 @@
-import { gsap } from 'gsap'
-import { ScrollTrigger as GSAPScrollTrigger } from 'gsap/ScrollTrigger'
+import gsap from 'gsap'
+import { ScrollTrigger as GSAPScrollTrigger } from 'gsap/all'
 import { useLenis } from 'lenis/react'
 import { useEffect, useEffectEvent } from 'react'
 

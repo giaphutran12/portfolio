@@ -18,7 +18,7 @@
  * ```
  */
 
-import { gsap } from 'gsap'
+import gsap from 'gsap'
 import { useTempus } from 'tempus/react'
 
 if (typeof window !== 'undefined') {
