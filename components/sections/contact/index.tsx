@@ -1,7 +1,7 @@
 'use client'
 
 import cn from 'clsx'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
 import { Link } from '@/components/ui/link'

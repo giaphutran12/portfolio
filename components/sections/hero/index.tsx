@@ -1,7 +1,7 @@
 'use client'
 
 import cn from 'clsx'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { useEffect, useRef } from 'react'
 import { AnimatedGradient } from '@/components/effects/animated-gradient'

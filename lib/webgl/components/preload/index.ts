@@ -2,7 +2,7 @@
 
 import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
-import type * as THREE from 'three'
+import type { Object3D, Scene, WebGLRenderer } from 'three'
 import { CubeCamera, WebGLCubeRenderTarget } from 'three'
 
 /**
@@ -40,8 +40,8 @@ export function Preload() {
       console.log('WebGL: Preloading...')
       console.time('WebGL: Preload took:')
 
-      const invisible: THREE.Object3D[] = []
-      scene.traverse((object: THREE.Object3D) => {
+      const invisible: Object3D[] = []
+      scene.traverse((object: Object3D) => {
         if (object.visible === false && !object.userData?.debug) {
           invisible.push(object)
           object.visible = true
@@ -50,7 +50,7 @@ export function Preload() {
       await gl.compileAsync(scene, camera)
       const cubeRenderTarget = new WebGLCubeRenderTarget(128)
       const cubeCamera = new CubeCamera(0.01, 100000, cubeRenderTarget)
-      cubeCamera.update(gl as THREE.WebGLRenderer, scene as THREE.Scene)
+      cubeCamera.update(gl as WebGLRenderer, scene as Scene)
       cubeRenderTarget.dispose()
 
       for (const object of invisible) {

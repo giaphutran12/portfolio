@@ -1,7 +1,7 @@
 'use client'
 
 import cn from 'clsx'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText as GSAPSplitText } from 'gsap/SplitText'
 import { useEffect, useRef } from 'react'
