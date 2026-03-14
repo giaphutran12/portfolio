@@ -181,7 +181,6 @@ export function NoiseWaves({
     set: false,
   })
   const rafRef = useRef(0)
-  const isPausedRef = useRef(true)
   const boundingRef = useRef({ left: 0, top: 0, width: 0, height: 0 })
 
   if (!noiseRef.current) {
@@ -199,7 +198,7 @@ export function NoiseWaves({
       const rect = container!.getBoundingClientRect()
       boundingRef.current = {
         left: rect.left,
-        top: rect.top + window.scrollY,
+        top: rect.top,
         width: container!.clientWidth,
         height: container!.clientHeight,
       }
@@ -263,29 +262,32 @@ export function NoiseWaves({
           p.wave.x = Math.cos(move) * waveAmplitudeX
           p.wave.y = Math.sin(move) * waveAmplitudeY
 
-          // Spring physics: force = cos/sin(angle) * falloff * dist * velocity * 0.00065
           const dx = p.x - mouse.sx
           const dy = p.y - mouse.sy
           const dist = Math.hypot(dx, dy)
-          const limit = Math.max(175, mouse.vs)
+          const limit = Math.max(400, mouse.vs)
 
           if (dist < limit) {
             const s = 1 - dist / limit
             const f = Math.cos(dist * 0.001) * s
 
-            p.cursor.vx += Math.cos(mouse.a) * f * limit * mouse.vs * 0.00065
-            p.cursor.vy += Math.sin(mouse.a) * f * limit * mouse.vs * 0.00065
+            const pushX = (p.x - mouse.sx) / (dist || 1)
+            const pushY = (p.y - mouse.sy) / (dist || 1)
+            const velocityBoost = 1 + mouse.vs * 0.02
+            const baseForce = f * 25 * velocityBoost
+
+            p.cursor.vx += pushX * baseForce
+            p.cursor.vy += pushY * baseForce
           }
 
-          // tension: 0.005, friction: 0.925, clamp: ±100
-          p.cursor.vx += (0 - p.cursor.x) * 0.005
-          p.cursor.vy += (0 - p.cursor.y) * 0.005
-          p.cursor.vx *= 0.925
-          p.cursor.vy *= 0.925
+          p.cursor.vx += (0 - p.cursor.x) * 0.004
+          p.cursor.vy += (0 - p.cursor.y) * 0.004
+          p.cursor.vx *= 0.94
+          p.cursor.vy *= 0.94
           p.cursor.x += p.cursor.vx * 2
           p.cursor.y += p.cursor.vy * 2
-          p.cursor.x = Math.min(100, Math.max(-100, p.cursor.x))
-          p.cursor.y = Math.min(100, Math.max(-100, p.cursor.y))
+          p.cursor.x = Math.min(600, Math.max(-600, p.cursor.x))
+          p.cursor.y = Math.min(600, Math.max(-600, p.cursor.y))
         }
       }
     }
@@ -318,8 +320,6 @@ export function NoiseWaves({
     }
 
     function tick(time: number) {
-      if (isPausedRef.current) return
-
       const mouse = mouseRef.current
 
       mouse.sx += (mouse.x - mouse.sx) * 0.1
@@ -357,7 +357,7 @@ export function NoiseWaves({
     function updateMousePosition(x: number, y: number) {
       const mouse = mouseRef.current
       mouse.x = x - boundingRef.current.left
-      mouse.y = y - boundingRef.current.top + window.scrollY
+      mouse.y = y - boundingRef.current.top
 
       if (!mouse.set) {
         mouse.sx = mouse.x
@@ -394,30 +394,12 @@ export function NoiseWaves({
       }
     }
 
-    isPausedRef.current = false
     rafRef.current = requestAnimationFrame(tick)
-
-    const intersectionObs = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        if (!entry) return
-        isPausedRef.current = !entry.isIntersecting
-
-        if (!isPausedRef.current) {
-          cancelAnimationFrame(rafRef.current)
-          rafRef.current = requestAnimationFrame(tick)
-        }
-      },
-      { threshold: 0 }
-    )
-    intersectionObs.observe(container)
 
     const resizeObs = new ResizeObserver(() => {
       setSize()
       setLines()
-      if (isPausedRef.current) {
-        drawLines()
-      }
+      drawLines()
     })
     resizeObs.observe(container)
 
@@ -426,7 +408,6 @@ export function NoiseWaves({
 
     return () => {
       cancelAnimationFrame(rafRef.current)
-      intersectionObs.disconnect()
       resizeObs.disconnect()
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('touchmove', onTouchMove)
