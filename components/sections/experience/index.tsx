@@ -59,7 +59,7 @@ const defaultExperiences: ExperienceEntry[] = [
   {
     _id: 'douglas-college',
     company: 'Douglas College',
-    role: 'Software Engineer Intern',
+    role: 'Software Engineering Intern',
     startDate: '2024-04',
     endDate: '2024-12',
     current: false,
@@ -197,7 +197,7 @@ export function Experience({
         </div>
       </div>
 
-      <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
+      <Marquee repeat={4} speed={0.5} className={s.logoMarquee}>
         <div className={s.logoTrack}>
           <HoverImageReveal
             src="/hover-previews/headstarter.png"
@@ -278,8 +278,8 @@ export function Experience({
                 data-current={entry.current ? 'true' : undefined}
               />
 
-              <h3 className={cn(s.company, 'heading-md')}>{entry.company}</h3>
-              <p className={cn(s.role, 'body-lg')}>{entry.role}</p>
+              <h3 className={cn(s.company, 'heading-md')}>{entry.role}</h3>
+              <p className={cn(s.role, 'body-lg')}>{entry.company}</p>
               <p className={cn(s.date, 'label')}>
                 {formatDateRange(entry.startDate, entry.endDate, entry.current)}
               </p>
@@ -299,7 +299,7 @@ export function Experience({
         </div>
       </div>
 
-      <Marquee repeat={4} speed={0.5} pauseOnHover className={s.logoMarquee}>
+      <Marquee repeat={4} speed={0.5} className={s.logoMarquee}>
         <div className={s.logoTrack}>
           <HoverImageReveal
             src="/hover-previews/smart-math-bc.png"
