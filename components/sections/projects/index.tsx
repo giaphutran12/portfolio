@@ -163,7 +163,7 @@ export function Projects({ projects }: ProjectsProps) {
                 <ImageTransition
                   className={s.imageEffect}
                   style={{
-                    backgroundImage: `${project.gradient}, url("${project.imageSrc}")`,
+                    backgroundImage: `url("${project.imageSrc}")`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                   }}
@@ -171,6 +171,10 @@ export function Projects({ projects }: ProjectsProps) {
                   {...(project.hoverImageSrc
                     ? { hoverImageSrc: project.hoverImageSrc }
                     : {})}
+                />
+                <div
+                  className={s.gradientLayer}
+                  style={{ backgroundImage: project.gradient }}
                 />
               </div>
               <div className={s.content}>
