@@ -45,6 +45,14 @@
 	--color-text: #e8e3d9;
 	--color-gold: #c8a97e;
 	
+	--z-canvas: 0;
+	--z-noiseWaves: 5;
+	--z-content: 20;
+	--z-header: 50;
+	--z-overlay: 100;
+	--z-tooltip: 200;
+	--z-preview: 300;
+	
 	@variant dt {
     --device-width: 1440;
     --device-height: 816;

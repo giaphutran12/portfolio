@@ -3,6 +3,8 @@
 import cn from 'clsx'
 import { useEffect, useRef } from 'react'
 
+import s from './noise-waves.module.css'
+
 // Perlin 2D noise — ported from AntoineW/AW-2025-Portfolio Noise.js (seedable, self-contained)
 
 class Grad {
@@ -425,7 +427,7 @@ export function NoiseWaves({
   return (
     <div
       ref={containerRef}
-      className={cn('pointer-events-none fixed inset-0 z-10', className)}
+      className={cn(s.container, className)}
       aria-hidden="true"
     >
       <svg ref={svgRef} className="block h-full w-full" />

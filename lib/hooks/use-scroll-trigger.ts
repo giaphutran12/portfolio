@@ -50,7 +50,7 @@ function useMarker({
         left: ${fixed ? '50%' : '10%'};
         right: ${fixed ? '10%' : '50%'};
         text-align: ${fixed ? 'left' : 'right'};
-        z-index: 9999;
+        z-index: var(--z-preview);
         color: ${color};
         
         ${type === 'start' ? 'border-top' : 'border-bottom'}: 1px solid ${color};

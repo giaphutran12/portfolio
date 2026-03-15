@@ -8,9 +8,16 @@ export function generateRoot({
   easings,
   layout,
   screens,
+  zIndex,
 }: Pick<
   Config,
-  'breakpoints' | 'colors' | 'customSizes' | 'easings' | 'layout' | 'screens'
+  | 'breakpoints'
+  | 'colors'
+  | 'customSizes'
+  | 'easings'
+  | 'layout'
+  | 'screens'
+  | 'zIndex'
 >) {
   return `@custom-media --hover (hover: hover);
 @custom-media --mobile (width <= ${breakpoints.dt - 0.02}px);
@@ -35,6 +42,8 @@ export function generateRoot({
 	${formatObject(easings, ([name, value]) => `--ease-${name}: ${value};`)}
 	
 	${formatObject(colors, ([name, value]) => `--color-${name}: ${value};`)}
+	
+	${formatObject(zIndex, ([name, value]) => `--z-${name}: ${value};`)}
 	
 	@variant dt {
     --device-width: ${screens.desktop.width};
