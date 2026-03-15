@@ -2,5 +2,5 @@
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: var(--z-noise-waves);
+  z-index: var(--z-noiseWaves);
 }
