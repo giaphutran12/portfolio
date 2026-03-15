@@ -37,15 +37,11 @@
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  opacity: 0;
+  opacity: 1;
   overflow: hidden;
   transition:
     box-shadow 0.35s var(--ease-out-cubic),
     transform 0.35s var(--ease-out-cubic);
-
-  @media (--reduced-motion) {
-    opacity: 1;
-  }
 }
 
 @media (--hover) {
