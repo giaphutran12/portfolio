@@ -2,9 +2,14 @@
 
 import dynamic from 'next/dynamic'
 import { type ComponentProps, type CSSProperties, useState } from 'react'
-import { useDeviceDetection } from '@/hooks/use-device-detection'
 import { WebGLTunnel } from '@/webgl/components/tunnel'
 import { useWebGLElement } from '@/webgl/hooks/use-webgl-element'
+import {
+  defaultRenderState,
+  type RenderState,
+  shouldHideFallback,
+  transitionRenderState,
+} from './render-state'
 
 const WebGLImageTransition = dynamic(
   () =>
@@ -60,11 +65,13 @@ export function ImageTransition({
   ...props
 }: ImageTransitionProps) {
   const { setRef, rect, isVisible } = useWebGLElement<HTMLDivElement>()
-  const { isWebGL } = useDeviceDetection()
   const [hovered, setHovered] = useState(false)
-  const shouldHideFallbackBackground = isWebGL && Boolean(props.hoverImageSrc)
+  const [renderState, setRenderState] =
+    useState<RenderState>(defaultRenderState)
+  const shouldHideDOMFallback =
+    Boolean(props.hoverImageSrc) && shouldHideFallback(renderState)
 
-  const resolvedStyle = shouldHideFallbackBackground
+  const resolvedStyle = shouldHideDOMFallback
     ? {
         ...style,
         backgroundColor: 'transparent',
@@ -82,6 +89,19 @@ export function ImageTransition({
     >
       <WebGLTunnel>
         <WebGLImageTransition
+          onError={() =>
+            setRenderState((state) => transitionRenderState(state, 'loadError'))
+          }
+          onLoading={() =>
+            setRenderState((state) =>
+              transitionRenderState(state, 'startLoading')
+            )
+          }
+          onReady={() =>
+            setRenderState((state) =>
+              transitionRenderState(state, 'loadSuccess')
+            )
+          }
           hovered={hovered}
           rect={toDOMRect(rect)}
           visible={isVisible}

@@ -27,6 +27,9 @@ type WebGLImageTransitionProps = {
   hovered: boolean
   imageSrc: string
   hoverImageSrc?: string
+  onLoading?: () => void
+  onReady?: () => void
+  onError?: () => void
 }
 
 function configureTexture(texture: Texture) {
@@ -73,6 +76,9 @@ export function WebGLImageTransition({
   hovered,
   imageSrc,
   hoverImageSrc,
+  onLoading,
+  onReady,
+  onError,
 }: WebGLImageTransitionProps) {
   const [material] = useState(() => new ImageTransitionMaterial())
   const meshRef = useRef<Mesh>(null!)
@@ -80,10 +86,21 @@ export function WebGLImageTransition({
   const progressRef = useRef({ value: 0 })
   const tweenRef = useRef<gsap.core.Tween | null>(null)
   const loadedRef = useRef<LoadedSet | null>(null)
+  const onLoadingRef = useRef(onLoading)
+  const onReadyRef = useRef(onReady)
+  const onErrorRef = useRef(onError)
+
+  useEffect(() => {
+    onLoadingRef.current = onLoading
+    onReadyRef.current = onReady
+    onErrorRef.current = onError
+  }, [onError, onLoading, onReady])
 
   useEffect(() => {
     const loader = new TextureLoader()
     let cancelled = false
+
+    onLoadingRef.current?.()
 
     const nextHoverSrc = hoverImageSrc ?? imageSrc
 
@@ -120,9 +137,13 @@ export function WebGLImageTransition({
 
         disposeSet(loadedRef.current)
         loadedRef.current = { texture1, texture2, displacement }
+
+        onReadyRef.current?.()
       })
       .catch((error: unknown) => {
+        if (cancelled) return
         console.error('[IMAGE_TRANSITION] Failed to load textures', error)
+        onErrorRef.current?.()
       })
 
     return () => {
