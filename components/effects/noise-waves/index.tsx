@@ -320,16 +320,7 @@ export function NoiseWaves({
       }
     }
 
-    let lastTickTime = 0
-    const FRAME_INTERVAL = 1000 / 30
-
     function tick(time: number) {
-      if (time - lastTickTime < FRAME_INTERVAL) {
-        rafRef.current = requestAnimationFrame(tick)
-        return
-      }
-      lastTickTime = time
-
       const mouse = mouseRef.current
 
       mouse.sx += (mouse.x - mouse.sx) * 0.1
