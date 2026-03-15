@@ -1,7 +1,6 @@
 'use client'
 
 import cn from 'clsx'
-import { useRef } from 'react'
 import { HoverImageReveal } from '@/components/effects/hover-image-reveal'
 import { Image } from '@/components/ui/image'
 import { Link } from '@/components/ui/link'
@@ -106,8 +105,6 @@ function formatDateRange(
 export function Experience({
   experiences = defaultExperiences,
 }: ExperienceProps) {
-  const entryRefs = useRef<Array<HTMLDivElement | null>>([])
-
   const displayExperiences =
     experiences.length > 0 ? experiences : defaultExperiences
 
@@ -191,14 +188,8 @@ export function Experience({
 
       <div className={cn(s.inner)}>
         <div className={cn(s.timeline)}>
-          {displayExperiences.map((entry, i) => (
-            <div
-              key={entry._id || entry.company}
-              ref={(el) => {
-                entryRefs.current[i] = el
-              }}
-              className={cn(s.entry)}
-            >
+          {displayExperiences.map((entry) => (
+            <div key={entry._id || entry.company} className={cn(s.entry)}>
               <div
                 className={cn(s.entryDot)}
                 data-current={entry.current ? 'true' : undefined}

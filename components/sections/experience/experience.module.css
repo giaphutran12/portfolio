@@ -119,13 +119,8 @@
 }
 
 .entry {
-  opacity: 0;
   padding-bottom: 56px;
   position: relative;
-
-  @media (--reduced-motion) {
-    opacity: 1;
-  }
 }
 
 .entry:last-child {
