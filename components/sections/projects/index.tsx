@@ -163,7 +163,7 @@ export function Projects({ projects }: ProjectsProps) {
                 <ImageTransition
                   className={s.imageEffect}
                   style={{
-                    backgroundImage: `${project.gradient}, url(${project.imageSrc})`,
+                    backgroundImage: `${project.gradient}, url("${project.imageSrc}")`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                   }}

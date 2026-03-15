@@ -1,10 +1,7 @@
 'use client'
 
 import cn from 'clsx'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SplitText as GSAPSplitText } from 'gsap/SplitText'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { HoverImageReveal } from '@/components/effects/hover-image-reveal'
 import { Image } from '@/components/ui/image'
 import { Link } from '@/components/ui/link'
@@ -109,91 +106,20 @@ function formatDateRange(
 export function Experience({
   experiences = defaultExperiences,
 }: ExperienceProps) {
-  const sectionRef = useRef<HTMLElement>(null)
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const timelineRef = useRef<HTMLDivElement>(null)
   const entryRefs = useRef<Array<HTMLDivElement | null>>([])
 
   const displayExperiences =
     experiences.length > 0 ? experiences : defaultExperiences
 
-  useEffect(() => {
-    gsap.registerPlugin(GSAPSplitText, ScrollTrigger)
-
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches
-
-    if (prefersReducedMotion) return
-
-    let headingSplit: GSAPSplitText | null = null
-
-    const ctx = gsap.context(() => {
-      const heading = headingRef.current
-
-      if (heading) {
-        headingSplit = GSAPSplitText.create(heading, {
-          mask: 'words',
-          type: 'words',
-          wordsClass: 'word',
-        })
-
-        gsap.fromTo(
-          headingSplit.words,
-          { y: '110%' },
-          {
-            duration: 0.9,
-            ease: 'power3.out',
-            scrollTrigger: {
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-              trigger: heading,
-            },
-            stagger: 0.06,
-            y: '0%',
-          }
-        )
-      }
-
-      const entries = entryRefs.current.filter(
-        (el): el is HTMLDivElement => el !== null
-      )
-
-      if (entries.length > 0) {
-        gsap.set(entries, { opacity: 0, y: 30 })
-        gsap.to(entries, {
-          duration: 0.8,
-          ease: 'power2.out',
-          opacity: 1,
-          scrollTrigger: {
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-            trigger: timelineRef.current,
-          },
-          stagger: 0.25,
-          y: 0,
-        })
-      }
-    }, sectionRef)
-
-    return () => {
-      headingSplit?.revert()
-      ctx.revert()
-    }
-  }, [])
-
   return (
     <section
-      ref={sectionRef}
       id="experience"
       className={cn(s.experience)}
       data-testid="experience-section"
     >
       <div className={cn(s.inner)}>
         <div className={cn(s.headingWrapper)}>
-          <h2 ref={headingRef} className={cn(s.heading, 'heading-lg')}>
-            Experience
-          </h2>
+          <h2 className={cn(s.heading, 'heading-lg')}>Experience</h2>
         </div>
       </div>
 
@@ -264,7 +190,7 @@ export function Experience({
       </Marquee>
 
       <div className={cn(s.inner)}>
-        <div ref={timelineRef} className={cn(s.timeline)}>
+        <div className={cn(s.timeline)}>
           {displayExperiences.map((entry, i) => (
             <div
               key={entry._id || entry.company}
