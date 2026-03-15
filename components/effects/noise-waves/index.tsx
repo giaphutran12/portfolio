@@ -266,7 +266,7 @@ export function NoiseWaves({
           const dx = p.x - mouse.sx
           const dy = p.y - mouse.sy
           const dist = Math.hypot(dx, dy)
-          const limit = Math.max(isMobileViewport ? 150 : 400, mouse.vs)
+          const limit = Math.max(isMobileViewport ? 75 : 200, mouse.vs)
 
           if (dist < limit) {
             const s = 1 - dist / limit
@@ -275,7 +275,7 @@ export function NoiseWaves({
             const pushX = (p.x - mouse.sx) / (dist || 1)
             const pushY = (p.y - mouse.sy) / (dist || 1)
             const velocityBoost = 1 + mouse.vs * 0.02
-            const baseForce = f * (isMobileViewport ? 10 : 25) * velocityBoost
+            const baseForce = f * (isMobileViewport ? 5 : 12) * velocityBoost
 
             p.cursor.vx += pushX * baseForce
             p.cursor.vy += pushY * baseForce
@@ -287,8 +287,9 @@ export function NoiseWaves({
           p.cursor.vy *= 0.94
           p.cursor.x += p.cursor.vx * 2
           p.cursor.y += p.cursor.vy * 2
-          p.cursor.x = Math.min(600, Math.max(-600, p.cursor.x))
-          p.cursor.y = Math.min(600, Math.max(-600, p.cursor.y))
+          const maxDisp = isMobileViewport ? 150 : 400
+          p.cursor.x = Math.min(maxDisp, Math.max(-maxDisp, p.cursor.x))
+          p.cursor.y = Math.min(maxDisp, Math.max(-maxDisp, p.cursor.y))
         }
       }
     }
