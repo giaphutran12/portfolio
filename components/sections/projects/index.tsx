@@ -1,5 +1,5 @@
 import cn from 'clsx'
-import { ImageTransition } from '@/components/effects/image-transition'
+import { ProjectCardMedia } from '@/components/effects/project-card-media'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
 import s from './projects.module.css'
 import { ProjectsGrid } from './projects-grid'
@@ -160,7 +160,7 @@ export function Projects({ projects }: ProjectsProps) {
               data-project-id={project.id}
             >
               <div aria-hidden="true" className={s.imageArea}>
-                <ImageTransition
+                <ProjectCardMedia
                   className={s.imageEffect}
                   style={{
                     backgroundImage: `url("${project.imageSrc}")`,

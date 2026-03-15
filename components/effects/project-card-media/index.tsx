@@ -51,7 +51,7 @@ const toDOMRect = (
   }),
 })
 
-type ImageTransitionProps = {
+type ProjectCardMediaProps = {
   className?: string | undefined
   style?: CSSProperties | undefined
 } & Omit<
@@ -59,11 +59,11 @@ type ImageTransitionProps = {
   'hovered' | 'rect' | 'visible'
 >
 
-export function ImageTransition({
+export function ProjectCardMedia({
   className,
   style,
   ...props
-}: ImageTransitionProps) {
+}: ProjectCardMediaProps) {
   const { setRef, rect, isVisible } = useWebGLElement<HTMLDivElement>()
   const [hovered, setHovered] = useState(false)
   const [renderState, setRenderState] =
