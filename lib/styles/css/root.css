@@ -45,7 +45,7 @@
 	--color-text: #e8e3d9;
 	--color-gold: #c8a97e;
 	
-	--z-canvas: 0;
+	--z-canvas: 30;
 	--z-noiseWaves: 5;
 	--z-content: 20;
 	--z-header: 50;

@@ -120,7 +120,6 @@ export function GlobalCanvas({
       className={cn(s.globalCanvas, className)}
       style={{
         visibility: isActive ? 'visible' : 'hidden',
-        pointerEvents: isActive ? 'auto' : 'none',
       }}
     >
       <Canvas
@@ -147,7 +146,7 @@ export function GlobalCanvas({
         })}
         eventPrefix="client"
         resize={{ scroll: false, debounce: 500 }}
-        style={{ pointerEvents: isActive ? 'all' : 'none' }}
+        style={{ pointerEvents: 'none' }}
       >
         <SheetProvider id="webgl">
           <OrthographicCamera
