@@ -7,8 +7,8 @@ import s from './video-autoplay.module.css'
 
 interface VideoAutoplayProps {
   src: string
-  poster?: string
-  className?: string
+  poster?: string | undefined
+  className?: string | undefined
 }
 
 export function VideoAutoplay({ src, poster, className }: VideoAutoplayProps) {

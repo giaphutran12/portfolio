@@ -1,5 +1,6 @@
 import cn from 'clsx'
 import { ProjectCardMedia } from '@/components/effects/project-card-media'
+import { VideoAutoplay } from '@/components/effects/video-autoplay'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
 import s from './projects.module.css'
 import { ProjectsGrid } from './projects-grid'
@@ -167,18 +168,26 @@ export function Projects({ projects }: ProjectsProps) {
               data-project-id={project.id}
             >
               <div aria-hidden="true" className={s.imageArea}>
-                <ProjectCardMedia
-                  className={s.imageEffect}
-                  style={{
-                    backgroundImage: `url("${project.imageSrc}")`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                  }}
-                  imageSrc={project.imageSrc}
-                  {...(project.hoverImageSrc
-                    ? { hoverImageSrc: project.hoverImageSrc }
-                    : {})}
-                />
+                {project.videoSrc ? (
+                  <VideoAutoplay
+                    className={s.imageEffect}
+                    poster={project.imageSrc}
+                    src={project.videoSrc}
+                  />
+                ) : (
+                  <ProjectCardMedia
+                    className={s.imageEffect}
+                    style={{
+                      backgroundImage: `url("${project.imageSrc}")`,
+                      backgroundPosition: 'center',
+                      backgroundSize: 'cover',
+                    }}
+                    imageSrc={project.imageSrc}
+                    {...(project.hoverImageSrc
+                      ? { hoverImageSrc: project.hoverImageSrc }
+                      : {})}
+                  />
+                )}
                 <div
                   className={s.gradientLayer}
                   style={{ backgroundImage: project.gradient }}
