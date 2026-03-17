@@ -13,6 +13,7 @@ interface ProjectCard {
   gradient: string
   imageSrc: string
   hoverImageSrc?: string
+  videoSrc?: string
 }
 
 interface ProjectsProps {
@@ -35,6 +36,7 @@ const fallbackProjects: ProjectCard[] = [
     techStack: ['Next.js', 'PyTorch', 'ONNX', 'Supabase'],
     imageSrc: '/project-pic/x-rec/x-rec1.png',
     hoverImageSrc: '/project-pic/x-rec/X-REC2.png',
+    videoSrc: '/project-videos/x-recommendation-algo.mp4',
   },
   {
     id: 'viet-bike-scout',
@@ -66,6 +68,7 @@ const fallbackProjects: ProjectCard[] = [
     techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
     imageSrc: '/project-pic/stolk/stolk1.png',
     hoverImageSrc: '/project-pic/stolk/stolk2.png',
+    videoSrc: '/project-videos/stocktwits-clone-2.mp4',
   },
   {
     id: 'self-improving-prompt',
@@ -139,6 +142,10 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
 
     if (fallback.hoverImageSrc) {
       result.hoverImageSrc = fallback.hoverImageSrc
+    }
+
+    if (fallback.videoSrc) {
+      result.videoSrc = fallback.videoSrc
     }
 
     return result
