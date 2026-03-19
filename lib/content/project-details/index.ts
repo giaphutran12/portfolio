@@ -26,6 +26,14 @@ export const projectDetails = Object.freeze(
   Object.values(projectDetailsRegistry)
 ) as readonly ProjectDetail[]
 
+export function getProjectDetailById(id: string): ProjectDetail | undefined {
+  return projectDetailsRegistry[id]
+}
+
+export function hasProjectDetail(id: string): boolean {
+  return id in projectDetailsRegistry
+}
+
 export function getProjectDetailBySlug(
   slug: string
 ): ProjectDetail | undefined {

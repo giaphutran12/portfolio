@@ -39,9 +39,26 @@
   flex-direction: column;
   opacity: 1;
   overflow: hidden;
+  position: relative;
   transition:
     box-shadow 0.35s var(--ease-out-cubic),
     transform 0.35s var(--ease-out-cubic);
+}
+
+.trigger {
+  background: none;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  inset: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid rgb(200 169 126 / 0.6);
+  outline-offset: 2px;
 }
 
 @media (--hover) {
