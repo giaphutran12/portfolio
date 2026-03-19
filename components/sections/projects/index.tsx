@@ -26,6 +26,28 @@ function toGradientDataUrl(colorA: string, colorB: string) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 }
 
+function toWebpFallback(src: string): string | undefined {
+  if (!(src.startsWith('/') && src.endsWith('.avif'))) {
+    return undefined
+  }
+
+  return src.replace(/\.avif$/u, '.webp')
+}
+
+function toPreferredMediaSource(src: string): string {
+  return toWebpFallback(src) ?? src
+}
+
+function toBackgroundImage(src: string): string {
+  const webpFallback = toWebpFallback(src)
+
+  if (!webpFallback) {
+    return `url("${src}")`
+  }
+
+  return `image-set(url("${src}") type("image/avif"), url("${webpFallback}") type("image/webp"))`
+}
+
 const fallbackProjects: ProjectCard[] = [
   {
     id: 'x-recommendation-algo',
@@ -35,8 +57,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
     techStack: ['Next.js', 'PyTorch', 'ONNX', 'Supabase'],
-    imageSrc: '/project-pic/x-rec/x-rec1.avif',
-    hoverImageSrc: '/project-pic/x-rec/X-REC2.avif',
+    imageSrc: toGradientDataUrl('#78350f', '#7c2d12'),
     videoSrc: '/project-videos/x-recommendation-algo.mp4',
   },
   {
@@ -47,7 +68,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['Next.js', 'Supabase', 'Zod'],
-    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.avif',
+    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
     videoSrc: '/project-videos/viet-bike-scout.mp4',
   },
   {
@@ -69,8 +90,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
     techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
-    imageSrc: '/project-pic/stolk/stolk1.avif',
-    hoverImageSrc: '/project-pic/stolk/stolk2.avif',
+    imageSrc: toGradientDataUrl('#581c87', '#831843'),
     videoSrc: '/project-videos/stocktwits-clone.mp4',
   },
   {
@@ -188,20 +208,23 @@ export function Projects({ projects }: ProjectsProps) {
                 {project.videoSrc ? (
                   <VideoAutoplay
                     className={s.imageEffect}
-                    poster={project.imageSrc}
                     src={project.videoSrc}
                   />
                 ) : (
                   <ProjectCardMedia
                     className={s.imageEffect}
                     style={{
-                      backgroundImage: `url("${project.imageSrc}")`,
+                      backgroundImage: toBackgroundImage(project.imageSrc),
                       backgroundPosition: 'center',
                       backgroundSize: 'cover',
                     }}
-                    imageSrc={project.imageSrc}
+                    imageSrc={toPreferredMediaSource(project.imageSrc)}
                     {...(project.hoverImageSrc
-                      ? { hoverImageSrc: project.hoverImageSrc }
+                      ? {
+                          hoverImageSrc: toPreferredMediaSource(
+                            project.hoverImageSrc
+                          ),
+                        }
                       : {})}
                   />
                 )}
