@@ -1,7 +1,19 @@
+'use client'
+
 import cn from 'clsx'
+import { useRef, useState } from 'react'
 import { ProjectCardMedia } from '@/components/effects/project-card-media'
 import { VideoAutoplay } from '@/components/effects/video-autoplay'
+import { Link } from '@/components/ui/link'
+import { ModalImageCarousel } from '@/components/ui/modal-image-carousel'
+import { ModalVideoPlayer } from '@/components/ui/modal-video-player'
+import { ProjectDetailDialog } from '@/components/ui/project-detail-dialog'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
+import {
+  getProjectDetailById,
+  hasProjectDetail,
+} from '@/lib/content/project-details'
+import { useProjectDetailDialogOpen } from '@/lib/hooks/use-project-detail-dialog-open'
 import s from './projects.module.css'
 import { ProjectsGrid } from './projects-grid'
 import { ProjectsHeading } from './projects-heading'
@@ -148,6 +160,26 @@ const fallbackProjects: ProjectCard[] = [
     imageSrc: toGradientDataUrl('#0e7490', '#0891b2'),
     videoSrc: '/project-videos/intelligent-llm-router.mp4',
   },
+  {
+    id: 'blue-pearl-landing-page',
+    title: 'Blue Pearl Mortgages & Investments',
+    description:
+      'Full-stack financial services platform with multi-service forms, advanced conversion tracking, and accessibility-first architecture. 20+ service pages with centralized analytics.',
+    gradient:
+      'linear-gradient(135deg, rgb(37 99 235 / 0.4) 0%, rgb(30 64 175 / 0.35) 100%)',
+    techStack: ['Next.js', 'React 19', 'Supabase', 'GA4'],
+    imageSrc: toGradientDataUrl('#2563eb', '#1e40af'),
+  },
+  {
+    id: 'portpal-2',
+    title: 'PortPal',
+    description:
+      'Mobile-first PWA for ILWU longshoremen to log shifts, track earnings, and monitor goals. Monorepo with Next.js web and React Native mobile sharing a Supabase backend.',
+    gradient:
+      'linear-gradient(135deg, rgb(217 119 6 / 0.4) 0%, rgb(146 64 14 / 0.35) 100%)',
+    techStack: ['Next.js', 'React Native', 'Supabase', 'Expo'],
+    imageSrc: toGradientDataUrl('#d97706', '#92400e'),
+  },
 ]
 
 const defaultProjectCard: ProjectCard = {
@@ -192,6 +224,36 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
 
 export function Projects({ projects }: ProjectsProps) {
   const projectCards = mapProjects(projects)
+  const isProjectDetailDialogOpen = useProjectDetailDialogOpen()
+
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null)
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
+
+  const activeDetail =
+    activeProjectId !== null ? getProjectDetailById(activeProjectId) : undefined
+
+  const handleProjectCardActivation = (
+    projectId: string,
+    trigger: HTMLButtonElement
+  ) => {
+    if (!hasProjectDetail(projectId)) return
+    triggerRef.current = trigger
+    setActiveProjectId(projectId)
+  }
+
+  const handleDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      setActiveProjectId(null)
+      // Return focus to the originating trigger after the dialog closes
+      const trigger = triggerRef.current
+      if (trigger) {
+        requestAnimationFrame(() => {
+          trigger.focus()
+        })
+        triggerRef.current = null
+      }
+    }
+  }
 
   return (
     <section id="projects" className={s.section} data-testid="projects-section">
@@ -203,12 +265,14 @@ export function Projects({ projects }: ProjectsProps) {
               key={project.id}
               className={s.card}
               data-project-id={project.id}
+              data-has-detail={hasProjectDetail(project.id) || undefined}
             >
               <div aria-hidden="true" className={s.imageArea}>
                 {project.videoSrc ? (
                   <VideoAutoplay
                     className={s.imageEffect}
                     src={project.videoSrc}
+                    suspended={isProjectDetailDialogOpen}
                   />
                 ) : (
                   <ProjectCardMedia
@@ -219,6 +283,7 @@ export function Projects({ projects }: ProjectsProps) {
                       backgroundSize: 'cover',
                     }}
                     imageSrc={toPreferredMediaSource(project.imageSrc)}
+                    suspended={isProjectDetailDialogOpen}
                     {...(project.hoverImageSrc
                       ? {
                           hoverImageSrc: toPreferredMediaSource(
@@ -248,10 +313,125 @@ export function Projects({ projects }: ProjectsProps) {
                   ))}
                 </ul>
               </div>
+              <button
+                type="button"
+                data-testid="project-card-trigger"
+                aria-label={`View details for ${project.title}`}
+                className={s.trigger}
+                onClick={(e) =>
+                  handleProjectCardActivation(project.id, e.currentTarget)
+                }
+              />
             </article>
           ))}
         </ProjectsGrid>
       </div>
+
+      <ProjectDetailDialog
+        open={activeDetail !== undefined}
+        onOpenChange={handleDialogOpenChange}
+        title={activeDetail?.displayTitle ?? ''}
+      >
+        {activeDetail ? <ProjectDetailContent detail={activeDetail} /> : null}
+      </ProjectDetailDialog>
     </section>
+  )
+}
+
+function ProjectDetailContent({
+  detail,
+}: {
+  detail: NonNullable<ReturnType<typeof getProjectDetailById>>
+}) {
+  return (
+    <div className={s.detailContent}>
+      {detail.primaryVideoUrl ? (
+        <ModalVideoPlayer
+          src={detail.primaryVideoUrl}
+          title={`${detail.displayTitle} demo`}
+        />
+      ) : null}
+
+      {detail.galleryImages && detail.galleryImages.length > 0 ? (
+        <ModalImageCarousel images={detail.galleryImages} />
+      ) : null}
+
+      <p className={s.detailSummary}>{detail.portfolioSummary}</p>
+
+      {detail.highlights.length > 0 ? (
+        <div className={s.detailSection}>
+          <h4 className={s.detailSectionHeading}>Highlights</h4>
+          <ul className={s.detailHighlights}>
+            {detail.highlights.map((highlight) => (
+              <li key={highlight} className={s.detailHighlight}>
+                {highlight}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {detail.techStack.length > 0 ? (
+        <div className={s.detailSection}>
+          <h4 className={s.detailSectionHeading}>Tech Stack</h4>
+          <div className={s.detailTechStack}>
+            {detail.techStack.map((tech) => (
+              <span key={tech} className={s.detailTechTag}>
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {detail.narrative ? (
+        <div className={s.detailSection}>
+          {detail.narrative.body ? (
+            <p className={s.detailNarrativeBody}>{detail.narrative.body}</p>
+          ) : null}
+          {detail.narrative.sections?.map((section) => (
+            <div key={section.heading} className={s.detailNarrativeSection}>
+              <h4 className={s.detailSectionHeading}>{section.heading}</h4>
+              <p className={s.detailNarrativeBody}>{section.body}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {(detail.links.live ?? detail.links.github ?? detail.links.demo) ? (
+        <div className={s.detailLinks}>
+          {detail.links.live ? (
+            <Link
+              href={detail.links.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.detailLink}
+            >
+              Live Site
+            </Link>
+          ) : null}
+          {detail.links.github ? (
+            <Link
+              href={detail.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.detailLink}
+            >
+              GitHub
+            </Link>
+          ) : null}
+          {detail.links.demo ? (
+            <Link
+              href={detail.links.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.detailLink}
+            >
+              Demo
+            </Link>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
   )
 }

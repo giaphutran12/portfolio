@@ -73,7 +73,7 @@ const nextConfig: NextConfig = {
             exclude: ['error', 'warn'],
           }
         : false,
-    reactRemoveProperties: true,
+    reactRemoveProperties: process.env.NODE_ENV === 'production',
   },
   cacheComponents: true,
   compress: true,

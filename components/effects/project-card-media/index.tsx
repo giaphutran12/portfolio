@@ -1,7 +1,12 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { type ComponentProps, type CSSProperties, useState } from 'react'
+import {
+  type ComponentProps,
+  type CSSProperties,
+  useEffect,
+  useState,
+} from 'react'
 import { WebGLTunnel } from '@/webgl/components/tunnel'
 import { useWebGLElement } from '@/webgl/hooks/use-webgl-element'
 import {
@@ -54,6 +59,7 @@ const toDOMRect = (
 type ProjectCardMediaProps = {
   className?: string | undefined
   style?: CSSProperties | undefined
+  suspended?: boolean | undefined
 } & Omit<
   ComponentProps<typeof WebGLImageTransition>,
   'hovered' | 'rect' | 'visible'
@@ -62,6 +68,7 @@ type ProjectCardMediaProps = {
 export function ProjectCardMedia({
   className,
   style,
+  suspended = false,
   ...props
 }: ProjectCardMediaProps) {
   const { setRef, rect, isVisible } = useWebGLElement<HTMLDivElement>()
@@ -79,10 +86,21 @@ export function ProjectCardMedia({
       }
     : style
 
+  useEffect(() => {
+    if (suspended) {
+      setHovered(false)
+    }
+  }, [suspended])
+
   return (
     <div
       className={className}
-      onPointerEnter={() => setHovered(true)}
+      data-suspended={suspended || undefined}
+      onPointerEnter={() => {
+        if (!suspended) {
+          setHovered(true)
+        }
+      }}
       onPointerLeave={() => setHovered(false)}
       ref={setRef}
       style={resolvedStyle}
@@ -102,9 +120,9 @@ export function ProjectCardMedia({
               transitionRenderState(state, 'loadSuccess')
             )
           }
-          hovered={hovered}
+          hovered={hovered && !suspended}
           rect={toDOMRect(rect)}
-          visible={isVisible}
+          visible={isVisible && !suspended}
           {...props}
         />
       </WebGLTunnel>
