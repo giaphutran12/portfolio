@@ -115,6 +115,17 @@ const fallbackProjects: ProjectCard[] = [
     techStack: ['Rust', 'WebAssembly', 'ONNX'],
     imageSrc: toGradientDataUrl('#d97706', '#b45309'),
   },
+  {
+    id: 'intelligent-llm-router',
+    title: 'Intelligent LLM Router',
+    description:
+      'Smart routing layer that dispatches prompts to the optimal LLM based on complexity, cost, and latency. Cuts API spend while maintaining quality across providers.',
+    gradient:
+      'linear-gradient(135deg, rgb(14 116 144 / 0.4) 0%, rgb(8 145 178 / 0.35) 100%)',
+    techStack: ['Next.js', 'OpenAI', 'Anthropic', 'LangChain'],
+    imageSrc: toGradientDataUrl('#0e7490', '#0891b2'),
+    videoSrc: '/project-videos/intelligent-llm-router.mp4',
+  },
 ]
 
 const defaultProjectCard: ProjectCard = {
