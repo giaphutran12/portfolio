@@ -188,6 +188,7 @@ export function Projects({ projects }: ProjectsProps) {
                 {project.videoSrc ? (
                   <VideoAutoplay
                     className={s.imageEffect}
+                    poster={project.imageSrc}
                     src={project.videoSrc}
                   />
                 ) : (
