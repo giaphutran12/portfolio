@@ -8,6 +8,7 @@ type UseVideoAutoplayOptions = {
   rootMargin?: string
   /** Intersection threshold to trigger visibility (default: 0.3) */
   threshold?: number
+  suspended?: boolean
 }
 
 /**
@@ -32,7 +33,11 @@ type UseVideoAutoplayOptions = {
  */
 export function useVideoAutoplay(
   videoRef: React.RefObject<HTMLVideoElement | null>,
-  { rootMargin = '200px', threshold = 0.3 }: UseVideoAutoplayOptions = {}
+  {
+    rootMargin = '200px',
+    threshold = 0.3,
+    suspended = false,
+  }: UseVideoAutoplayOptions = {}
 ): void {
   const observerRef = useRef<IntersectionObserver | null>(null)
   const isIntersectingRef = useRef(false)
@@ -48,6 +53,11 @@ export function useVideoAutoplay(
         if (!entry) return
 
         isIntersectingRef.current = entry.isIntersecting
+
+        if (suspended) {
+          video.pause()
+          return
+        }
 
         if (entry.isIntersecting) {
           // Play video when it enters viewport
@@ -67,14 +77,30 @@ export function useVideoAutoplay(
     return () => {
       observerRef.current?.disconnect()
     }
-  }, [videoRef, rootMargin, threshold])
+  }, [videoRef, rootMargin, threshold, suspended])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (suspended) {
+      video.pause()
+      return
+    }
+
+    if (visibility === 'visible' && isIntersectingRef.current) {
+      video.play().catch(() => {
+        // Browser may reject autoplay, ignore silently
+      })
+    }
+  }, [suspended, videoRef, visibility])
 
   // Handle document visibility changes
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
 
-    if (visibility === 'hidden') {
+    if (suspended || visibility === 'hidden') {
       // Pause when tab is hidden
       video.pause()
     } else if (visibility === 'visible' && isIntersectingRef.current) {
@@ -83,5 +109,5 @@ export function useVideoAutoplay(
         // Browser may reject autoplay, ignore silently
       })
     }
-  }, [visibility, videoRef])
+  }, [suspended, visibility, videoRef])
 }

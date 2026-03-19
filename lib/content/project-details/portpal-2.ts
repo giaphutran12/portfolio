@@ -32,6 +32,7 @@ export const portpal2: ProjectDetail = {
     'Vitest',
     'Playwright',
   ],
+  primaryVideoUrl: '/project-videos/lovable-clone.mp4',
   links: {
     live: 'https://portpal-2.vercel.app',
     github: 'https://github.com/giaphutran12/portpal-2',

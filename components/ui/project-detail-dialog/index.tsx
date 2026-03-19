@@ -2,7 +2,8 @@
 
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import cn from 'clsx'
-import type { ReactNode } from 'react'
+import { type ReactNode, useEffect } from 'react'
+import { setProjectDetailDialogOpen } from '@/lib/hooks/use-project-detail-dialog-open'
 import s from './project-detail-dialog.module.css'
 
 export interface ProjectDetailDialogProps {
@@ -18,6 +19,14 @@ export function ProjectDetailDialog({
   title,
   children,
 }: ProjectDetailDialogProps) {
+  useEffect(() => {
+    setProjectDetailDialogOpen(open)
+
+    return () => {
+      setProjectDetailDialogOpen(false)
+    }
+  }, [open])
+
   return (
     <BaseDialog.Root open={open} onOpenChange={onOpenChange}>
       <BaseDialog.Portal>

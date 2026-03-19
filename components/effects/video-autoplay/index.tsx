@@ -9,13 +9,19 @@ interface VideoAutoplayProps {
   src: string
   poster?: string | undefined
   className?: string | undefined
+  suspended?: boolean | undefined
 }
 
-export function VideoAutoplay({ src, poster, className }: VideoAutoplayProps) {
+export function VideoAutoplay({
+  src,
+  poster,
+  className,
+  suspended = false,
+}: VideoAutoplayProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [hasError, setHasError] = useState(false)
 
-  useVideoAutoplay(videoRef)
+  useVideoAutoplay(videoRef, { suspended })
 
   if (hasError) return null
 
