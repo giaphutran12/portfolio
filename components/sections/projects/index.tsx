@@ -35,8 +35,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
     techStack: ['Next.js', 'PyTorch', 'ONNX', 'Supabase'],
-    imageSrc: '/project-pic/x-rec/x-rec1.png',
-    hoverImageSrc: '/project-pic/x-rec/X-REC2.png',
+    imageSrc: '/project-pic/x-rec/x-rec1.avif',
+    hoverImageSrc: '/project-pic/x-rec/X-REC2.avif',
     videoSrc: '/project-videos/x-recommendation-algo.mp4',
   },
   {
@@ -47,7 +47,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['Next.js', 'Supabase', 'Zod'],
-    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.png',
+    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.avif',
     videoSrc: '/project-videos/viet-bike-scout.mp4',
   },
   {
@@ -69,8 +69,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
     techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
-    imageSrc: '/project-pic/stolk/stolk1.png',
-    hoverImageSrc: '/project-pic/stolk/stolk2.png',
+    imageSrc: '/project-pic/stolk/stolk1.avif',
+    hoverImageSrc: '/project-pic/stolk/stolk2.avif',
     videoSrc: '/project-videos/stocktwits-clone.mp4',
   },
   {
@@ -81,8 +81,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 95 70 / 0.4) 0%, rgb(17 94 89 / 0.35) 100%)',
     techStack: ['Next.js', 'FastAPI', 'Gemini', 'Redis'],
-    imageSrc: '/project-pic/self-improving-prompt/sip1.png',
-    hoverImageSrc: '/project-pic/self-improving-prompt/sip2.png',
+    imageSrc: '/project-pic/self-improving-prompt/sip1.avif',
+    hoverImageSrc: '/project-pic/self-improving-prompt/sip2.avif',
   },
   {
     id: 'lovable-clone',
