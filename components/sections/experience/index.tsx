@@ -123,7 +123,7 @@ export function Experience({
       <Marquee repeat={4} speed={0.5} className={s.logoMarquee}>
         <div className={s.logoTrack}>
           <HoverImageReveal
-            src="/hover-previews/headstarter.png"
+            src="/hover-previews/real-pics/headstarter1.61.png"
             alt="Headstarter preview"
           >
             <span className={s.logoTrigger}>
@@ -139,7 +139,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/tinyfish.png"
+            src="/hover-previews/real-pics/tinyfish1.61.png"
             alt="Tinyfish preview"
           >
             <span className={s.logoTrigger}>
@@ -154,7 +154,10 @@ export function Experience({
               </Link>
             </span>
           </HoverImageReveal>
-          <HoverImageReveal src="/hover-previews/bli.png" alt="BLI preview">
+          <HoverImageReveal
+            src="/hover-previews/real-pics/bli1.61.png"
+            alt="BLI preview"
+          >
             <span className={s.logoTrigger}>
               <Link href="https://buildlaunchiterate.ca" target="_blank">
                 <Image
@@ -168,7 +171,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/douglas-college.png"
+            src="/hover-previews/real-pics/douglascollege1.61.png"
             alt="Douglas College preview"
           >
             <span className={s.logoTrigger}>
@@ -219,7 +222,7 @@ export function Experience({
       <Marquee repeat={4} speed={0.5} className={s.logoMarquee}>
         <div className={s.logoTrack}>
           <HoverImageReveal
-            src="/hover-previews/smart-math-bc.png"
+            src="/hover-previews/real-pics/smart-math-bc1.61.png"
             alt="Smart Math BC preview"
           >
             <span className={s.logoTrigger}>
@@ -238,7 +241,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/costco.png"
+            src="/hover-previews/real-pics/costco1.61.png"
             alt="Costco preview"
           >
             <span className={s.logoTrigger}>
@@ -254,7 +257,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/thai-by-thai.png"
+            src="/hover-previews/real-pics/thai-by-thai1.61.png"
             alt="Thai by Thai preview"
           >
             <span className={s.logoTrigger}>
@@ -270,7 +273,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/mtu-aero.png"
+            src="/hover-previews/real-pics/mtu1.61.png"
             alt="MTU Aero preview"
           >
             <span className={s.logoTrigger}>
@@ -286,7 +289,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/naka-bistro.png"
+            src="/hover-previews/real-pics/naka-bistro1.61.png"
             alt="Naka Bistro preview"
           >
             <span className={s.logoTrigger}>
@@ -301,7 +304,10 @@ export function Experience({
               </Link>
             </span>
           </HoverImageReveal>
-          <HoverImageReveal src="/hover-previews/veym.png" alt="VEYM preview">
+          <HoverImageReveal
+            src="/hover-previews/real-pics/veym1.61.png"
+            alt="VEYM preview"
+          >
             <span className={s.logoTrigger}>
               <Link href="https://veym.net" target="_blank">
                 <Image
@@ -315,7 +321,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/vancouver-dev.png"
+            src="/hover-previews/real-pics/vancouver-dev1.61.png"
             alt="Vancouver Dev preview"
           >
             <span className={s.logoTrigger}>
@@ -331,7 +337,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/ai-tinkerers.png"
+            src="/hover-previews/real-pics/ai-tinkerers1.61.png"
             alt="AI Tinkerers preview"
           >
             <span className={s.logoTrigger}>
