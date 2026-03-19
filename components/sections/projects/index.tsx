@@ -48,6 +48,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['Next.js', 'Supabase', 'Zod'],
     imageSrc: toGradientDataUrl('#065f46', '#115e59'),
+    videoSrc: '/project-videos/viet-bike-scout.mp4',
   },
   {
     id: 'autoresearch-macos',
@@ -58,6 +59,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(30 58 138 / 0.4) 0%, rgb(49 46 129 / 0.35) 100%)',
     techStack: ['Swift', 'macOS', 'LLM'],
     imageSrc: toGradientDataUrl('#1e3a8a', '#312e81'),
+    videoSrc: '/project-videos/autoresearch-macos.mp4',
   },
   {
     id: 'stocktwits-clone-2',
@@ -69,7 +71,7 @@ const fallbackProjects: ProjectCard[] = [
     techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
     imageSrc: '/project-pic/stolk/stolk1.png',
     hoverImageSrc: '/project-pic/stolk/stolk2.png',
-    videoSrc: '/project-videos/stocktwits-clone-2.mp4',
+    videoSrc: '/project-videos/stocktwits-clone.mp4',
   },
   {
     id: 'self-improving-prompt',
@@ -90,6 +92,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(109 40 217 / 0.4) 0%, rgb(76 29 149 / 0.35) 100%)',
     techStack: ['Next.js', 'Prisma', 'E2B', 'Inngest'],
     imageSrc: toGradientDataUrl('#6d28d9', '#4c1d95'),
+    videoSrc: '/project-videos/lovable-clone.mp4',
   },
   {
     id: 'ai-customer-support',
@@ -100,6 +103,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(190 18 60 / 0.4) 0%, rgb(136 19 55 / 0.35) 100%)',
     techStack: ['Firecrawl', 'Pinecone', 'VAPI'],
     imageSrc: toGradientDataUrl('#be123c', '#881337'),
+    videoSrc: '/project-videos/ai-customer-support.mp4',
   },
   {
     id: 'serverless-style-transfer',
