@@ -114,7 +114,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(217 119 6 / 0.4) 0%, rgb(180 83 9 / 0.35) 100%)',
     techStack: ['Rust', 'WebAssembly', 'ONNX'],
-    imageSrc: toGradientDataUrl('#d97706', '#b45309'),
+    imageSrc: '/project-pic/web-assembly-image-style-transfer/ist1.avif',
+    hoverImageSrc: '/project-pic/web-assembly-image-style-transfer/ist2.avif',
   },
   {
     id: 'intelligent-llm-router',
