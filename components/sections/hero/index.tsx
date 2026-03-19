@@ -32,7 +32,12 @@ export function Hero({
       '(prefers-reduced-motion: reduce)'
     ).matches
 
-    if (prefersReducedMotion) return
+    if (prefersReducedMotion) {
+      if (nameRef.current) {
+        nameRef.current.textContent = name
+      }
+      return
+    }
 
     let rafId = 0
     let nestedRafId = 0
@@ -93,7 +98,7 @@ export function Hero({
         className={cn(s.background)}
         colorAmplitude={2}
         colorFrequency={0.2}
-        colors={['#0a0a08', '#0f0d0a', '#171410', '#0a0a08']}
+        colors={['#0a0a08', '#241a10', '#3d2e1a', '#0a0a08']}
         frequency={0.25}
         speed={0.5}
       />
@@ -102,7 +107,7 @@ export function Hero({
         <h1 className={cn(s.name, 'heading-xl')} data-testid="hero-name">
           <span className="sr-only">{name}</span>
           <span aria-hidden="true" ref={nameRef}>
-            {name}
+            エドワード・トラン
           </span>
         </h1>
 
