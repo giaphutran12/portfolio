@@ -47,7 +47,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['Next.js', 'Supabase', 'Zod'],
-    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
+    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.png',
     videoSrc: '/project-videos/viet-bike-scout.mp4',
   },
   {
@@ -80,8 +80,9 @@ const fallbackProjects: ProjectCard[] = [
       'CI/CD for prompts. Evaluate, fail, improve, repeat. Averaged +42% score lift across 10K+ prompts using multi-agent feedback loops. Prompts that get better on their own.',
     gradient:
       'linear-gradient(135deg, rgb(6 95 70 / 0.4) 0%, rgb(17 94 89 / 0.35) 100%)',
-    techStack: ['Next.js', 'Mermaid.js', 'shadcn/ui'],
-    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
+    techStack: ['Next.js', 'FastAPI', 'Gemini', 'Redis'],
+    imageSrc: '/project-pic/self-improving-prompt/sip1.png',
+    hoverImageSrc: '/project-pic/self-improving-prompt/sip2.png',
   },
   {
     id: 'lovable-clone',
@@ -119,10 +120,10 @@ const fallbackProjects: ProjectCard[] = [
     id: 'intelligent-llm-router',
     title: 'Intelligent LLM Router',
     description:
-      'Smart routing layer that dispatches prompts to the optimal LLM based on complexity, cost, and latency. Cuts API spend while maintaining quality across providers.',
+      'Smart traffic controller for AI requests. Analyzes intent, routes to optimal model — coding to Claude, simple chat to free models, complex reasoning to GPT. ~100ms routing overhead.',
     gradient:
       'linear-gradient(135deg, rgb(14 116 144 / 0.4) 0%, rgb(8 145 178 / 0.35) 100%)',
-    techStack: ['Next.js', 'OpenAI', 'Anthropic', 'LangChain'],
+    techStack: ['Next.js', 'TypeScript', 'OpenRouter', 'Gemini'],
     imageSrc: toGradientDataUrl('#0e7490', '#0891b2'),
     videoSrc: '/project-videos/intelligent-llm-router.mp4',
   },
