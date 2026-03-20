@@ -178,24 +178,6 @@ function getDefaultProjects(): Project[] {
       techStack: ['Rust', 'WebAssembly', 'WebGPU'],
       order: 8,
     },
-    {
-      _id: 'blue-pearl-landing-page',
-      title: 'Blue Pearl Mortgages & Investments',
-      slug: { current: 'blue-pearl-landing-page' },
-      description:
-        'Full-stack financial services platform with multi-service forms, advanced conversion tracking, and accessibility-first architecture. 20+ service pages with centralized analytics.',
-      techStack: ['Next.js', 'React 19', 'Supabase', 'GA4'],
-      order: 9,
-    },
-    {
-      _id: 'portpal-2',
-      title: 'PortPal',
-      slug: { current: 'portpal-2' },
-      description:
-        'Mobile-first PWA for ILWU longshoremen to log shifts, track earnings, and monitor goals. Monorepo with Next.js web and React Native mobile sharing a Supabase backend.',
-      techStack: ['Next.js', 'React Native', 'Supabase', 'Expo'],
-      order: 10,
-    },
   ]
 }
 

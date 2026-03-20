@@ -39,26 +39,9 @@
   flex-direction: column;
   opacity: 1;
   overflow: hidden;
-  position: relative;
   transition:
     box-shadow 0.35s var(--ease-out-cubic),
     transform 0.35s var(--ease-out-cubic);
-}
-
-.trigger {
-  background: none;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  inset: 0;
-  padding: 0;
-  position: absolute;
-  z-index: 10;
-}
-
-.trigger:focus-visible {
-  outline: 2px solid rgb(200 169 126 / 0.6);
-  outline-offset: 2px;
 }
 
 @media (--hover) {
@@ -135,116 +118,4 @@
   letter-spacing: 0.08em;
   padding: 4px 10px;
   text-transform: uppercase;
-}
-
-.detailContent {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  @media (--desktop) {
-    gap: 24px;
-  }
-}
-
-.detailSummary {
-  color: color-mix(in srgb, var(--color-secondary), transparent 15%);
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  margin: 0;
-}
-
-.detailSection {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.detailSectionHeading {
-  color: var(--color-secondary);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.detailHighlights {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.detailHighlight {
-  color: color-mix(in srgb, var(--color-secondary), transparent 25%);
-  font-size: 0.875rem;
-  line-height: 1.6;
-  padding-left: 16px;
-  position: relative;
-}
-
-.detailHighlight::before {
-  color: var(--color-contrast);
-  content: "\2022";
-  left: 0;
-  position: absolute;
-}
-
-.detailTechStack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.detailTechTag {
-  background-color: rgb(200 169 126 / 0.08);
-  border: 1px solid rgb(200 169 126 / 0.15);
-  border-radius: 4px;
-  color: var(--color-contrast);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-}
-
-.detailNarrativeBody {
-  color: color-mix(in srgb, var(--color-secondary), transparent 25%);
-  font-size: 0.875rem;
-  line-height: 1.7;
-  margin: 0;
-}
-
-.detailNarrativeSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.detailLinks {
-  display: flex;
-  gap: 12px;
-  padding-top: 4px;
-}
-
-.detailLink {
-  background-color: rgb(200 169 126 / 0.1);
-  border: 1px solid rgb(200 169 126 / 0.2);
-  border-radius: 6px;
-  color: var(--color-contrast);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: all 150ms ease;
-}
-
-@media (--hover) {
-  .detailLink:hover {
-    background-color: rgb(200 169 126 / 0.18);
-    border-color: rgb(200 169 126 / 0.35);
-  }
 }
