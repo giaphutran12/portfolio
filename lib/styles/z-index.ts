@@ -6,7 +6,7 @@
  */
 
 export const zIndex = {
-  canvas: 30,
+  canvas: 0,
   noiseWaves: 5,
   content: 20,
   header: 50,
