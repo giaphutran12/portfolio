@@ -109,6 +109,27 @@
   overflow-y: auto;
   flex-grow: 1;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(200 169 126 / 0.35) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(200 169 126 / 0.35);
+    border-radius: 999px;
+  }
+
+  @media (--hover) {
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgb(200 169 126 / 0.5);
+    }
+  }
 
   @media (--desktop) {
     padding: 24px;

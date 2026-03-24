@@ -61,7 +61,9 @@ export function ProjectDetailDialog({
               </svg>
             </BaseDialog.Close>
           </div>
-          <div className={cn(s.body)}>{children}</div>
+          <div className={cn(s.body)} data-lenis-prevent>
+            {children}
+          </div>
         </BaseDialog.Popup>
       </BaseDialog.Portal>
     </BaseDialog.Root>
