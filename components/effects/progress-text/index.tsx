@@ -55,6 +55,20 @@ export function ProgressText({
     return children
   }
 
+  const words = children.split(' ')
+  const wordOccurrences = new Map<string, number>()
+  const wordsWithKeys = words.map((word) => {
+    const slug = slugify(word) || 'word'
+    const occurrence = wordOccurrences.get(slug) ?? 0
+
+    wordOccurrences.set(slug, occurrence + 1)
+
+    return {
+      key: `${slug}-${occurrence}`,
+      word,
+    }
+  })
+
   return (
     <span
       ref={setRectRef}
@@ -64,8 +78,8 @@ export function ProgressText({
         ...style,
       }}
     >
-      {children.split(' ').map((word, index) => (
-        <Fragment key={`${slugify(word)}-${index}`}>
+      {wordsWithKeys.map(({ key, word }, index) => (
+        <Fragment key={key}>
           <span
             className={s.word}
             ref={(node) => {
