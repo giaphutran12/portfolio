@@ -9,13 +9,35 @@ interface VideoAutoplayProps {
   src: string
   poster?: string | undefined
   className?: string | undefined
+  onReady?: (() => void) | undefined
+  onError?: (() => void) | undefined
 }
 
-export function VideoAutoplay({ src, poster, className }: VideoAutoplayProps) {
+export function VideoAutoplay({
+  src,
+  poster,
+  className,
+  onReady,
+  onError,
+}: VideoAutoplayProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [hasError, setHasError] = useState(false)
+  const hasReportedReadyRef = useRef(false)
 
   useVideoAutoplay(videoRef)
+
+  function handleReady() {
+    if (hasError || hasReportedReadyRef.current) return
+
+    hasReportedReadyRef.current = true
+    onReady?.()
+  }
+
+  function handleError() {
+    setHasError(true)
+    hasReportedReadyRef.current = false
+    onError?.()
+  }
 
   if (hasError) return null
 
@@ -24,7 +46,9 @@ export function VideoAutoplay({ src, poster, className }: VideoAutoplayProps) {
       className={cn(s.video, className)}
       loop
       muted
-      onError={() => setHasError(true)}
+      onCanPlay={handleReady}
+      onError={handleError}
+      onLoadedData={handleReady}
       playsInline
       poster={poster}
       preload="none"

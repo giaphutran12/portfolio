@@ -1,7 +1,8 @@
 import cn from 'clsx'
+import type { CSSProperties } from 'react'
 import { ProjectCardMedia } from '@/components/effects/project-card-media'
-import { VideoAutoplay } from '@/components/effects/video-autoplay'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
+import { ProjectCardVideoMedia } from './project-card-video-media'
 import s from './projects.module.css'
 import { ProjectsGrid } from './projects-grid'
 import { ProjectsHeading } from './projects-heading'
@@ -21,10 +22,24 @@ interface ProjectsProps {
   projects?: SanityProject[]
 }
 
+const PROJECT_CARD_HOVER_LIFT_PX = 6
+
 function toGradientDataUrl(colorA: string, colorB: string) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${colorA}"/><stop offset="100%" stop-color="${colorB}"/></linearGradient></defs><rect width="1600" height="900" fill="url(#g)"/></svg>`
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 }
+
+function toCoverStyle(imageSrc: string): CSSProperties {
+  return {
+    backgroundImage: `url("${imageSrc}")`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+  }
+}
+
+const projectCardLiftStyle = {
+  '--project-card-hover-lift-px': `${PROJECT_CARD_HOVER_LIFT_PX}px`,
+} as CSSProperties
 
 const fallbackProjects: ProjectCard[] = [
   {
@@ -35,8 +50,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(120 53 15 / 0.4) 0%, rgb(124 45 18 / 0.35) 100%)',
     techStack: ['Next.js', 'PyTorch', 'ONNX', 'Supabase'],
-    imageSrc: '/project-pic/x-rec/x-rec1.png',
-    hoverImageSrc: '/project-pic/x-rec/X-REC2.png',
+    imageSrc: '/project-pic/x-rec/x-rec1.avif',
+    hoverImageSrc: '/project-pic/x-rec/X-REC2.avif',
     videoSrc: '/project-videos/x-recommendation-algo.mp4',
   },
   {
@@ -47,7 +62,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['Next.js', 'Supabase', 'Zod'],
-    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.png',
+    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.avif',
     videoSrc: '/project-videos/viet-bike-scout.mp4',
   },
   {
@@ -69,8 +84,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(88 28 135 / 0.4) 0%, rgb(131 24 67 / 0.35) 100%)',
     techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
-    imageSrc: '/project-pic/stolk/stolk1.png',
-    hoverImageSrc: '/project-pic/stolk/stolk2.png',
+    imageSrc: '/project-pic/stolk/stolk1.avif',
+    hoverImageSrc: '/project-pic/stolk/stolk2.avif',
     videoSrc: '/project-videos/stocktwits-clone.mp4',
   },
   {
@@ -81,8 +96,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 95 70 / 0.4) 0%, rgb(17 94 89 / 0.35) 100%)',
     techStack: ['Next.js', 'FastAPI', 'Gemini', 'Redis'],
-    imageSrc: '/project-pic/self-improving-prompt/sip1.png',
-    hoverImageSrc: '/project-pic/self-improving-prompt/sip2.png',
+    imageSrc: '/project-pic/self-improving-prompt/sip1.avif',
+    hoverImageSrc: '/project-pic/self-improving-prompt/sip2.avif',
     videoSrc: '/project-videos/self-improving-prompt.mp4',
   },
   {
@@ -115,7 +130,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(217 119 6 / 0.4) 0%, rgb(180 83 9 / 0.35) 100%)',
     techStack: ['Rust', 'WebAssembly', 'ONNX'],
-    imageSrc: toGradientDataUrl('#d97706', '#b45309'),
+    imageSrc: '/project-pic/web-assembly-image-style-transfer/ist1.avif',
+    hoverImageSrc: '/project-pic/web-assembly-image-style-transfer/ist2.avif',
     videoSrc: '/project-videos/web-assembly.mp4',
   },
   {
@@ -184,10 +200,11 @@ export function Projects({ projects }: ProjectsProps) {
               key={project.id}
               className={s.card}
               data-project-id={project.id}
+              style={projectCardLiftStyle}
             >
               <div aria-hidden="true" className={s.imageArea}>
                 {project.videoSrc ? (
-                  <VideoAutoplay
+                  <ProjectCardVideoMedia
                     className={s.imageEffect}
                     poster={project.imageSrc}
                     src={project.videoSrc}
@@ -195,11 +212,7 @@ export function Projects({ projects }: ProjectsProps) {
                 ) : (
                   <ProjectCardMedia
                     className={s.imageEffect}
-                    style={{
-                      backgroundImage: `url("${project.imageSrc}")`,
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                    }}
+                    style={toCoverStyle(project.imageSrc)}
                     imageSrc={project.imageSrc}
                     {...(project.hoverImageSrc
                       ? { hoverImageSrc: project.hoverImageSrc }
