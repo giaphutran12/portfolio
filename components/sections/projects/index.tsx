@@ -1,5 +1,6 @@
 import cn from 'clsx'
 import { ProjectCardMedia } from '@/components/effects/project-card-media'
+import { VideoAutoplay } from '@/components/effects/video-autoplay'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
 import s from './projects.module.css'
 import { ProjectsGrid } from './projects-grid'
@@ -13,6 +14,7 @@ interface ProjectCard {
   gradient: string
   imageSrc: string
   hoverImageSrc?: string
+  videoSrc?: string
 }
 
 interface ProjectsProps {
@@ -35,6 +37,7 @@ const fallbackProjects: ProjectCard[] = [
     techStack: ['Next.js', 'PyTorch', 'ONNX', 'Supabase'],
     imageSrc: '/project-pic/x-rec/x-rec1.png',
     hoverImageSrc: '/project-pic/x-rec/X-REC2.png',
+    videoSrc: '/project-videos/x-recommendation-algo.mp4',
   },
   {
     id: 'viet-bike-scout',
@@ -44,7 +47,8 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(6 78 59 / 0.4) 0%, rgb(19 78 74 / 0.35) 100%)',
     techStack: ['Next.js', 'Supabase', 'Zod'],
-    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
+    imageSrc: '/project-pic/viet-bike-scout/viet-bike-scout1.png',
+    videoSrc: '/project-videos/viet-bike-scout.mp4',
   },
   {
     id: 'autoresearch-macos',
@@ -55,6 +59,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(30 58 138 / 0.4) 0%, rgb(49 46 129 / 0.35) 100%)',
     techStack: ['Swift', 'macOS', 'LLM'],
     imageSrc: toGradientDataUrl('#1e3a8a', '#312e81'),
+    videoSrc: '/project-videos/autoresearch-macos.mp4',
   },
   {
     id: 'stocktwits-clone-2',
@@ -66,6 +71,7 @@ const fallbackProjects: ProjectCard[] = [
     techStack: ['Next.js', 'Prisma', 'Clerk', 'Claude'],
     imageSrc: '/project-pic/stolk/stolk1.png',
     hoverImageSrc: '/project-pic/stolk/stolk2.png',
+    videoSrc: '/project-videos/stocktwits-clone.mp4',
   },
   {
     id: 'self-improving-prompt',
@@ -74,8 +80,10 @@ const fallbackProjects: ProjectCard[] = [
       'CI/CD for prompts. Evaluate, fail, improve, repeat. Averaged +42% score lift across 10K+ prompts using multi-agent feedback loops. Prompts that get better on their own.',
     gradient:
       'linear-gradient(135deg, rgb(6 95 70 / 0.4) 0%, rgb(17 94 89 / 0.35) 100%)',
-    techStack: ['Next.js', 'Mermaid.js', 'shadcn/ui'],
-    imageSrc: toGradientDataUrl('#065f46', '#115e59'),
+    techStack: ['Next.js', 'FastAPI', 'Gemini', 'Redis'],
+    imageSrc: '/project-pic/self-improving-prompt/sip1.png',
+    hoverImageSrc: '/project-pic/self-improving-prompt/sip2.png',
+    videoSrc: '/project-videos/self-improving-prompt.mp4',
   },
   {
     id: 'lovable-clone',
@@ -86,6 +94,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(109 40 217 / 0.4) 0%, rgb(76 29 149 / 0.35) 100%)',
     techStack: ['Next.js', 'Prisma', 'E2B', 'Inngest'],
     imageSrc: toGradientDataUrl('#6d28d9', '#4c1d95'),
+    videoSrc: '/project-videos/lovable-clone.mp4',
   },
   {
     id: 'ai-customer-support',
@@ -96,6 +105,7 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(190 18 60 / 0.4) 0%, rgb(136 19 55 / 0.35) 100%)',
     techStack: ['Firecrawl', 'Pinecone', 'VAPI'],
     imageSrc: toGradientDataUrl('#be123c', '#881337'),
+    videoSrc: '/project-videos/ai-customer-support.mp4',
   },
   {
     id: 'serverless-style-transfer',
@@ -106,6 +116,18 @@ const fallbackProjects: ProjectCard[] = [
       'linear-gradient(135deg, rgb(217 119 6 / 0.4) 0%, rgb(180 83 9 / 0.35) 100%)',
     techStack: ['Rust', 'WebAssembly', 'ONNX'],
     imageSrc: toGradientDataUrl('#d97706', '#b45309'),
+    videoSrc: '/project-videos/web-assembly.mp4',
+  },
+  {
+    id: 'intelligent-llm-router',
+    title: 'Intelligent LLM Router',
+    description:
+      'Smart traffic controller for AI requests. Analyzes intent, routes to optimal model — coding to Claude, simple chat to free models, complex reasoning to GPT. ~100ms routing overhead.',
+    gradient:
+      'linear-gradient(135deg, rgb(14 116 144 / 0.4) 0%, rgb(8 145 178 / 0.35) 100%)',
+    techStack: ['Next.js', 'TypeScript', 'OpenRouter', 'Gemini'],
+    imageSrc: toGradientDataUrl('#0e7490', '#0891b2'),
+    videoSrc: '/project-videos/intelligent-llm-router.mp4',
   },
 ]
 
@@ -141,6 +163,10 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
       result.hoverImageSrc = fallback.hoverImageSrc
     }
 
+    if (fallback.videoSrc) {
+      result.videoSrc = fallback.videoSrc
+    }
+
     return result
   })
 }
@@ -160,18 +186,26 @@ export function Projects({ projects }: ProjectsProps) {
               data-project-id={project.id}
             >
               <div aria-hidden="true" className={s.imageArea}>
-                <ProjectCardMedia
-                  className={s.imageEffect}
-                  style={{
-                    backgroundImage: `url("${project.imageSrc}")`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                  }}
-                  imageSrc={project.imageSrc}
-                  {...(project.hoverImageSrc
-                    ? { hoverImageSrc: project.hoverImageSrc }
-                    : {})}
-                />
+                {project.videoSrc ? (
+                  <VideoAutoplay
+                    className={s.imageEffect}
+                    poster={project.imageSrc}
+                    src={project.videoSrc}
+                  />
+                ) : (
+                  <ProjectCardMedia
+                    className={s.imageEffect}
+                    style={{
+                      backgroundImage: `url("${project.imageSrc}")`,
+                      backgroundPosition: 'center',
+                      backgroundSize: 'cover',
+                    }}
+                    imageSrc={project.imageSrc}
+                    {...(project.hoverImageSrc
+                      ? { hoverImageSrc: project.hoverImageSrc }
+                      : {})}
+                  />
+                )}
                 <div
                   className={s.gradientLayer}
                   style={{ backgroundImage: project.gradient }}

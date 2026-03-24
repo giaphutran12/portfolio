@@ -123,7 +123,7 @@ export function Experience({
       <Marquee repeat={4} speed={0.5} className={s.logoMarquee}>
         <div className={s.logoTrack}>
           <HoverImageReveal
-            src="/hover-previews/headstarter.png"
+            src="/hover-previews/real-pics/headstarter1.61.png"
             alt="Headstarter preview"
           >
             <span className={s.logoTrigger}>
@@ -139,7 +139,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/tinyfish.png"
+            src="/hover-previews/real-pics/tinyfish1.61.png"
             alt="Tinyfish preview"
           >
             <span className={s.logoTrigger}>
@@ -154,7 +154,10 @@ export function Experience({
               </Link>
             </span>
           </HoverImageReveal>
-          <HoverImageReveal src="/hover-previews/bli.png" alt="BLI preview">
+          <HoverImageReveal
+            src="/hover-previews/real-pics/bli1.61.png"
+            alt="BLI preview"
+          >
             <span className={s.logoTrigger}>
               <Link href="https://buildlaunchiterate.ca" target="_blank">
                 <Image
@@ -168,7 +171,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/douglas-college.png"
+            src="/hover-previews/real-pics/douglascollege1.61.png"
             alt="Douglas College preview"
           >
             <span className={s.logoTrigger}>
@@ -219,7 +222,7 @@ export function Experience({
       <Marquee repeat={4} speed={0.5} className={s.logoMarquee}>
         <div className={s.logoTrack}>
           <HoverImageReveal
-            src="/hover-previews/smart-math-bc.png"
+            src="/hover-previews/real-pics/smart-math-bc1.61.png"
             alt="Smart Math BC preview"
           >
             <span className={s.logoTrigger}>
@@ -238,7 +241,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/costco.png"
+            src="/hover-previews/real-pics/costco1.61.png"
             alt="Costco preview"
           >
             <span className={s.logoTrigger}>
@@ -254,7 +257,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/thai-by-thai.png"
+            src="/hover-previews/real-pics/thai-by-thai1.61.png"
             alt="Thai by Thai preview"
           >
             <span className={s.logoTrigger}>
@@ -270,7 +273,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/mtu-aero.png"
+            src="/hover-previews/real-pics/mtu1.61.png"
             alt="MTU Aero preview"
           >
             <span className={s.logoTrigger}>
@@ -286,7 +289,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/naka-bistro.png"
+            src="/hover-previews/real-pics/naka-bistro1.61.png"
             alt="Naka Bistro preview"
           >
             <span className={s.logoTrigger}>
@@ -301,7 +304,10 @@ export function Experience({
               </Link>
             </span>
           </HoverImageReveal>
-          <HoverImageReveal src="/hover-previews/veym.png" alt="VEYM preview">
+          <HoverImageReveal
+            src="/hover-previews/real-pics/veym1.61.png"
+            alt="VEYM preview"
+          >
             <span className={s.logoTrigger}>
               <Link href="https://veym.net" target="_blank">
                 <Image
@@ -315,7 +321,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/vancouver-dev.png"
+            src="/hover-previews/real-pics/vancouver-dev1.61.png"
             alt="Vancouver Dev preview"
           >
             <span className={s.logoTrigger}>
@@ -331,7 +337,7 @@ export function Experience({
             </span>
           </HoverImageReveal>
           <HoverImageReveal
-            src="/hover-previews/ai-tinkerers.png"
+            src="/hover-previews/real-pics/ai-tinkerers1.61.png"
             alt="AI Tinkerers preview"
           >
             <span className={s.logoTrigger}>
@@ -352,48 +358,48 @@ export function Experience({
       <div className={cn(s.inner)}>
         <div className={s.otherContent}>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Smart Math BC</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
               Founder · Jan 2019–Present
             </p>
-            <p className={cn(s.otherRole, 'body-sm')}>Smart Math BC</p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I pitch and sell to moms. I teach kids to do math. Your kid will
               improve in Math after 1 month, or your money back.
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Costco</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
               Cashier · Oct 2023–Sep 2025
             </p>
-            <p className={cn(s.otherRole, 'body-sm')}>Costco</p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I pitch costco mastercard. 50%+ close rate on qualified prospects.
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Thai by Thai</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
               Server · Jun 2022–Sep 2022
             </p>
-            <p className={cn(s.otherRole, 'body-sm')}>Thai by Thai</p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I talk to difficult customers without crying.
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>
+            <p className={cn(s.otherCompany, 'body-lg')}>MTU Aero Engines</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
               Gas Turbine Technician Intern · May 2022–Jun 2022
             </p>
-            <p className={cn(s.otherRole, 'body-sm')}>MTU Aero Engines</p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I help taking apart a HUGE airplane engine and putting it back
               together.
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Naka Bistro</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
               Food Prep · Jan 2021–Apr 2021
             </p>
-            <p className={cn(s.otherRole, 'body-sm')}>Naka Bistro</p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I handle 10+ orders at a time. The kitchen was busy as heck.
             </p>
