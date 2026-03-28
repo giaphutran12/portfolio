@@ -367,8 +367,10 @@ export function Experience({
               improve in Math after 1 month, or your money back.
             </p>
           </div>
-                    <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Gas Turbine Technician Intern</p>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>
+              Gas Turbine Technician Intern
+            </p>
             <p className={cn(s.otherRole, 'body-sm')}>
               MTU Aero Engines · May 2022–Jun 2022
             </p>
@@ -378,13 +380,15 @@ export function Experience({
             </p>
           </div>
 
-                    <div className={s.otherEntry}>
+          <div className={s.otherEntry}>
             <p className={cn(s.otherCompany, 'body-lg')}>Youth Leader</p>
             <p className={cn(s.otherRole, 'body-sm')}>
               Vietnamese Eucharist Youth Movement · Jan 2019–Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-              Teach kids about Jesus & Catholic faith. Hosted 10+ summer camps, retreats, countless lessons & activities. My public speaking is natural at this point. 
+              Teach kids about Jesus & Catholic faith. Hosted 10+ summer camps,
+              retreats, countless lessons & activities. My public speaking is
+              natural at this point.
             </p>
           </div>
 
@@ -394,7 +398,8 @@ export function Experience({
               Vancouver.dev · Oct 2023-Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-                Helped hosted 10+ technical community events with speakers from FAANG and Fortune 500
+              Helped hosted 10+ technical community events with speakers from
+              FAANG and Fortune 500
             </p>
           </div>
           <div className={s.otherEntry}>
@@ -403,13 +408,16 @@ export function Experience({
               AI Tinkerers · Feb 2026-Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-              Helped hosted 3+ events within 1 month, vetted speakers from FAANG and Fortune 500
+              Helped hosted 3+ events within 1 month, vetted speakers from FAANG
+              and Fortune 500
             </p>
           </div>
         </div>
 
         <p className={cn(s.activitiesLine, 'label')}>
-          Insider scoop: Building NotionCode - let your whole team ship code without ever leaving Notion. Building TrueWeapon - Block NSFW content on X and Reddit without blocking the entire sites
+          Insider scoop: Building NotionCode - let your whole team ship code
+          without ever leaving Notion. Building TrueWeapon - Block NSFW content
+          on X and Reddit without blocking the entire sites
         </p>
       </div>
     </section>
