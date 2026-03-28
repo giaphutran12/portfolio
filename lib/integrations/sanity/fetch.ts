@@ -135,7 +135,7 @@ function getDefaultProjects(): Project[] {
     },
     {
       _id: 'stocktwits-clone-2',
-      title: 'StockTwits Clone',
+      title: 'Twitter For Stocks',
       slug: { current: 'stocktwits-clone-2' },
       description:
         'A real-time social trading platform with live market data, sentiment analysis, and community-driven stock discussions powered by WebSocket streams.',
