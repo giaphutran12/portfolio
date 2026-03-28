@@ -8,6 +8,8 @@ A modern Next.js 16 starter with React 19, Tailwind CSS v4, and optional WebGL. 
 
 > **Note**: This README is for template developers. For client handoff, see [PROD-README.md](PROD-README.md).
 
+<!-- NotionCode repo-intake test PR. Safe to close after validation. -->
+
 ## Requirements
 
 | Tool | Version | Notes |
