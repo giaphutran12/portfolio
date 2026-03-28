@@ -119,7 +119,7 @@ const fallbackProjects: ProjectCard[] = [
     gradient:
       'linear-gradient(135deg, rgb(190 18 60 / 0.4) 0%, rgb(136 19 55 / 0.35) 100%)',
     techStack: ['Firecrawl', 'Pinecone', 'VAPI'],
-    imageSrc: toGradientDataUrl('#be123c', '#881337'),
+    imageSrc: '/project-pic/aven-customer-support/aven-pic.png',
     videoSrc: '/project-videos/ai-customer-support.mp4',
   },
   {

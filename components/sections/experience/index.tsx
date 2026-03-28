@@ -35,7 +35,7 @@ const defaultExperiences: ExperienceEntry[] = [
   {
     _id: 'tinyfish',
     company: 'TinyFish',
-    role: 'Software Engineering + Growth Intern',
+    role: 'Software Engineering Intern',
     startDate: '2026-03',
     endDate: null,
     current: true,
@@ -367,25 +367,7 @@ export function Experience({
               improve in Math after 1 month, or your money back.
             </p>
           </div>
-          <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Cashier + Sales</p>
-            <p className={cn(s.otherRole, 'body-sm')}>
-              Costco · Oct 2023–Sep 2025
-            </p>
-            <p className={cn(s.otherDescription, 'body-sm')}>
-              I pitch costco mastercard. 50%+ close rate on qualified prospects.
-            </p>
-          </div>
-          <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Server</p>
-            <p className={cn(s.otherRole, 'body-sm')}>
-              Thai by Thai · Jun 2022–Sep 2022
-            </p>
-            <p className={cn(s.otherDescription, 'body-sm')}>
-              I talk to difficult customers without crying.
-            </p>
-          </div>
-          <div className={s.otherEntry}>
+                    <div className={s.otherEntry}>
             <p className={cn(s.otherCompany, 'body-lg')}>Gas Turbine Technician Intern</p>
             <p className={cn(s.otherRole, 'body-sm')}>
               MTU Aero Engines · May 2022–Jun 2022
@@ -395,20 +377,39 @@ export function Experience({
               together.
             </p>
           </div>
-          <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Food Prep</p>
+
+                    <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Youth Leader</p>
             <p className={cn(s.otherRole, 'body-sm')}>
-              Naka Bistro · Jan 2021–Apr 2021
+              Vietnamese Eucharist Youth Movement · Jan 2019–Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-              I handle 10+ orders at a time. The kitchen was busy as heck.
+              Teach kids about Jesus & Catholic faith. Hosted 10+ summer camps, retreats, countless lessons & activities. My public speaking is natural at this point. 
+            </p>
+          </div>
+
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}> Campus Ambassador</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              Vancouver.dev · Oct 2023-Present
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+                Helped hosted 10+ technical community events with speakers from FAANG and Fortune 500
+            </p>
+          </div>
+          <div className={s.otherEntry}>
+            <p className={cn(s.otherCompany, 'body-lg')}>Core Team Member</p>
+            <p className={cn(s.otherRole, 'body-sm')}>
+              AI Tinkerers · Feb 2026-Present
+            </p>
+            <p className={cn(s.otherDescription, 'body-sm')}>
+              Helped hosted 3+ events within 1 month, vetted speakers from FAANG and Fortune 500
             </p>
           </div>
         </div>
 
         <p className={cn(s.activitiesLine, 'label')}>
-          4+ Medium blogs on AI experiments · youth leader – VEYM (6yrs) ·
-          vancouver.dev campus ambassador (2yrs) · Hosted 3+ tech events in 3 months @AI Tinkerers
+          Insider scoop: Building NotionCode - let your whole team ship code without ever leaving Notion. Building TrueWeapon - Block NSFW content on X and Reddit without blocking the entire sites
         </p>
       </div>
     </section>

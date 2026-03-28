@@ -199,7 +199,7 @@ function getDefaultExperience(): Experience[] {
     {
       _id: 'tinyfish',
       company: 'TinyFish',
-      role: 'Software Engineering + Growth Intern',
+      role: 'Software Engineering Intern',
       startDate: '2026-03',
       endDate: null,
       current: true,
