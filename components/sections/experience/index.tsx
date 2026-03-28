@@ -358,9 +358,9 @@ export function Experience({
       <div className={cn(s.inner)}>
         <div className={s.otherContent}>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Smart Math BC</p>
+            <p className={cn(s.otherCompany, 'body-lg')}>Founder</p>
             <p className={cn(s.otherRole, 'body-sm')}>
-              Founder · Jan 2019–Present
+              Smart Math BC · Jan 2019–Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I pitch and sell to moms. I teach kids to do math. Your kid will
@@ -368,27 +368,27 @@ export function Experience({
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Costco</p>
+            <p className={cn(s.otherCompany, 'body-lg')}>Cashier + Sales</p>
             <p className={cn(s.otherRole, 'body-sm')}>
-              Cashier · Oct 2023–Sep 2025
+              Costco · Oct 2023–Sep 2025
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I pitch costco mastercard. 50%+ close rate on qualified prospects.
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Thai by Thai</p>
+            <p className={cn(s.otherCompany, 'body-lg')}>Server</p>
             <p className={cn(s.otherRole, 'body-sm')}>
-              Server · Jun 2022–Sep 2022
+              Thai by Thai · Jun 2022–Sep 2022
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I talk to difficult customers without crying.
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>MTU Aero Engines</p>
+            <p className={cn(s.otherCompany, 'body-lg')}>Gas Turbine Technician Intern</p>
             <p className={cn(s.otherRole, 'body-sm')}>
-              Gas Turbine Technician Intern · May 2022–Jun 2022
+              MTU Aero Engines · May 2022–Jun 2022
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I help taking apart a HUGE airplane engine and putting it back
@@ -396,9 +396,9 @@ export function Experience({
             </p>
           </div>
           <div className={s.otherEntry}>
-            <p className={cn(s.otherCompany, 'body-lg')}>Naka Bistro</p>
+            <p className={cn(s.otherCompany, 'body-lg')}>Food Prep</p>
             <p className={cn(s.otherRole, 'body-sm')}>
-              Food Prep · Jan 2021–Apr 2021
+              Naka Bistro · Jan 2021–Apr 2021
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
               I handle 10+ orders at a time. The kitchen was busy as heck.
@@ -408,7 +408,7 @@ export function Experience({
 
         <p className={cn(s.activitiesLine, 'label')}>
           4+ Medium blogs on AI experiments · youth leader – VEYM (6yrs) ·
-          vancouver.dev campus ambassador (2yrs) · AI Tinkerers member
+          vancouver.dev campus ambassador (2yrs) · Hosted 3+ tech events in 3 months @AI Tinkerers
         </p>
       </div>
     </section>
