@@ -9,6 +9,14 @@
   z-index: 0;
 }
 
+.content {
+  gap: 24px;
+
+  @media (--desktop) {
+    gap: 28px;
+  }
+}
+
 .name {
   color: var(--color-secondary);
 }

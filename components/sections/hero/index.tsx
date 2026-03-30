@@ -3,6 +3,7 @@
 import cn from 'clsx'
 import gsap from 'gsap'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
 import { AnimatedGradient } from '@/components/effects/animated-gradient'
 import s from './hero.module.css'
@@ -24,9 +25,10 @@ export function Hero({
   const nameRef = useRef<HTMLSpanElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const scrollIndicatorRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    gsap.registerPlugin(ScrambleTextPlugin)
+    gsap.registerPlugin(ScrambleTextPlugin, ScrollTrigger)
 
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
@@ -43,11 +45,12 @@ export function Hero({
     let nestedRafId = 0
 
     const ctx = gsap.context(() => {
-      gsap.set(subtitleRef.current, { opacity: 0 })
+      gsap.set(subtitleRef.current, { opacity: 0, y: 20 })
       gsap.set(scrollIndicatorRef.current, { opacity: 0 })
 
       rafId = requestAnimationFrame(() => {
         nestedRafId = requestAnimationFrame(() => {
+          // Phase 1: Name scramble text reveal
           gsap.to(nameRef.current, {
             delay: ANIM_DELAY,
             duration: ANIM_DURATION,
@@ -60,20 +63,48 @@ export function Hero({
             },
           })
 
+          // Phase 2: Tagline slides up + fades in
           gsap.to(subtitleRef.current, {
             delay: ANIM_END,
-            duration: 0.8,
-            ease: 'power2.out',
+            duration: 1,
+            ease: 'power3.out',
             opacity: 1,
+            y: 0,
           })
 
+          // Phase 3: Scroll indicator fades in
           gsap.to(scrollIndicatorRef.current, {
-            delay: ANIM_END + 0.3,
-            duration: 0.8,
+            delay: ANIM_END + 0.5,
+            duration: 1,
             ease: 'power2.out',
             opacity: 1,
           })
         })
+      })
+
+      // Scroll parallax — content drifts up as user scrolls past hero
+      gsap.to(contentRef.current, {
+        yPercent: -15,
+        opacity: 0.3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
+      // Scroll indicator fades out on first scroll
+      gsap.to(scrollIndicatorRef.current, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '15% top',
+          scrub: true,
+        },
       })
     })
 
@@ -103,7 +134,13 @@ export function Hero({
         speed={0.5}
       />
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
+      <div
+        ref={contentRef}
+        className={cn(
+          s.content,
+          'relative z-10 flex flex-1 flex-col items-center justify-center px-4 text-center'
+        )}
+      >
         <h1 className={cn(s.name, 'heading-xl')} data-testid="hero-name">
           <span className="sr-only">{name}</span>
           <span aria-hidden="true" ref={nameRef}>

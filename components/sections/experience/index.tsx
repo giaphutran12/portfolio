@@ -1,6 +1,9 @@
 'use client'
 
 import cn from 'clsx'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useEffect, useRef } from 'react'
 import { HoverImageReveal } from '@/components/effects/hover-image-reveal'
 import { Image } from '@/components/ui/image'
 import { Link } from '@/components/ui/link'
@@ -108,15 +111,67 @@ export function Experience({
   const displayExperiences =
     experiences.length > 0 ? experiences : defaultExperiences
 
+  const sectionRef = useRef<HTMLElement>(null)
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const timelineRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
+    if (prefersReducedMotion) return
+
+    const ctx = gsap.context(() => {
+      gsap.from(headingRef.current, {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: 'top 85%',
+          once: true,
+        },
+      })
+
+      if (timelineRef.current) {
+        const entries = timelineRef.current.querySelectorAll(`.${s.entry}`)
+        gsap.set(entries, { opacity: 0, x: -30 })
+
+        ScrollTrigger.batch(entries, {
+          onEnter: (elements) => {
+            gsap.to(elements, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              stagger: 0.2,
+              ease: 'power3.out',
+            })
+          },
+          start: 'top 88%',
+          once: true,
+        })
+      }
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
+      ref={sectionRef}
       id="experience"
       className={cn(s.experience)}
       data-testid="experience-section"
     >
       <div className={cn(s.inner)}>
         <div className={cn(s.headingWrapper)}>
-          <h2 className={cn(s.heading, 'heading-lg')}>Experience</h2>
+          <h2 ref={headingRef} className={cn(s.heading, 'heading-lg')}>
+            Experience
+          </h2>
         </div>
       </div>
 
@@ -190,7 +245,7 @@ export function Experience({
       </Marquee>
 
       <div className={cn(s.inner)}>
-        <div className={cn(s.timeline)}>
+        <div ref={timelineRef} className={cn(s.timeline)}>
           {displayExperiences.map((entry) => (
             <div key={entry._id || entry.company} className={cn(s.entry)}>
               <div

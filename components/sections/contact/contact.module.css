@@ -2,44 +2,104 @@
   background-color: var(--color-primary);
   color: var(--color-secondary);
   overflow: hidden;
+  padding: 80px 0 60px;
+
+  @media (--desktop) {
+    padding: 160px 0 80px;
+  }
+}
+
+.inner {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 clamp(24px, 5vw, 80px);
+  text-align: center;
+}
+
+.label {
+  color: var(--color-contrast);
+  letter-spacing: 0.12em;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+
+  @media (--desktop) {
+    margin-bottom: 40px;
+  }
+}
+
+.divider {
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-contrast),
+    transparent
+  );
+  height: 1px;
+  margin: 0 auto 48px;
+  width: 80px;
+
+  @media (--desktop) {
+    margin-bottom: 64px;
+  }
 }
 
 .heading {
   color: var(--color-secondary);
-  text-align: center;
+  margin-bottom: 48px;
+
+  @media (--desktop) {
+    margin-bottom: 64px;
+  }
 }
 
 .links {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+@media (--desktop) {
+  .links {
+    gap: 24px;
+  }
 }
 
 .link {
-  align-items: center;
-  border-bottom: 1px solid transparent;
   color: var(--color-secondary);
-  display: inline-flex;
-  min-height: 44px;
-  padding: 0 0.5rem 0.25rem;
   position: relative;
   text-decoration: none;
-  transition:
-    border-color 0.3s ease,
-    color 0.3s ease;
+  transition: color 0.3s var(--ease-out-cubic);
+}
+
+.link::after {
+  background: var(--color-contrast);
+  bottom: -4px;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out-expo);
+  width: 100%;
 }
 
 @media (--hover) {
   .link:hover {
-    border-bottom-color: var(--color-contrast);
     color: var(--color-contrast);
+    text-decoration: none;
+  }
+
+  .link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
 
-.copyright {
-  color: var(--color-secondary);
-  margin-top: 1rem;
-  opacity: 0.6;
-  text-align: center;
+.linkSeparator {
+  color: color-mix(in srgb, var(--color-secondary) 25%, transparent);
+  font-size: 24px;
+  line-height: 1;
 }

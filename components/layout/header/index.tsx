@@ -1,8 +1,9 @@
 'use client'
 
 import cn from 'clsx'
+import gsap from 'gsap'
 import { useLenis } from 'lenis/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import s from './header.module.css'
 
 const NAV_LINKS = [
@@ -16,10 +17,25 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const lenis = useLenis()
+  const headerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
+    if (!prefersReducedMotion && headerRef.current) {
+      gsap.from(headerRef.current, {
+        opacity: 0,
+        y: -20,
+        duration: 1,
+        delay: 2.2,
+        ease: 'power3.out',
+      })
+    }
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
+      setIsScrolled(window.scrollY > 50)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -39,6 +55,7 @@ export function Header() {
 
   return (
     <header
+      ref={headerRef}
       className={cn(s.header, isScrolled && s.isScrolled)}
       data-testid="nav-header"
     >

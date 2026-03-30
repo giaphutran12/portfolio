@@ -1,30 +1,35 @@
-import Logo from '@/components/ui/darkroom.svg'
+import cn from 'clsx'
 import { Link } from '@/components/ui/link'
+import s from './footer.module.css'
 
 export function Footer() {
   return (
-    <footer className="relative z-2 flex dt:flex-row flex-col dt:items-end items-center justify-between bg-(--color-primary) p-safe font-mono uppercase">
-      <Link
-        href="https://darkroom.engineering/"
-        className="link"
-        aria-label="Darkroom Engineering"
-      >
-        <Logo className="dr-w-148 text-secondary" aria-hidden="true" />
-      </Link>
-      <div>
-        <Link
-          href="https://github.com/darkroomengineering/satus/generate"
-          className="link"
-        >
-          use this template
-        </Link>
-        {' / '}
-        <Link
-          href="https://github.com/darkroomengineering/satus"
-          className="link"
-        >
-          github
-        </Link>
+    <footer className={cn(s.footer, 'relative z-2')}>
+      <div className={s.inner}>
+        <span className={s.copyright}>
+          © {new Date().getFullYear()} Edward Tran
+        </span>
+        <nav className={s.links}>
+          <Link
+            href="https://github.com/giaphutran12"
+            className={s.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </Link>
+          <span className={s.separator} aria-hidden="true">
+            /
+          </span>
+          <Link
+            href="https://linkedin.com/in/edwardtran"
+            className={s.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </Link>
+        </nav>
       </div>
     </footer>
   )

@@ -1,0 +1,50 @@
+.footer {
+  background-color: var(--color-primary);
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-contrast) 10%, transparent);
+  padding: 24px clamp(24px, 5vw, 80px);
+}
+
+.inner {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.copyright {
+  color: color-mix(in srgb, var(--color-secondary) 40%, transparent);
+  font-family: var(--next-font-body);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.links {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.link {
+  color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  font-family: var(--next-font-body);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+@media (--hover) {
+  .link:hover {
+    color: var(--color-contrast);
+    text-decoration: none;
+  }
+}
+
+.separator {
+  color: color-mix(in srgb, var(--color-secondary) 20%, transparent);
+  font-size: 11px;
+}
