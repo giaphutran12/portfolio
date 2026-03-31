@@ -27,12 +27,12 @@ export function Contact({
       <h2 className={cn(s.heading, 'heading-lg')}>Let's Connect</h2>
 
       <div className={cn(s.links, 'flex flex-col items-center gap-6')}>
-        <Link href={`mailto:${email}`} className={cn(s.link, 'body-lg')}>
+        <Link href={`mailto:${email}`} className={cn(s.link, 'label')}>
           Email
         </Link>
         <Link
           href={githubUrl}
-          className={cn(s.link, 'body-lg')}
+          className={cn(s.link, 'label')}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -40,7 +40,7 @@ export function Contact({
         </Link>
         <Link
           href={linkedinUrl}
-          className={cn(s.link, 'body-lg')}
+          className={cn(s.link, 'label')}
           target="_blank"
           rel="noopener noreferrer"
         >

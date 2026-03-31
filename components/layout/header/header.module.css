@@ -52,6 +52,7 @@
 
 .navList {
   display: flex;
+  align-items: center;
   gap: 2.5rem;
   list-style: none;
   margin: 0;
@@ -59,17 +60,54 @@
 }
 
 .navLink {
+  align-items: center;
+  display: inline-flex;
   font-family: var(--next-font-body);
   font-size: 11px;
   font-weight: 500;
+  justify-content: center;
   letter-spacing: 0.08em;
+  line-height: 1;
   text-transform: uppercase;
+  text-align: center;
   color: var(--color-secondary);
   background: none;
   border: none;
   cursor: pointer;
   transition: color 0.2s ease;
   padding: 0;
+}
+
+.ctaPill {
+  align-items: center;
+  background-color: color-mix(in srgb, var(--color-primary), white 8%);
+  border: 1px solid rgb(200 169 126 / 0.35);
+  border-radius: 999px;
+  color: var(--color-contrast);
+  display: none;
+  font-family: var(--next-font-body);
+  justify-content: center;
+  line-height: 1;
+  min-height: 40px;
+  padding: 0 16px;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.ctaPill:hover {
+  background-color: color-mix(in srgb, var(--color-primary), white 14%);
+  border-color: rgb(200 169 126 / 0.6);
+  color: var(--color-secondary);
+}
+
+@media (--desktop) {
+  .ctaPill {
+    display: inline-flex;
+  }
 }
 
 .navLink:hover {
@@ -123,6 +161,7 @@
 .navListMobile {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   list-style: none;
   margin: 0;
@@ -131,21 +170,32 @@
 }
 
 .navLinkMobile {
+  align-items: center;
   background: none;
   border: none;
   color: var(--color-secondary);
   cursor: pointer;
+  display: inline-flex;
   font-family: var(--next-font-body);
   font-size: 18px;
   font-weight: 600;
+  justify-content: center;
   letter-spacing: 0.08em;
+  line-height: 1;
   min-height: 44px;
   min-width: 44px;
   padding: 10px 24px;
+  text-align: center;
   text-transform: uppercase;
   transition: color 0.2s ease;
 }
 
 .navLinkMobile:hover {
   color: var(--color-contrast);
+}
+
+.ctaPillMobile {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 20px;
 }
