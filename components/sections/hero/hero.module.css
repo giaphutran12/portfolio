@@ -9,8 +9,16 @@
   z-index: 0;
 }
 
+.kicker {
+  color: color-mix(in srgb, var(--color-secondary) 65%, transparent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .name {
   color: var(--color-secondary);
+  max-width: 12ch;
+  text-wrap: balance;
 }
 
 .subtitle {
@@ -21,6 +29,66 @@
 
   @media (--reduced-motion) {
     opacity: 1;
+  }
+}
+
+.lead {
+  color: color-mix(in srgb, var(--color-secondary) 78%, transparent);
+  line-height: 1.6;
+  max-width: 58ch;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+
+  @media (--desktop) {
+    flex-direction: row;
+  }
+}
+
+.action {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 220px;
+  padding: 12px 22px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s var(--ease-out-cubic),
+    border-color 0.3s var(--ease-out-cubic),
+    color 0.3s var(--ease-out-cubic),
+    transform 0.3s var(--ease-out-cubic);
+}
+
+.actionPrimary {
+  background-color: var(--color-contrast);
+  border: 1px solid color-mix(in srgb, var(--color-contrast) 70%, white 30%);
+  color: var(--color-primary);
+}
+
+.actionSecondary {
+  background-color: color-mix(in srgb, var(--color-primary), white 6%);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  color: var(--color-secondary);
+}
+
+@media (--hover) {
+  .action:hover {
+    transform: translateY(-1px);
+  }
+
+  .actionPrimary:hover {
+    background-color: color-mix(in srgb, var(--color-contrast) 85%, white 15%);
+  }
+
+  .actionSecondary:hover {
+    border-color: rgb(255 255 255 / 0.3);
+    color: var(--color-contrast);
   }
 }
 

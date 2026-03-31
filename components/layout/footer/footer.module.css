@@ -1,0 +1,69 @@
+.footer {
+  align-items: center;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  justify-content: space-between;
+  padding: 24px clamp(16px, 4vw, 48px) 34px;
+
+  @media (--desktop) {
+    flex-direction: row;
+    padding: 24px clamp(32px, 4vw, 56px) 34px;
+  }
+}
+
+.brandBlock {
+  text-align: center;
+
+  @media (--desktop) {
+    text-align: left;
+  }
+}
+
+.brandName {
+  color: var(--color-secondary);
+  font-family: var(--next-font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.brandLine {
+  color: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  margin-top: 7px;
+  text-transform: uppercase;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.link {
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--color-secondary) 85%, transparent);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  min-height: 38px;
+  padding: 8px 14px;
+  text-transform: uppercase;
+  transition:
+    border-color 0.25s var(--ease-out-cubic),
+    color 0.25s var(--ease-out-cubic);
+}
+
+@media (--hover) {
+  .link:hover {
+    border-color: rgb(200 169 126 / 0.5);
+    color: var(--color-contrast);
+  }
+}

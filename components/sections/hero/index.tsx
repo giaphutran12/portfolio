@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { useEffect, useRef } from 'react'
 import { AnimatedGradient } from '@/components/effects/animated-gradient'
+import { Link } from '@/components/ui/link'
 import s from './hero.module.css'
 
 const ANIM_DELAY = 0.3
@@ -104,6 +105,9 @@ export function Hero({
       />
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
+        <p className={cn(s.kicker, 'label')}>
+          Edward Tran · Product-minded builder
+        </p>
         <h1 className={cn(s.name, 'heading-xl')} data-testid="hero-name">
           <span className="sr-only">{name}</span>
           <span aria-hidden="true" ref={nameRef}>
@@ -118,6 +122,26 @@ export function Hero({
         >
           {tagline}
         </p>
+
+        <p className={cn(s.lead, 'body-sm')}>
+          Cinematic interfaces. Strong product judgment. Production-grade AI
+          systems.
+        </p>
+
+        <div className={s.actions}>
+          <Link
+            href="#projects"
+            className={cn(s.action, s.actionPrimary, 'label')}
+          >
+            View projects
+          </Link>
+          <Link
+            href="#contact"
+            className={cn(s.action, s.actionSecondary, 'label')}
+          >
+            Start a conversation
+          </Link>
+        </div>
       </div>
 
       <div

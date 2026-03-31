@@ -21,8 +21,8 @@ export default async function Home() {
   ])
 
   return (
-    <Wrapper theme="dark" lenis={{}} webgl>
-      <NoiseWaves color="rgba(200, 169, 126, 0.08)" />
+    <Wrapper theme="dark" lenis={{}} webgl className="bg-(--color-primary)">
+      <NoiseWaves color="rgba(200, 169, 126, 0.12)" />
       <Hero name={siteConfig.name} tagline={siteConfig.tagline} />
       <About aboutText={siteConfig.aboutText} />
       <Projects projects={projects as Project[]} />

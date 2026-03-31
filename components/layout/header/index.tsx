@@ -15,13 +15,29 @@ const NAV_LINKS = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] =
+    useState<(typeof NAV_LINKS)[number]['id']>('about')
   const lenis = useLenis()
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
+
+      const sections = NAV_LINKS.map((link) => ({
+        id: link.id,
+        top: document.getElementById(link.id)?.getBoundingClientRect().top,
+      }))
+
+      const current = sections
+        .filter((section) => typeof section.top === 'number')
+        .findLast((section) => (section.top ?? 0) <= window.innerHeight * 0.35)
+
+      if (current) {
+        setActiveSection(current.id)
+      }
     }
 
+    handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -44,7 +60,8 @@ export function Header() {
     >
       <div className={s.container}>
         <div className={s.logo}>
-          <span className={s.logoText}>ET</span>
+          <span className={s.logoText}>Edward Tran</span>
+          <span className={s.logoMeta}>Product-minded builder</span>
         </div>
 
         <nav className={s.navDesktop}>
@@ -53,8 +70,12 @@ export function Header() {
               <li key={link.id}>
                 <button
                   onClick={() => handleNavClick(link.id)}
-                  className={s.navLink}
+                  className={cn(
+                    s.navLink,
+                    activeSection === link.id && s.isActive
+                  )}
                   type="button"
+                  aria-current={activeSection === link.id ? 'page' : undefined}
                 >
                   {link.label}
                 </button>
@@ -62,6 +83,14 @@ export function Header() {
             ))}
           </ul>
         </nav>
+
+        <button
+          className={s.cta}
+          onClick={() => handleNavClick('contact')}
+          type="button"
+        >
+          Let&apos;s talk
+        </button>
 
         <button
           className={s.hamburger}
@@ -82,7 +111,10 @@ export function Header() {
               <li key={link.id}>
                 <button
                   onClick={() => handleNavClick(link.id)}
-                  className={s.navLinkMobile}
+                  className={cn(
+                    s.navLinkMobile,
+                    activeSection === link.id && s.isActiveMobile
+                  )}
                   type="button"
                 >
                   {link.label}

@@ -21,7 +21,7 @@ export function About({ aboutText = defaultAboutText }: AboutProps) {
         <div className={cn(s.divider)} aria-hidden="true" />
 
         <h2 className={cn(s.heading, 'heading-lg')}>
-          I build things that work.
+          I build products that users remember.
         </h2>
 
         <div className={cn(s.body)}>

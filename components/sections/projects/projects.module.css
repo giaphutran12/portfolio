@@ -1,5 +1,9 @@
 .section {
-  background-color: transparent;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-primary) 95%, transparent),
+    color-mix(in srgb, var(--color-primary) 80%, transparent)
+  );
   padding-block: 80px;
 }
 
@@ -9,15 +13,32 @@
   }
 }
 
-.heading {
-  color: var(--color-secondary);
+.headingGroup {
   margin-bottom: 48px;
 }
 
 @media (--desktop) {
-  .heading {
+  .headingGroup {
     margin-bottom: 64px;
   }
+}
+
+.eyebrow {
+  color: var(--color-contrast);
+  letter-spacing: 0.13em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.heading {
+  color: var(--color-secondary);
+  margin-bottom: 14px;
+}
+
+.headingLead {
+  color: color-mix(in srgb, var(--color-secondary) 76%, transparent);
+  line-height: 1.65;
+  max-width: 62ch;
 }
 
 .grid {
@@ -33,19 +54,22 @@
 }
 
 .card {
-  border: 1px solid rgb(255 255 255 / 0.06);
-  border-radius: 12px;
+  background-color: color-mix(in srgb, var(--color-primary), white 4%);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   opacity: 1;
   overflow: hidden;
   transition:
+    border-color 0.35s var(--ease-out-cubic),
     box-shadow 0.35s var(--ease-out-cubic),
     transform 0.35s var(--ease-out-cubic);
 }
 
 @media (--hover) {
   .card:hover {
+    border-color: rgb(200 169 126 / 0.35);
     box-shadow:
       0 24px 48px rgb(0 0 0 / 0.5),
       0 0 0 1px rgb(200 169 126 / 0.14);
@@ -111,11 +135,11 @@
 }
 
 .tag {
-  background-color: rgb(200 169 126 / 0.1);
+  background-color: rgb(200 169 126 / 0.12);
   border: 1px solid rgb(200 169 126 / 0.2);
-  border-radius: 4px;
+  border-radius: 999px;
   color: var(--color-contrast);
   letter-spacing: 0.08em;
-  padding: 4px 10px;
+  padding: 5px 12px;
   text-transform: uppercase;
 }

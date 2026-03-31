@@ -1,38 +1,91 @@
 .contact {
-  background-color: var(--color-primary);
+  background:
+    radial-gradient(circle at top, rgb(200 169 126 / 0.16), transparent 55%),
+    var(--color-primary);
   color: var(--color-secondary);
+  gap: 2rem;
   overflow: hidden;
+}
+
+.panel {
+  background-color: color-mix(in srgb, var(--color-primary), white 4%);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 18px;
+  max-width: 760px;
+  padding: clamp(28px, 6vw, 56px);
+  text-align: center;
+  width: min(100%, 760px);
+}
+
+.eyebrow {
+  color: var(--color-contrast);
+  letter-spacing: 0.14em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
 }
 
 .heading {
   color: var(--color-secondary);
+  margin-bottom: 16px;
   text-align: center;
+}
+
+.lead {
+  color: color-mix(in srgb, var(--color-secondary) 78%, transparent);
+  line-height: 1.65;
+  margin: 0 auto 2rem;
+  max-width: 56ch;
 }
 
 .links {
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .link {
   align-items: center;
-  border-bottom: 1px solid transparent;
+  border: 1px solid rgb(200 169 126 / 0.35);
+  border-radius: 999px;
   color: var(--color-secondary);
   display: inline-flex;
   min-height: 44px;
-  padding: 0 0.5rem 0.25rem;
+  padding: 12px 22px;
   position: relative;
   text-decoration: none;
   transition:
-    border-color 0.3s ease,
-    color 0.3s ease;
+    background-color 0.3s var(--ease-out-cubic),
+    border-color 0.3s var(--ease-out-cubic),
+    color 0.3s var(--ease-out-cubic);
+}
+
+.metaLinks {
+  display: flex;
+  gap: 10px;
+}
+
+.metaLink {
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--color-secondary) 86%, transparent);
+  min-height: 40px;
+  padding: 9px 16px;
+  text-transform: uppercase;
+  transition:
+    border-color 0.3s var(--ease-out-cubic),
+    color 0.3s var(--ease-out-cubic);
 }
 
 @media (--hover) {
   .link:hover {
-    border-bottom-color: var(--color-contrast);
+    background-color: rgb(200 169 126 / 0.15);
+    border-color: rgb(200 169 126 / 0.6);
+    color: var(--color-contrast);
+  }
+
+  .metaLink:hover {
+    border-color: rgb(255 255 255 / 0.4);
     color: var(--color-contrast);
   }
 }
