@@ -1,17 +1,19 @@
 .experience {
-  background-color: var(--color-primary);
+  background:
+    linear-gradient(to bottom, rgb(10 10 8 / 0.92), rgb(10 10 8 / 0.97)),
+    radial-gradient(circle at 12% 90%, rgb(200 169 126 / 0.12), transparent 40%);
   color: var(--color-secondary);
   overflow: hidden;
-  padding: 80px 0;
+  padding: 90px 0;
 
   @media (--desktop) {
-    padding: 120px 0;
+    padding: 130px 0;
   }
 }
 
 .inner {
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 980px;
   padding: 0 clamp(24px, 5vw, 80px);
 }
 
@@ -42,14 +44,20 @@
 }
 
 .otherContent {
+  backdrop-filter: blur(4px);
+  background: color-mix(in srgb, var(--color-primary), white 4%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  border-radius: 18px;
   display: grid;
   gap: 24px;
   margin-top: 32px;
+  padding: 24px;
 
   @media (--desktop) {
     gap: 28px;
     grid-template-columns: repeat(2, 1fr);
     margin-top: 48px;
+    padding: 28px;
   }
 }
 
@@ -82,6 +90,7 @@
 
 .otherDescription {
   color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  text-wrap: pretty;
 }
 
 .activitiesLine {
@@ -98,8 +107,18 @@
   --timeline-pad: 32px;
   --dot-size: 8px;
 
+  backdrop-filter: blur(4px);
+  background: color-mix(in srgb, var(--color-primary), white 3%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  border-radius: 18px;
+  padding: 26px;
   padding-left: var(--timeline-pad);
   position: relative;
+
+  @media (--desktop) {
+    padding: 32px;
+    padding-left: 42px;
+  }
 }
 
 .timeline::before {
@@ -112,10 +131,14 @@
   );
   bottom: 0;
   content: "";
-  left: 0;
+  left: 26px;
   position: absolute;
   top: 0;
   width: 1px;
+
+  @media (--desktop) {
+    left: 32px;
+  }
 }
 
 .entry {
@@ -163,10 +186,13 @@
 .description {
   color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
   max-width: 560px;
+  text-wrap: pretty;
 }
 
 .logoMarquee {
-  background-color: color-mix(in srgb, var(--color-primary), white 8%);
+  background-color: color-mix(in srgb, var(--color-primary), white 10%);
+  border-block: 1px solid
+    color-mix(in srgb, var(--color-secondary) 10%, transparent);
   margin-bottom: 48px;
   padding: 24px 0;
 
@@ -191,7 +217,7 @@
   flex-shrink: 0;
   height: 40px;
   object-fit: contain;
-  opacity: 0.7;
+  opacity: 0.78;
   transition: opacity 0.3s ease;
   width: auto;
 }

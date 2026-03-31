@@ -1,7 +1,36 @@
 .contact {
-  background-color: var(--color-primary);
+  background:
+    linear-gradient(to bottom, rgb(10 10 8 / 0.94), rgb(10 10 8 / 1)),
+    radial-gradient(circle at 78% 18%, rgb(200 169 126 / 0.13), transparent 42%);
   color: var(--color-secondary);
   overflow: hidden;
+  padding: 84px 16px;
+
+  @media (--desktop) {
+    padding: 140px 16px;
+  }
+}
+
+.inner {
+  align-items: center;
+  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--color-primary), white 4%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-inline: auto;
+  max-width: min(980px, 100%);
+  padding: clamp(28px, 5vw, 56px);
+  text-align: center;
+}
+
+.kicker {
+  color: var(--color-contrast);
+  font-family: var(--next-font-body);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
 }
 
 .heading {
@@ -9,37 +38,54 @@
   text-align: center;
 }
 
+.copy {
+  color: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+  max-width: 50ch;
+  text-wrap: pretty;
+}
+
 .links {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
 }
 
 .link {
   align-items: center;
-  border-bottom: 1px solid transparent;
-  color: var(--color-secondary);
+  background: color-mix(in srgb, var(--color-primary), white 8%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 16%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--color-secondary) 90%, transparent);
   display: inline-flex;
+  font-family: var(--next-font-body);
+  justify-content: center;
   min-height: 44px;
-  padding: 0 0.5rem 0.25rem;
+  min-width: 140px;
+  padding: 0 18px;
   position: relative;
   text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
   transition:
     border-color 0.3s ease,
-    color 0.3s ease;
+    color 0.3s ease,
+    transform 0.3s var(--ease-out-cubic);
 }
 
 @media (--hover) {
   .link:hover {
-    border-bottom-color: var(--color-contrast);
+    background: color-mix(in srgb, var(--color-primary), white 12%);
+    border-color: color-mix(in srgb, var(--color-contrast) 50%, transparent);
     color: var(--color-contrast);
+    transform: translateY(-1px);
   }
 }
 
 .copyright {
-  color: var(--color-secondary);
-  margin-top: 1rem;
-  opacity: 0.6;
+  color: color-mix(in srgb, var(--color-secondary) 48%, transparent);
+  margin-top: 0.6rem;
+  opacity: 1;
   text-align: center;
 }
