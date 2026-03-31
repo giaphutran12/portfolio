@@ -64,6 +64,14 @@ export function Header() {
         </nav>
 
         <button
+          className={cn(s.ctaPill, 'label')}
+          onClick={() => handleNavClick('contact')}
+          type="button"
+        >
+          Start a project
+        </button>
+
+        <button
           className={s.hamburger}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           type="button"
@@ -89,6 +97,15 @@ export function Header() {
                 </button>
               </li>
             ))}
+            <li>
+              <button
+                className={cn(s.ctaPill, s.ctaPillMobile, 'label')}
+                onClick={() => handleNavClick('contact')}
+                type="button"
+              >
+                Start a project
+              </button>
+            </li>
           </ul>
         </nav>
       )}
