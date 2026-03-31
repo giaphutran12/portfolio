@@ -2,6 +2,49 @@
   color: var(--color-secondary);
 }
 
+.noiseVignette {
+  background:
+    radial-gradient(circle at 15% 20%, rgb(200 169 126 / 0.2), transparent 42%),
+    radial-gradient(circle at 85% 78%, rgb(232 227 217 / 0.15), transparent 38%),
+    linear-gradient(to bottom, rgb(10 10 8 / 0.15), rgb(10 10 8 / 0.8));
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.contentWrap {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-inline: auto;
+  max-width: min(1120px, 92vw);
+  padding: 96px 16px 32px;
+  position: relative;
+  text-align: center;
+  z-index: 10;
+
+  @media (--desktop) {
+    gap: 1.6rem;
+    padding-top: 132px;
+  }
+}
+
+.kicker {
+  background: color-mix(in srgb, var(--color-primary), white 10%);
+  border: 1px solid color-mix(in srgb, var(--color-contrast) 30%, transparent);
+  border-radius: 999px;
+  color: var(--color-contrast);
+  font-family: var(--next-font-body);
+  line-height: 1;
+  min-height: 42px;
+  padding: 14px 20px;
+  text-transform: uppercase;
+}
+
 .background {
   inset: 0;
   pointer-events: none;
@@ -11,17 +54,124 @@
 
 .name {
   color: var(--color-secondary);
+  line-height: 0.9;
+  max-width: 12ch;
 }
 
 .subtitle {
   color: var(--color-contrast);
+  font-family: var(--next-font-body);
   letter-spacing: 0.15em;
+  max-width: 46ch;
   opacity: 0;
   text-transform: uppercase;
 
   @media (--reduced-motion) {
     opacity: 1;
   }
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+
+  @media (--desktop) {
+    flex-direction: row;
+    gap: 14px;
+  }
+}
+
+.actionPill {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-family: var(--next-font-body);
+  justify-content: center;
+  min-height: 48px;
+  min-width: 210px;
+  padding: 0 20px;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s var(--ease-out-cubic),
+    border-color 0.3s var(--ease-out-cubic),
+    color 0.3s var(--ease-out-cubic),
+    transform 0.3s var(--ease-out-cubic);
+}
+
+.actionPrimary {
+  background-color: var(--color-contrast);
+  border: 1px solid var(--color-contrast);
+  color: var(--color-primary);
+}
+
+.actionSecondary {
+  background-color: rgb(10 10 8 / 0.55);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 25%, transparent);
+  color: var(--color-secondary);
+}
+
+@media (--hover) {
+  .actionPill:hover {
+    transform: translateY(-2px);
+  }
+
+  .actionPrimary:hover {
+    background-color: color-mix(in srgb, var(--color-contrast), white 10%);
+    border-color: color-mix(in srgb, var(--color-contrast), white 10%);
+  }
+
+  .actionSecondary:hover {
+    background-color: color-mix(in srgb, var(--color-primary), white 8%);
+    border-color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
+    color: var(--color-contrast);
+  }
+}
+
+.metrics {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 20px 0 0;
+  max-width: 860px;
+  padding: 0;
+  width: 100%;
+
+  @media (--desktop) {
+    gap: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 28px;
+  }
+}
+
+.metricItem {
+  align-items: center;
+  backdrop-filter: blur(6px);
+  background: color-mix(in srgb, var(--color-primary), white 8%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  min-height: 108px;
+  padding: 20px 14px;
+}
+
+.metricValue {
+  color: var(--color-secondary);
+  font-weight: 500;
+}
+
+.metricLabel {
+  color: color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  font-family: var(--next-font-body);
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .scrollIndicator {
@@ -39,6 +189,7 @@
 
 .scrollText {
   color: color-mix(in srgb, var(--color-secondary) 50%, transparent);
+  font-family: var(--next-font-body);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }

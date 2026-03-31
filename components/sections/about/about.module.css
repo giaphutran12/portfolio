@@ -1,18 +1,24 @@
 .about {
-  background-color: var(--color-primary);
+  background:
+    linear-gradient(to bottom, rgb(10 10 8 / 0.82), rgb(10 10 8 / 0.95)),
+    radial-gradient(circle at 8% 5%, rgb(200 169 126 / 0.13), transparent 40%);
   color: var(--color-secondary);
   overflow: hidden;
-  padding: 80px 0;
+  padding: 90px 0;
 
   @media (--desktop) {
-    padding: 120px 0;
+    padding: 130px 0;
   }
 }
 
 .inner {
+  backdrop-filter: blur(4px);
+  background: color-mix(in srgb, var(--color-primary), white 4%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  border-radius: 20px;
   margin: 0 auto;
-  max-width: 900px;
-  padding: 0 clamp(24px, 5vw, 80px);
+  max-width: 980px;
+  padding: clamp(28px, 4vw, 56px);
 }
 
 .label {
@@ -50,6 +56,7 @@
 
 .paragraph {
   color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+  text-wrap: pretty;
 }
 
 .accent {
@@ -57,10 +64,14 @@
 }
 
 .divider {
-  background: linear-gradient(to right, var(--color-contrast), transparent);
+  background: linear-gradient(
+    to right,
+    var(--color-contrast),
+    rgb(200 169 126 / 0.18)
+  );
   height: 1px;
   margin-bottom: 40px;
-  width: 80px;
+  width: 140px;
 
   @media (--desktop) {
     margin-bottom: 64px;

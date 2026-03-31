@@ -43,8 +43,11 @@ export function Header() {
       data-testid="nav-header"
     >
       <div className={s.container}>
-        <div className={s.logo}>
-          <span className={s.logoText}>ET</span>
+        <div className={s.brandCluster}>
+          <div className={s.logo}>
+            <span className={s.logoText}>ET</span>
+          </div>
+          <p className={cn(s.status, 'label')}>Open for select projects</p>
         </div>
 
         <nav className={s.navDesktop}>
@@ -53,7 +56,7 @@ export function Header() {
               <li key={link.id}>
                 <button
                   onClick={() => handleNavClick(link.id)}
-                  className={s.navLink}
+                  className={cn(s.navLink, 'label')}
                   type="button"
                 >
                   {link.label}
@@ -63,16 +66,26 @@ export function Header() {
           </ul>
         </nav>
 
-        <button
-          className={s.hamburger}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          type="button"
-          aria-label="Toggle navigation menu"
-        >
-          <span className={cn(s.hamburgerLine, s.line1)} />
-          <span className={cn(s.hamburgerLine, s.line2)} />
-          <span className={cn(s.hamburgerLine, s.line3)} />
-        </button>
+        <div className={s.actions}>
+          <button
+            className={cn(s.contactPill, 'label')}
+            onClick={() => handleNavClick('contact')}
+            type="button"
+          >
+            Start Conversation
+          </button>
+
+          <button
+            className={s.hamburger}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            type="button"
+            aria-label="Toggle navigation menu"
+          >
+            <span className={cn(s.hamburgerLine, s.line1)} />
+            <span className={cn(s.hamburgerLine, s.line2)} />
+            <span className={cn(s.hamburgerLine, s.line3)} />
+          </button>
+        </div>
       </div>
 
       {isMobileMenuOpen && (
@@ -82,7 +95,7 @@ export function Header() {
               <li key={link.id}>
                 <button
                   onClick={() => handleNavClick(link.id)}
-                  className={s.navLinkMobile}
+                  className={cn(s.navLinkMobile, 'label')}
                   type="button"
                 >
                   {link.label}
@@ -90,6 +103,14 @@ export function Header() {
               </li>
             ))}
           </ul>
+
+          <button
+            className={cn(s.contactPillMobile, 'label')}
+            onClick={() => handleNavClick('contact')}
+            type="button"
+          >
+            Start Conversation
+          </button>
         </nav>
       )}
     </header>

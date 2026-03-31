@@ -3,6 +3,7 @@
 import cn from 'clsx'
 import gsap from 'gsap'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
+import { useLenis } from 'lenis/react'
 import { useEffect, useRef } from 'react'
 import { AnimatedGradient } from '@/components/effects/animated-gradient'
 import s from './hero.module.css'
@@ -20,10 +21,20 @@ export function Hero({
   name = 'Edward Tran',
   tagline = 'AI Engineer. Ships Code.',
 }: HeroProps) {
+  const lenis = useLenis()
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLSpanElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const scrollIndicatorRef = useRef<HTMLDivElement>(null)
+
+  const handleScrollTo = (sectionId: string) => {
+    if (lenis) {
+      lenis.scrollTo(`#${sectionId}`, {
+        duration: 1.2,
+        easing: (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
+      })
+    }
+  }
 
   useEffect(() => {
     gsap.registerPlugin(ScrambleTextPlugin)
@@ -98,7 +109,11 @@ export function Hero({
         speed={0.5}
       />
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
+      <div className={s.noiseVignette} aria-hidden="true" />
+
+      <div className={s.contentWrap}>
+        <p className={cn(s.kicker, 'label')}>Creative engineer · Vancouver</p>
+
         <h1 className={cn(s.name, 'heading-xl')} data-testid="hero-name">
           <span className="sr-only">{name}</span>
           <span aria-hidden="true" ref={nameRef}>
@@ -113,6 +128,38 @@ export function Hero({
         >
           {tagline}
         </p>
+
+        <div className={s.actions}>
+          <button
+            className={cn(s.actionPill, s.actionPrimary, 'label')}
+            onClick={() => handleScrollTo('projects')}
+            type="button"
+          >
+            View Projects
+          </button>
+          <button
+            className={cn(s.actionPill, s.actionSecondary, 'label')}
+            onClick={() => handleScrollTo('contact')}
+            type="button"
+          >
+            Start Conversation
+          </button>
+        </div>
+
+        <ul className={s.metrics}>
+          <li className={s.metricItem}>
+            <span className={cn(s.metricValue, 'heading-md')}>15+</span>
+            <span className={cn(s.metricLabel, 'label')}>Systems Audited</span>
+          </li>
+          <li className={s.metricItem}>
+            <span className={cn(s.metricValue, 'heading-md')}>2x</span>
+            <span className={cn(s.metricLabel, 'label')}>Weekly Shipping</span>
+          </li>
+          <li className={s.metricItem}>
+            <span className={cn(s.metricValue, 'heading-md')}>163+</span>
+            <span className={cn(s.metricLabel, 'label')}>Sprint Commits</span>
+          </li>
+        </ul>
       </div>
 
       <div

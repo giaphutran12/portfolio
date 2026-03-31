@@ -1,0 +1,97 @@
+.footer {
+  background:
+    linear-gradient(to top, rgb(10 10 8 / 0.98), rgb(10 10 8 / 0.84)),
+    radial-gradient(circle at 85% 15%, rgb(200 169 126 / 0.14), transparent 48%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  padding: 2.2rem 1rem 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.inner {
+  align-items: center;
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: min(1380px, 96vw);
+
+  @media (--desktop) {
+    gap: 1rem;
+    grid-template-columns: 1fr auto auto;
+  }
+}
+
+.brandBlock {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.brand {
+  color: var(--color-secondary);
+  font-family: var(--next-font-body);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.statement {
+  color: color-mix(in srgb, var(--color-secondary) 65%, transparent);
+  font-family: var(--next-font-body);
+  max-width: 46ch;
+}
+
+.links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-start;
+
+  @media (--desktop) {
+    justify-content: center;
+  }
+}
+
+.link {
+  align-items: center;
+  background-color: color-mix(in srgb, var(--color-primary), white 7%);
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 16%, transparent);
+  border-radius: 999px;
+  color: var(--color-secondary);
+  display: inline-flex;
+  font-family: var(--next-font-body);
+  height: 36px;
+  justify-content: center;
+  letter-spacing: 0.08em;
+  min-width: 96px;
+  padding: 0 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s var(--ease-out-cubic),
+    border-color 0.3s var(--ease-out-cubic),
+    color 0.3s var(--ease-out-cubic),
+    transform 0.3s var(--ease-out-cubic);
+}
+
+@media (--hover) {
+  .link:hover {
+    background-color: color-mix(in srgb, var(--color-primary), white 12%);
+    border-color: color-mix(in srgb, var(--color-contrast) 45%, transparent);
+    color: var(--color-contrast);
+    transform: translateY(-1px);
+  }
+}
+
+.copyright {
+  color: color-mix(in srgb, var(--color-secondary) 45%, transparent);
+  font-family: var(--next-font-body);
+  justify-self: start;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+
+  @media (--desktop) {
+    justify-self: end;
+  }
+}
