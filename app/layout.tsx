@@ -17,10 +17,10 @@ import AppData from '@/package.json'
 import '@/lib/styles/css/index.css'
 
 const APP_NAME = 'Edward Tran'
-const APP_DEFAULT_TITLE = 'Edward Tran — Creative Developer'
+const APP_DEFAULT_TITLE = 'Edward Tran — AI Engineer'
 const APP_TITLE_TEMPLATE = '%s — Edward Tran'
 const APP_DESCRIPTION =
-  'Portfolio of Edward Tran — creative developer crafting interactive web experiences with WebGL, animation, and modern frontend technologies.'
+  'Portfolio of Edward Tran — AI engineer shipping enterprise-grade apps that solve real problems.'
 const APP_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? 'https://localhost:3000'
 
