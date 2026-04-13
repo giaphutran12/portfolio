@@ -68,10 +68,22 @@
   border-color: rgb(200 169 126 / 0.25) transparent transparent transparent;
 }
 
+.chatPanelWrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 91;
+  pointer-events: none;
+}
+
+@media (--desktop) {
+  .chatPanelWrapper {
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
 .chatPanel {
-  position: absolute;
-  bottom: calc(100% + 16px);
-  right: 0;
   width: min(92vw, 380px);
   max-height: min(80vh, 520px);
   background: rgba(14, 12, 10, 0.96);

@@ -157,31 +157,12 @@ export function AiAssistant() {
         body: JSON.stringify({ messages: nextMessages }),
       })
 
-      if (!(response.ok && response.body)) {
+      if (!response.ok) {
         throw new Error('Failed to fetch response')
       }
 
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let accumulated = ''
-
-      // Add empty assistant message that will be filled as stream arrives
-      setMessages((prev) => [...prev, { role: 'assistant', content: '' }])
-
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        accumulated += decoder.decode(value, { stream: true })
-
-        setMessages((prev) => {
-          const updated = [...prev]
-          updated[updated.length - 1] = {
-            role: 'assistant',
-            content: accumulated,
-          }
-          return updated
-        })
-      }
+      const text = await response.text()
+      setMessages((prev) => [...prev, { role: 'assistant', content: text }])
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -197,31 +178,35 @@ export function AiAssistant() {
   }
 
   return (
-    <div
-      className={s.wrapper}
-      style={{
-        left: dogX,
-        top: dogY,
-        width: DOG_SIZE,
-        height: DOG_SIZE,
-      }}
-    >
-      <span
-        className={cn(s.bubble, bubbleVisible && s.bubbleVisible)}
-        aria-hidden="true"
+    <>
+      <div
+        className={s.wrapper}
+        style={{
+          left: dogX,
+          top: dogY,
+          width: DOG_SIZE,
+          height: DOG_SIZE,
+        }}
       >
-        {BUBBLE_MESSAGES[bubbleIndex]}
-      </span>
+        <span
+          className={cn(s.bubble, bubbleVisible && s.bubbleVisible)}
+          aria-hidden="true"
+        >
+          {BUBBLE_MESSAGES[bubbleIndex]}
+        </span>
 
-      <Dog onClick={() => setIsOpen(true)} />
+        <Dog onClick={() => setIsOpen(true)} />
+      </div>
 
-      <ChatPanel
-        open={isOpen}
-        messages={messages}
-        isLoading={isLoading}
-        onClose={() => setIsOpen(false)}
-        onSend={handleSend}
-      />
-    </div>
+      <div className={s.chatPanelWrapper}>
+        <ChatPanel
+          open={isOpen}
+          messages={messages}
+          isLoading={isLoading}
+          onClose={() => setIsOpen(false)}
+          onSend={handleSend}
+        />
+      </div>
+    </>
   )
 }
