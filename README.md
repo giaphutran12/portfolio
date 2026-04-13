@@ -59,6 +59,7 @@ lib/                    # Everything non-UI
 | Components | [COMPONENTS.md](COMPONENTS.md) — Complete component/hook/utility inventory |
 | Patterns | [PATTERNS.md](PATTERNS.md) — Recurring code patterns guide |
 | AI Agents | [CLAUDE.md](CLAUDE.md) — Agent-readable project configuration |
+| Portfolio | [PORTFOLIO_CONTEXT.md](PORTFOLIO_CONTEXT.md) — Builder-ready context for AI-generated portfolio work |
 | App Router | [app/README.md](app/README.md) — Pages, layouts, routing |
 | Components | [components/README.md](components/README.md) — UI reference |
 | Library | [lib/README.md](lib/README.md) — Hooks, utils, integrations |
