@@ -80,4 +80,20 @@ describe('ChatPanel nested scroll escape hatch', () => {
 
     expect(html).toContain('data-lenis-prevent=""')
   })
+
+  test('hides focusable controls from keyboard access when closed and loading', () => {
+    const html = renderToStaticMarkup(
+      <ChatPanel
+        open={false}
+        messages={[{ role: 'assistant', content: 'Hello' }]}
+        isLoading
+        onClose={() => undefined}
+        onSend={() => undefined}
+      />
+    )
+
+    expect(html).toContain('aria-hidden="true"')
+    expect(html).toContain('inert=""')
+    expect(html).toContain('disabled=""')
+  })
 })

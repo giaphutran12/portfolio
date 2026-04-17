@@ -89,13 +89,13 @@ export function Hero({
       )}
     >
       <AnimatedGradient
-        amplitude={1.5}
+        amplitude={3.5}
         className={cn(s.background)}
-        colorAmplitude={2}
-        colorFrequency={0.2}
-        colors={['#0a0a08', '#0f0d0a', '#171410', '#0a0a08']}
-        frequency={0.25}
-        speed={0.5}
+        colorAmplitude={3.5}
+        colorFrequency={0.35}
+        colors={['#0a0a08', '#3d2e20', '#5c4a36', '#0a0a08']}
+        frequency={0.45}
+        speed={1.2}
       />
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">

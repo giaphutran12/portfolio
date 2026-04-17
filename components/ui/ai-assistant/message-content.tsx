@@ -12,7 +12,7 @@ type Block =
 const ORDERED_LIST_PATTERN = /^\d+\.\s+/
 const UNORDERED_LIST_PATTERN = /^[-*]\s+/
 const INLINE_PATTERN =
-  /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))|(\*\*([^*]+)\*\*)|(__(.+?)__)|(`([^`]+)`)|(\*([^*\n]+)\*)|(_([^_\n]+)_)/g
+  /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))|(\*\*([^*]+)\*\*)|(__([^_\n]+)__)|(`([^`]+)`)|(\*([^*\n]+)\*)|(_([^_\n]+)_)/g
 
 function parseBlocks(content: string): Block[] {
   const normalized = content.replace(/\r\n/g, '\n').trim()
@@ -185,24 +185,39 @@ export function MessageContent({ content }: { content: string }) {
         if (block.type === 'list') {
           const ListTag = block.ordered ? 'ol' : 'ul'
           const listKey = `${block.ordered ? 'ordered' : 'unordered'}-${block.items.join('|')}`
+          const itemCounts = new Map<string, number>()
 
           return (
             <ListTag key={listKey} className={s.messageList}>
-              {block.items.map((item) => (
-                <li key={`${listKey}-${item}`}>{renderInline(item)}</li>
-              ))}
+              {block.items.map((item) => {
+                const itemCount = itemCounts.get(item) ?? 0
+                itemCounts.set(item, itemCount + 1)
+
+                return (
+                  <li key={`${listKey}-${item}-${itemCount}`}>
+                    {renderInline(item)}
+                  </li>
+                )
+              })}
             </ListTag>
           )
         }
 
+        const lineCounts = new Map<string, number>()
+
         return (
           <p key={`paragraph-${block.content}`} className={s.messageParagraph}>
-            {block.content.split('\n').map((line, lineIndex) => (
-              <span key={`${block.content}-${line}`}>
-                {lineIndex > 0 && <br />}
-                {renderInline(line)}
-              </span>
-            ))}
+            {block.content.split('\n').map((line, lineIndex) => {
+              const lineCount = lineCounts.get(line) ?? 0
+              lineCounts.set(line, lineCount + 1)
+
+              return (
+                <span key={`${block.content}-${line}-${lineCount}`}>
+                  {lineIndex > 0 && <br />}
+                  {renderInline(line)}
+                </span>
+              )
+            })}
           </p>
         )
       })}

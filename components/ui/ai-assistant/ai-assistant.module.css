@@ -13,7 +13,7 @@
   padding: 0;
   cursor: pointer;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
-  animation: dogBounce 2.6s ease-in-out infinite;
+  animation: dog-bounce 2.6s ease-in-out infinite;
 }
 
 .dogSvg {
@@ -24,12 +24,12 @@
 
 .tail {
   transform-origin: 56px 58px;
-  animation: tailWag 1.2s ease-in-out infinite;
+  animation: tail-wag 1.2s ease-in-out infinite;
 }
 
 .ears {
   transform-origin: 40px 26px;
-  animation: earTwitch 4s ease-in-out infinite;
+  animation: ear-twitch 4s ease-in-out infinite;
 }
 
 .bubble {
@@ -180,7 +180,6 @@
   font-family: inherit;
   font-size: 13.5px;
   line-height: 1.55;
-  word-break: break-word;
   overflow-wrap: anywhere;
 }
 
@@ -353,7 +352,7 @@
   height: 5px;
   background: rgb(200 169 126 / 0.7);
   border-radius: 50%;
-  animation: typingBounce 1s infinite;
+  animation: typing-bounce 1s infinite;
 }
 
 .typingDot:nth-child(2) {
@@ -364,7 +363,7 @@
   animation-delay: 0.3s;
 }
 
-@keyframes dogBounce {
+@keyframes dog-bounce {
   0%,
   100% {
     transform: translateY(0);
@@ -374,7 +373,7 @@
   }
 }
 
-@keyframes tailWag {
+@keyframes tail-wag {
   0%,
   100% {
     transform: rotate(-8deg);
@@ -384,7 +383,7 @@
   }
 }
 
-@keyframes earTwitch {
+@keyframes ear-twitch {
   0%,
   92%,
   100% {
@@ -398,7 +397,7 @@
   }
 }
 
-@keyframes typingBounce {
+@keyframes typing-bounce {
   0%,
   60%,
   100% {
@@ -437,20 +436,20 @@
 /* Idle animation: 25 frames (5x5), ~10fps = 2.5s */
 .animatedDog[data-state="idle"] .dogSprite {
   background-image: url("/dog/dog-idle.png");
-  animation: dogIdle 2.5s steps(1) infinite;
+  animation: dog-idle 2.5s steps(1) infinite;
 }
 
 /* Walk animation: 25 frames (5x5), ~12.5fps = 2s */
 .animatedDog[data-state="walk"] .dogSprite {
   background-image: url("/dog/dog-walk.png");
-  animation: dogWalk 2s steps(1) infinite;
+  animation: dog-walk 2s steps(1) infinite;
 }
 
 .animatedDog[data-direction="left"] .dogSprite {
   transform: scaleX(-1);
 }
 
-@keyframes dogIdle {
+@keyframes dog-idle {
   0% {
     background-position: 0% 0%;
   }
@@ -531,7 +530,7 @@
   }
 }
 
-@keyframes dogWalk {
+@keyframes dog-walk {
   0% {
     background-position: 0% 0%;
   }

@@ -13,7 +13,14 @@ export function useFluidSim() {
   // Use ref to ensure fluid is only created once
   const fluidRef = useRef<Fluid | null>(null)
   if (!fluidRef.current) {
-    fluidRef.current = new Fluid(gl, { size: 128 })
+    fluidRef.current = new Fluid(gl, {
+      size: 256,
+      dyeRes: 1024,
+      velocityDissipation: 0.995,
+      densityDissipation: 0.99,
+      curlStrength: 35,
+      radius: 0.8,
+    })
   }
   const fluid = fluidRef.current
 
@@ -64,7 +71,7 @@ export function useFluidSim() {
         const normalizedY = 1 - clientY / size.height
 
         // Add splat to fluid simulation
-        fluid.addSplat(normalizedX, normalizedY, deltaX * 5, deltaY * -5)
+        fluid.addSplat(normalizedX, normalizedY, deltaX * 8, deltaY * -8)
       }
     }
 

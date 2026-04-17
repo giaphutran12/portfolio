@@ -6,13 +6,74 @@ import { isKimiAuthError } from '@/lib/integrations/kimi/config'
 import { getClientIP, rateLimit, rateLimiters } from '@/lib/utils/rate-limit'
 
 const requestSchema = z.object({
-  messages: z.array(
-    z.object({
-      role: z.enum(['user', 'assistant', 'system']),
-      content: z.string(),
-    })
-  ),
+  messages: z
+    .array(
+      z.object({
+        role: z.enum(['user', 'assistant']),
+        content: z.string(),
+      })
+    )
+    .max(50),
 })
+
+const STREAM_HEADERS = {
+  'Content-Type': 'text/plain; charset=utf-8',
+} as const
+
+type StreamChunk = OpenAI.Chat.Completions.ChatCompletionChunk
+
+type TextStreamResponse =
+  | { ok: true; response: Response }
+  | { ok: false; error: unknown }
+
+async function streamTextResponse(
+  stream: AsyncIterable<StreamChunk>
+): Promise<TextStreamResponse> {
+  const encoder = new TextEncoder()
+  const iterator = stream[Symbol.asyncIterator]()
+  let didEmit = false
+  let pendingError: unknown = null
+
+  const readable = new ReadableStream({
+    async pull(controller) {
+      try {
+        const chunk = await iterator.next()
+
+        if (chunk.done) {
+          controller.close()
+          return
+        }
+
+        const content = chunk.value.choices[0]?.delta?.content || ''
+        if (content) {
+          didEmit = true
+          controller.enqueue(encoder.encode(content))
+        }
+      } catch (error) {
+        pendingError =
+          error instanceof Error ? error : new Error('Unknown stream error')
+        controller.error(pendingError)
+      }
+    },
+    async cancel() {
+      await iterator.return?.()
+    },
+  })
+
+  if (pendingError && !didEmit) {
+    return {
+      ok: false,
+      error: pendingError,
+    }
+  }
+
+  return {
+    ok: true,
+    response: new Response(readable, {
+      headers: STREAM_HEADERS,
+    }),
+  }
+}
 
 const SYSTEM_PROMPT = `You are a friendly, concise AI assistant embedded in Edward Tran's portfolio website.
 
@@ -138,27 +199,6 @@ function getFallbackAnswer(question: string): string {
   return "I don't have a specific answer for that. Email Edward at giaphutran012@gmail.com or check out his LinkedIn!"
 }
 
-function streamTextResponse(
-  stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>
-) {
-  const encoder = new TextEncoder()
-  const readable = new ReadableStream({
-    async start(controller) {
-      for await (const chunk of stream) {
-        const content = chunk.choices[0]?.delta?.content || ''
-        if (content) {
-          controller.enqueue(encoder.encode(content))
-        }
-      }
-      controller.close()
-    },
-  })
-
-  return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  })
-}
-
 export async function POST(request: Request) {
   const ip = getClientIP(request)
   const limitResult = rateLimit(`chat:${ip}`, rateLimiters.standard)
@@ -212,7 +252,25 @@ export async function POST(request: Request) {
         stream: true,
       })
 
-      return streamTextResponse(stream)
+      const streamed = await streamTextResponse(stream)
+      if (streamed.ok) {
+        return streamed.response
+      }
+
+      lastError = streamed.error
+
+      if (provider.name === 'kimi') {
+        if (isKimiAuthError(streamed.error)) {
+          console.error(
+            `[CHAT] Kimi auth failed. Moonshot rejected API key for baseURL=${provider.baseURL}. Falling back to OpenAI if configured.`
+          )
+        } else {
+          console.error(
+            '[CHAT] Kimi failed during streaming. Falling back to OpenAI if configured.',
+            streamed.error
+          )
+        }
+      }
     } catch (error) {
       lastError = error
 
@@ -235,6 +293,6 @@ export async function POST(request: Request) {
   const answer = getFallbackAnswer(lastMessage?.content || '')
   return new Response(answer, {
     status: 200,
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    headers: STREAM_HEADERS,
   })
 }

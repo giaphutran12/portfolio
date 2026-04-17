@@ -107,6 +107,7 @@ export function ChatPanel({
     <div
       className={cn(s.chatPanel, open && s.chatPanelOpen)}
       aria-hidden={!open}
+      inert={!open}
       data-lenis-prevent=""
     >
       <div className={s.chatHeader}>
@@ -161,6 +162,7 @@ export function ChatPanel({
             type="button"
             className={s.quickPrompt}
             onClick={() => onSend(prompt)}
+            disabled={isLoading}
           >
             {prompt}
           </button>

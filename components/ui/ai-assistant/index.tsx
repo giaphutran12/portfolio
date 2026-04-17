@@ -23,9 +23,25 @@ function isTouchDevice() {
   return 'ontouchstart' in window || navigator.maxTouchPoints > 0
 }
 
+function getStoredMessages(): Message[] {
+  if (typeof window === 'undefined') {
+    return []
+  }
+
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (!saved) return []
+
+    const parsed = JSON.parse(saved) as Message[]
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
 export function AiAssistant() {
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>(getStoredMessages)
   const [isLoading, setIsLoading] = useState(false)
 
   const [dogX, setDogX] = useState(0)
@@ -37,27 +53,21 @@ export function AiAssistant() {
   const prevDogPosRef = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
   const touchDeviceRef = useRef(false)
+  const messagesRef = useRef<Message[]>(messages)
+  const isSendingRef = useRef(false)
   const heroVisibleRef = useRef(true)
   const isFrozenRef = useRef(false)
 
   const [bubbleIndex, setBubbleIndex] = useState(0)
   const [bubbleVisible, setBubbleVisible] = useState(false)
 
-  // Load messages from localStorage on mount
   useEffect(() => {
     touchDeviceRef.current = isTouchDevice()
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (saved) {
-        const parsed = JSON.parse(saved) as Message[]
-        if (Array.isArray(parsed)) {
-          setMessages(parsed)
-        }
-      }
-    } catch {
-      // ignore
-    }
   }, [])
+
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
 
   // Persist messages to localStorage
   useEffect(() => {
@@ -241,10 +251,14 @@ export function AiAssistant() {
   }, [isOpen])
 
   const handleSend = async (text: string) => {
-    const nextMessages: Message[] = [
-      ...messages,
-      { role: 'user', content: text },
-    ]
+    const trimmed = text.trim()
+    if (!trimmed || isSendingRef.current) return
+
+    isSendingRef.current = true
+
+    const userMessage: Message = { role: 'user', content: trimmed }
+    const nextMessages: Message[] = [...messagesRef.current, userMessage]
+    messagesRef.current = nextMessages
     setMessages(nextMessages)
     setIsLoading(true)
 
@@ -260,18 +274,26 @@ export function AiAssistant() {
       }
 
       const text = await response.text()
-      setMessages((prev) => [...prev, { role: 'assistant', content: text }])
+      setMessages((prev) => {
+        const assistantMessage: Message = { role: 'assistant', content: text }
+        const updated = [...prev, assistantMessage]
+        messagesRef.current = updated
+        return updated
+      })
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
+      setMessages((prev) => {
+        const fallbackMessage: Message = {
           role: 'assistant',
           content:
             'Sorry, my brain is a little fuzzy right now. Try emailing me directly!',
-        },
-      ])
+        }
+        const updated = [...prev, fallbackMessage]
+        messagesRef.current = updated
+        return updated
+      })
     } finally {
       setIsLoading(false)
+      isSendingRef.current = false
     }
   }
 
