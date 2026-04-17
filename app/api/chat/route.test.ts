@@ -1,4 +1,12 @@
-import { afterEach, beforeAll, describe, expect, mock, test } from 'bun:test'
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  mock,
+  test,
+} from 'bun:test'
 
 let createImpl: (() => Promise<AsyncIterable<unknown>>) | null = null
 
@@ -37,11 +45,19 @@ beforeAll(async () => {
   ;({ POST } = await import('./route'))
 })
 
-afterEach(() => {
+function resetProviderEnv() {
   createImpl = null
   delete process.env.KIMI_API_KEY
   delete process.env.MOONSHOT_API_KEY
   delete process.env.OPENAI_API_KEY
+}
+
+beforeEach(() => {
+  resetProviderEnv()
+})
+
+afterEach(() => {
+  resetProviderEnv()
 })
 
 describe('POST /api/chat', () => {
