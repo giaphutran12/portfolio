@@ -1,23 +1,6 @@
 import { afterEach, beforeAll, describe, expect, mock, test } from 'bun:test'
 
-type MockProvider = {
-  name: 'kimi' | 'openai'
-  apiKey: string
-  model: string
-  baseURL?: string
-}
-
-let providersMock: MockProvider[] = []
-let kimiAuthError = false
 let createImpl: (() => Promise<AsyncIterable<unknown>>) | null = null
-
-mock.module('@/lib/integrations/chat/providers', () => ({
-  resolveChatProviders: () => providersMock,
-}))
-
-mock.module('@/lib/integrations/kimi/config', () => ({
-  isKimiAuthError: () => kimiAuthError,
-}))
 
 mock.module('@/lib/utils/rate-limit', () => ({
   getClientIP: () => '127.0.0.1',
@@ -55,9 +38,10 @@ beforeAll(async () => {
 })
 
 afterEach(() => {
-  providersMock = []
-  kimiAuthError = false
   createImpl = null
+  delete process.env.KIMI_API_KEY
+  delete process.env.MOONSHOT_API_KEY
+  delete process.env.OPENAI_API_KEY
 })
 
 describe('POST /api/chat', () => {
@@ -77,21 +61,13 @@ describe('POST /api/chat', () => {
   })
 
   test('falls back to OpenAI when Kimi auth fails', async () => {
-    providersMock = [
-      {
-        name: 'kimi',
-        apiKey: 'kimi',
-        model: 'kimi-k2.5',
-        baseURL: 'https://api.moonshot.ai/v1',
-      },
-      { name: 'openai', apiKey: 'openai', model: 'gpt-5.4-nano' },
-    ]
+    process.env.KIMI_API_KEY = 'kimi'
+    process.env.OPENAI_API_KEY = 'openai'
 
     let callCount = 0
     createImpl = async () => {
       callCount += 1
       if (callCount === 1) {
-        kimiAuthError = true
         throw { status: 401 }
       }
 
