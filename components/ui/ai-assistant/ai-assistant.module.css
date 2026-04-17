@@ -1,0 +1,612 @@
+.wrapper {
+  position: fixed;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.dog {
+  pointer-events: auto;
+  width: 72px;
+  height: 72px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  animation: dog-bounce 2.6s ease-in-out infinite;
+}
+
+.dogSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tail {
+  transform-origin: 56px 58px;
+  animation: tail-wag 1.2s ease-in-out infinite;
+}
+
+.ears {
+  transform-origin: 40px 26px;
+  animation: ear-twitch 4s ease-in-out infinite;
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 18, 15, 0.95);
+  border: 1px solid rgb(200 169 126 / 0.25);
+  border-radius: 12px;
+  padding: 8px 14px;
+  white-space: nowrap;
+  font-family: var(--next-font-body), system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--color-secondary);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.bubbleVisible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgb(200 169 126 / 0.25) transparent transparent transparent;
+}
+
+.chatPanelWrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 91;
+  pointer-events: none;
+}
+
+@media (--desktop) {
+  .chatPanelWrapper {
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
+.chatPanel {
+  width: min(92vw, 380px);
+  max-height: min(80vh, 520px);
+  background: rgba(14, 12, 10, 0.96);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--next-font-body), system-ui, sans-serif;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  transition:
+    opacity 220ms ease-out,
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chatPanelOpen {
+  pointer-events: auto;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.chatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+  background: color-mix(in srgb, var(--color-primary), white 2%);
+  flex-shrink: 0;
+}
+
+.chatTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+.chatClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+  padding: 0;
+}
+
+@media (--hover) {
+  .chatClose:hover {
+    background-color: rgb(255 255 255 / 0.05);
+    border-color: rgb(255 255 255 / 0.1);
+  }
+}
+
+.messages {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(200 169 126 / 0.35) transparent;
+}
+
+.messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: rgb(200 169 126 / 0.35);
+  border-radius: 999px;
+}
+
+.message {
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.messageUser {
+  align-self: flex-end;
+  background: rgb(200 169 126 / 0.16);
+  border: 1px solid rgb(200 169 126 / 0.22);
+  color: var(--color-secondary);
+}
+
+.messageAssistant {
+  align-self: flex-start;
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  color: color-mix(in srgb, var(--color-secondary), transparent 10%);
+}
+
+.messageBody {
+  display: grid;
+  gap: 10px;
+}
+
+.messageParagraph {
+  margin: 0;
+}
+
+.messageStrong {
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.messageEmphasis {
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-secondary), transparent 8%);
+}
+
+.messageLink {
+  color: rgb(200 169 126);
+  text-decoration: underline;
+  text-decoration-color: rgb(200 169 126 / 0.45);
+  text-underline-offset: 2px;
+}
+
+.inlineCode {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  font-family: var(--next-font-mono), ui-monospace, monospace;
+  font-size: 0.92em;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgb(0 0 0 / 0.28);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: var(--next-font-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.messageList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.quickPrompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 16px 10px;
+  flex-shrink: 0;
+}
+
+.quickPrompt {
+  appearance: none;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.04);
+  color: color-mix(in srgb, var(--color-secondary), transparent 20%);
+  font-family: inherit;
+  font-size: 11.5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+@media (--hover) {
+  .quickPrompt:hover {
+    background: rgb(255 255 255 / 0.08);
+    border-color: rgb(255 255 255 / 0.16);
+    color: var(--color-secondary);
+  }
+}
+
+.inputArea {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+  background: color-mix(in srgb, var(--color-primary), white 1%);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  appearance: none;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(0 0 0 / 0.25);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--color-secondary);
+  outline: none;
+}
+
+.input::placeholder {
+  color: color-mix(in srgb, var(--color-secondary), transparent 55%);
+}
+
+.input:focus {
+  border-color: rgb(200 169 126 / 0.35);
+}
+
+.sendButton {
+  appearance: none;
+  border: 1px solid rgb(200 169 126 / 0.3);
+  background: rgb(200 169 126 / 0.12);
+  color: var(--color-secondary);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (--hover) {
+  .sendButton:hover:not(:disabled) {
+    background: rgb(200 169 126 / 0.2);
+    border-color: rgb(200 169 126 / 0.45);
+  }
+}
+
+.typingIndicator {
+  display: flex;
+  gap: 4px;
+  padding: 6px 0;
+}
+
+.typingDot {
+  width: 5px;
+  height: 5px;
+  background: rgb(200 169 126 / 0.7);
+  border-radius: 50%;
+  animation: typing-bounce 1s infinite;
+}
+
+.typingDot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typingDot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes dog-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes tail-wag {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes ear-twitch {
+  0%,
+  92%,
+  100% {
+    transform: rotate(0deg);
+  }
+  94% {
+    transform: rotate(-4deg);
+  }
+  96% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Animated dog sprite */
+.animatedDog {
+  pointer-events: auto;
+  width: 104px;
+  height: 104px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  display: block;
+}
+
+.dogSprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 500% 500%;
+  image-rendering: pixelated;
+  transform-origin: center;
+}
+
+/* Idle animation: 25 frames (5x5), ~10fps = 2.5s */
+.animatedDog[data-state="idle"] .dogSprite {
+  background-image: url("/dog/dog-idle.png");
+  animation: dog-idle 2.5s steps(1) infinite;
+}
+
+/* Walk animation: 25 frames (5x5), ~12.5fps = 2s */
+.animatedDog[data-state="walk"] .dogSprite {
+  background-image: url("/dog/dog-walk.png");
+  animation: dog-walk 2s steps(1) infinite;
+}
+
+.animatedDog[data-direction="left"] .dogSprite {
+  transform: scaleX(-1);
+}
+
+@keyframes dog-idle {
+  0% {
+    background-position: 0% 0%;
+  }
+  4% {
+    background-position: 25% 0%;
+  }
+  8% {
+    background-position: 50% 0%;
+  }
+  12% {
+    background-position: 75% 0%;
+  }
+  16% {
+    background-position: 100% 0%;
+  }
+  20% {
+    background-position: 0% 25%;
+  }
+  24% {
+    background-position: 25% 25%;
+  }
+  28% {
+    background-position: 50% 25%;
+  }
+  32% {
+    background-position: 75% 25%;
+  }
+  36% {
+    background-position: 100% 25%;
+  }
+  40% {
+    background-position: 0% 50%;
+  }
+  44% {
+    background-position: 25% 50%;
+  }
+  48% {
+    background-position: 50% 50%;
+  }
+  52% {
+    background-position: 75% 50%;
+  }
+  56% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 0% 75%;
+  }
+  64% {
+    background-position: 25% 75%;
+  }
+  68% {
+    background-position: 50% 75%;
+  }
+  72% {
+    background-position: 75% 75%;
+  }
+  76% {
+    background-position: 100% 75%;
+  }
+  80% {
+    background-position: 0% 100%;
+  }
+  84% {
+    background-position: 25% 100%;
+  }
+  88% {
+    background-position: 50% 100%;
+  }
+  92% {
+    background-position: 75% 100%;
+  }
+  96% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes dog-walk {
+  0% {
+    background-position: 0% 0%;
+  }
+  4% {
+    background-position: 25% 0%;
+  }
+  8% {
+    background-position: 50% 0%;
+  }
+  12% {
+    background-position: 75% 0%;
+  }
+  16% {
+    background-position: 100% 0%;
+  }
+  20% {
+    background-position: 0% 25%;
+  }
+  24% {
+    background-position: 25% 25%;
+  }
+  28% {
+    background-position: 50% 25%;
+  }
+  32% {
+    background-position: 75% 25%;
+  }
+  36% {
+    background-position: 100% 25%;
+  }
+  40% {
+    background-position: 0% 50%;
+  }
+  44% {
+    background-position: 25% 50%;
+  }
+  48% {
+    background-position: 50% 50%;
+  }
+  52% {
+    background-position: 75% 50%;
+  }
+  56% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 0% 75%;
+  }
+  64% {
+    background-position: 25% 75%;
+  }
+  68% {
+    background-position: 50% 75%;
+  }
+  72% {
+    background-position: 75% 75%;
+  }
+  76% {
+    background-position: 100% 75%;
+  }
+  80% {
+    background-position: 0% 100%;
+  }
+  84% {
+    background-position: 25% 100%;
+  }
+  88% {
+    background-position: 50% 100%;
+  }
+  92% {
+    background-position: 75% 100%;
+  }
+  96% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}

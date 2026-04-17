@@ -161,8 +161,8 @@ export function NoiseWaves({
   color = 'currentColor',
   xGap = 10,
   yGap = 32,
-  waveAmplitudeX = 32,
-  waveAmplitudeY = 16,
+  waveAmplitudeX = 48,
+  waveAmplitudeY = 32,
   className,
 }: NoiseWavesProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -261,7 +261,7 @@ export function NoiseWaves({
             noise.perlin2(
               (p.x + time * 0.0125) * 0.002,
               (p.y + time * 0.005) * 0.0015
-            ) * 12
+            ) * 20
           p.wave.x = Math.cos(move) * waveAmplitudeX
           p.wave.y = Math.sin(move) * waveAmplitudeY
 
@@ -277,19 +277,19 @@ export function NoiseWaves({
             const pushX = (p.x - mouse.sx) / (dist || 1)
             const pushY = (p.y - mouse.sy) / (dist || 1)
             const velocityBoost = 1 + mouse.vs * 0.02
-            const baseForce = f * (isMobileViewport ? 5 : 12) * velocityBoost
+            const baseForce = f * (isMobileViewport ? 8 : 18) * velocityBoost
 
             p.cursor.vx += pushX * baseForce
             p.cursor.vy += pushY * baseForce
           }
 
-          p.cursor.vx += (0 - p.cursor.x) * 0.004
-          p.cursor.vy += (0 - p.cursor.y) * 0.004
-          p.cursor.vx *= 0.94
-          p.cursor.vy *= 0.94
+          p.cursor.vx += (0 - p.cursor.x) * 0.003
+          p.cursor.vy += (0 - p.cursor.y) * 0.003
+          p.cursor.vx *= 0.97
+          p.cursor.vy *= 0.97
           p.cursor.x += p.cursor.vx * 2
           p.cursor.y += p.cursor.vy * 2
-          const maxDisp = isMobileViewport ? 150 : 400
+          const maxDisp = isMobileViewport ? 200 : 500
           p.cursor.x = Math.min(maxDisp, Math.max(-maxDisp, p.cursor.x))
           p.cursor.y = Math.min(maxDisp, Math.max(-maxDisp, p.cursor.y))
         }
@@ -310,13 +310,23 @@ export function NoiseWaves({
 
       for (let li = 0; li < lines.length; li++) {
         const points = lines[li]!
-        const p0 = moved(points[0]!, false)
+        const pts = points.map((p, i) =>
+          moved(p, i > 0 && i < points.length - 1)
+        )
+        const p0 = pts[0]!
         let d = `M ${p0.x} ${p0.y}`
 
-        for (let pi = 0; pi < points.length; pi++) {
-          const isLast = pi === points.length - 1
-          const p = moved(points[pi]!, !isLast)
-          d += `L ${p.x} ${p.y}`
+        for (let i = 1; i < pts.length - 1; i++) {
+          const p = pts[i]!
+          const nextP = pts[i + 1]!
+          const midX = (p.x + nextP.x) / 2
+          const midY = (p.y + nextP.y) / 2
+          d += ` Q ${p.x} ${p.y}, ${midX} ${midY}`
+        }
+
+        if (pts.length > 1) {
+          const lastP = pts[pts.length - 1]!
+          d += ` Q ${lastP.x} ${lastP.y}, ${lastP.x} ${lastP.y}`
         }
 
         paths[li]!.setAttribute('d', d)

@@ -35,12 +35,18 @@
 .card {
   --project-card-hover-lift-px: 0px;
 
+  appearance: none;
+  background: transparent;
   border: 1px solid rgb(255 255 255 / 0.06);
   border-radius: 12px;
+  color: inherit;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
+  font: inherit;
   opacity: 1;
   overflow: hidden;
+  text-align: left;
   transition:
     box-shadow 0.35s var(--ease-out-cubic),
     transform 0.35s var(--ease-out-cubic);

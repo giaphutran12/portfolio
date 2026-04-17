@@ -1,22 +1,18 @@
+'use client'
+
 import cn from 'clsx'
 import type { CSSProperties } from 'react'
+import { useState } from 'react'
 import { ProjectCardMedia } from '@/components/effects/project-card-media'
 import type { Project as SanityProject } from '@/integrations/sanity/fetch'
 import { ProjectCardVideoMedia } from './project-card-video-media'
+import {
+  type ProjectCard,
+  ProjectDetailContent,
+} from './project-detail-content'
 import s from './projects.module.css'
 import { ProjectsGrid } from './projects-grid'
 import { ProjectsHeading } from './projects-heading'
-
-interface ProjectCard {
-  id: string
-  title: string
-  description: string
-  techStack: string[]
-  gradient: string
-  imageSrc: string
-  hoverImageSrc?: string
-  videoSrc?: string
-}
 
 interface ProjectsProps {
   projects?: SanityProject[]
@@ -173,6 +169,8 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
       techStack: project.techStack,
       gradient: fallback.gradient,
       imageSrc: project.image?.asset?.url || fallback.imageSrc,
+      liveUrl: project.liveUrl || fallback.liveUrl,
+      githubUrl: project.githubUrl || fallback.githubUrl,
     }
 
     if (fallback.hoverImageSrc) {
@@ -189,6 +187,16 @@ function mapProjects(projects?: SanityProject[]): ProjectCard[] {
 
 export function Projects({ projects }: ProjectsProps) {
   const projectCards = mapProjects(projects)
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null
+  )
+
+  const selectedProject =
+    projectCards.find((p) => p.id === selectedProjectId) || null
+
+  const handleCardClick = (projectId: string) => {
+    setSelectedProjectId(projectId)
+  }
 
   return (
     <section id="projects" className={s.section} data-testid="projects-section">
@@ -196,11 +204,14 @@ export function Projects({ projects }: ProjectsProps) {
         <ProjectsHeading />
         <ProjectsGrid className={s.grid}>
           {projectCards.map((project) => (
-            <article
+            <button
               key={project.id}
+              type="button"
               className={s.card}
               data-project-id={project.id}
               style={projectCardLiftStyle}
+              onClick={() => handleCardClick(project.id)}
+              aria-label={`Open details for ${project.title}`}
             >
               <div aria-hidden="true" className={s.imageArea}>
                 {project.videoSrc ? (
@@ -239,10 +250,20 @@ export function Projects({ projects }: ProjectsProps) {
                   ))}
                 </ul>
               </div>
-            </article>
+            </button>
           ))}
         </ProjectsGrid>
       </div>
+
+      {selectedProject && (
+        <ProjectDetailContent
+          project={selectedProject}
+          open={Boolean(selectedProject)}
+          onOpenChange={(open) => {
+            if (!open) setSelectedProjectId(null)
+          }}
+        />
+      )}
     </section>
   )
 }
