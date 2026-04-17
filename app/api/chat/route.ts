@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { z } from 'zod'
+import { resolveChatProviders } from '@/lib/integrations/chat/providers'
+import { isKimiAuthError } from '@/lib/integrations/kimi/config'
 import { getClientIP, rateLimit, rateLimiters } from '@/lib/utils/rate-limit'
 
 const requestSchema = z.object({
@@ -136,6 +138,27 @@ function getFallbackAnswer(question: string): string {
   return "I don't have a specific answer for that. Email Edward at giaphutran012@gmail.com or check out his LinkedIn!"
 }
 
+function streamTextResponse(
+  stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>
+) {
+  const encoder = new TextEncoder()
+  const readable = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content || ''
+        if (content) {
+          controller.enqueue(encoder.encode(content))
+        }
+      }
+      controller.close()
+    },
+  })
+
+  return new Response(readable, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  })
+}
+
 export async function POST(request: Request) {
   const ip = getClientIP(request)
   const limitResult = rateLimit(`chat:${ip}`, rateLimiters.standard)
@@ -161,9 +184,9 @@ export async function POST(request: Request) {
 
   const { messages } = parsed.data
   const lastMessage = messages[messages.length - 1]
-  const apiKey = process.env.KIMI_API_KEY
+  const providers = resolveChatProviders()
 
-  if (!apiKey) {
+  if (providers.length === 0) {
     const answer = getFallbackAnswer(lastMessage?.content || '')
     return new Response(answer, {
       status: 200,
@@ -171,43 +194,47 @@ export async function POST(request: Request) {
     })
   }
 
-  const openai = new OpenAI({
-    apiKey,
-    baseURL: 'https://api.moonshot.cn/v1',
-  })
+  let lastError: unknown
 
-  try {
-    const stream = await openai.chat.completions.create({
-      model: 'kimi-latest',
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...messages.map((m) => ({ role: m.role, content: m.content })),
-      ],
-      stream: true,
+  for (const provider of providers) {
+    const client = new OpenAI({
+      apiKey: provider.apiKey,
+      baseURL: provider.baseURL,
     })
 
-    const encoder = new TextEncoder()
-    const readable = new ReadableStream({
-      async start(controller) {
-        for await (const chunk of stream) {
-          const content = chunk.choices[0]?.delta?.content || ''
-          if (content) {
-            controller.enqueue(encoder.encode(content))
-          }
+    try {
+      const stream = await client.chat.completions.create({
+        model: provider.model,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...messages.map((m) => ({ role: m.role, content: m.content })),
+        ],
+        stream: true,
+      })
+
+      return streamTextResponse(stream)
+    } catch (error) {
+      lastError = error
+
+      if (provider.name === 'kimi') {
+        if (isKimiAuthError(error)) {
+          console.error(
+            `[CHAT] Kimi auth failed. Moonshot rejected API key for baseURL=${provider.baseURL}. Falling back to OpenAI if configured.`
+          )
+        } else {
+          console.error(
+            '[CHAT] Kimi failed before streaming. Falling back to OpenAI if configured.',
+            error
+          )
         }
-        controller.close()
-      },
-    })
-
-    return new Response(readable, {
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-    })
-  } catch (error) {
-    console.error('[CHAT] Streaming error:', error)
-    const answer = getFallbackAnswer(lastMessage?.content || '')
-    return new Response(answer, {
-      status: 200,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-    })
+      }
+    }
   }
+
+  console.error('[CHAT] Streaming error:', lastError)
+  const answer = getFallbackAnswer(lastMessage?.content || '')
+  return new Response(answer, {
+    status: 200,
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  })
 }
