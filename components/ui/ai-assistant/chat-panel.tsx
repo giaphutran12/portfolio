@@ -3,6 +3,7 @@
 import cn from 'clsx'
 import { useEffect, useRef } from 'react'
 import s from './ai-assistant.module.css'
+import { MessageContent } from './message-content'
 
 export interface Message {
   role: 'user' | 'assistant'
@@ -15,6 +16,12 @@ interface ChatPanelProps {
   isLoading: boolean
   onClose: () => void
   onSend: (text: string) => void
+}
+
+type ChatScrollState = {
+  open: boolean
+  messageCount: number
+  isLoading: boolean
 }
 
 const QUICK_PROMPTS = [
@@ -36,6 +43,25 @@ function TypingIndicator() {
   )
 }
 
+export function shouldAutoScroll(
+  previous: ChatScrollState | undefined,
+  next: ChatScrollState
+) {
+  if (!next.open) {
+    return false
+  }
+
+  if (!previous) {
+    return true
+  }
+
+  return (
+    (!previous.open && next.open) ||
+    previous.messageCount !== next.messageCount ||
+    previous.isLoading !== next.isLoading
+  )
+}
+
 export function ChatPanel({
   open,
   messages,
@@ -45,10 +71,21 @@ export function ChatPanel({
 }: ChatPanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const previousScrollStateRef = useRef<ChatScrollState | undefined>(undefined)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  })
+    const nextState = {
+      open,
+      messageCount: messages.length,
+      isLoading,
+    }
+
+    if (shouldAutoScroll(previousScrollStateRef.current, nextState)) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+
+    previousScrollStateRef.current = nextState
+  }, [open, messages.length, isLoading])
 
   useEffect(() => {
     if (open) {
@@ -70,6 +107,7 @@ export function ChatPanel({
     <div
       className={cn(s.chatPanel, open && s.chatPanelOpen)}
       aria-hidden={!open}
+      data-lenis-prevent=""
     >
       <div className={s.chatHeader}>
         <h3 className={s.chatTitle}>Ask Edward&apos;s AI</h3>
@@ -96,7 +134,7 @@ export function ChatPanel({
         </button>
       </div>
 
-      <div className={s.messages}>
+      <div className={s.messages} data-lenis-prevent="">
         {messages.map((message, index) => (
           <div
             key={`${message.role}-${index}`}
@@ -105,7 +143,11 @@ export function ChatPanel({
               message.role === 'user' ? s.messageUser : s.messageAssistant
             )}
           >
-            {message.content}
+            {message.role === 'assistant' ? (
+              <MessageContent content={message.content} />
+            ) : (
+              message.content
+            )}
           </div>
         ))}
         {isLoading && <TypingIndicator />}

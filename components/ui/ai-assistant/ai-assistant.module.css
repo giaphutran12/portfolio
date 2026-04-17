@@ -42,6 +42,7 @@
   border-radius: 12px;
   padding: 8px 14px;
   white-space: nowrap;
+  font-family: var(--next-font-body), system-ui, sans-serif;
   font-size: 12px;
   color: var(--color-secondary);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -92,8 +93,9 @@
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
   display: flex;
   flex-direction: column;
+  font-family: var(--next-font-body), system-ui, sans-serif;
   overflow: hidden;
-  pointer-events: auto;
+  pointer-events: none;
   opacity: 0;
   transform: scale(0.96) translateY(8px);
   transition:
@@ -102,6 +104,7 @@
 }
 
 .chatPanelOpen {
+  pointer-events: auto;
   opacity: 1;
   transform: scale(1) translateY(0);
 }
@@ -118,7 +121,7 @@
 
 .chatTitle {
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-secondary);
   margin: 0;
 }
@@ -174,9 +177,11 @@
   max-width: 88%;
   padding: 10px 14px;
   border-radius: 12px;
+  font-family: inherit;
   font-size: 13.5px;
   line-height: 1.55;
-  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .messageUser {
@@ -191,7 +196,62 @@
   background: rgb(255 255 255 / 0.05);
   border: 1px solid rgb(255 255 255 / 0.08);
   color: color-mix(in srgb, var(--color-secondary), transparent 10%);
+}
+
+.messageBody {
+  display: grid;
+  gap: 10px;
+}
+
+.messageParagraph {
+  margin: 0;
+}
+
+.messageStrong {
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.messageEmphasis {
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-secondary), transparent 8%);
+}
+
+.messageLink {
+  color: rgb(200 169 126);
+  text-decoration: underline;
+  text-decoration-color: rgb(200 169 126 / 0.45);
+  text-underline-offset: 2px;
+}
+
+.inlineCode {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.08);
   font-family: var(--next-font-mono), ui-monospace, monospace;
+  font-size: 0.92em;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgb(0 0 0 / 0.28);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: var(--next-font-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.messageList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
 }
 
 .quickPrompts {
@@ -207,6 +267,7 @@
   border: 1px solid rgb(255 255 255 / 0.1);
   background: rgb(255 255 255 / 0.04);
   color: color-mix(in srgb, var(--color-secondary), transparent 20%);
+  font-family: inherit;
   font-size: 11.5px;
   padding: 5px 10px;
   border-radius: 999px;
@@ -238,6 +299,7 @@
   background: rgb(0 0 0 / 0.25);
   border-radius: 10px;
   padding: 9px 12px;
+  font-family: inherit;
   font-size: 13.5px;
   color: var(--color-secondary);
   outline: none;
@@ -258,6 +320,7 @@
   color: var(--color-secondary);
   border-radius: 10px;
   padding: 0 14px;
+  font-family: inherit;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -345,5 +408,206 @@
   30% {
     transform: translateY(-4px);
     opacity: 1;
+  }
+}
+
+/* Animated dog sprite */
+.animatedDog {
+  pointer-events: auto;
+  width: 104px;
+  height: 104px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  display: block;
+}
+
+.dogSprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 500% 500%;
+  image-rendering: pixelated;
+  transform-origin: center;
+}
+
+/* Idle animation: 25 frames (5x5), ~10fps = 2.5s */
+.animatedDog[data-state="idle"] .dogSprite {
+  background-image: url("/dog/dog-idle.png");
+  animation: dogIdle 2.5s steps(1) infinite;
+}
+
+/* Walk animation: 25 frames (5x5), ~12.5fps = 2s */
+.animatedDog[data-state="walk"] .dogSprite {
+  background-image: url("/dog/dog-walk.png");
+  animation: dogWalk 2s steps(1) infinite;
+}
+
+.animatedDog[data-direction="left"] .dogSprite {
+  transform: scaleX(-1);
+}
+
+@keyframes dogIdle {
+  0% {
+    background-position: 0% 0%;
+  }
+  4% {
+    background-position: 25% 0%;
+  }
+  8% {
+    background-position: 50% 0%;
+  }
+  12% {
+    background-position: 75% 0%;
+  }
+  16% {
+    background-position: 100% 0%;
+  }
+  20% {
+    background-position: 0% 25%;
+  }
+  24% {
+    background-position: 25% 25%;
+  }
+  28% {
+    background-position: 50% 25%;
+  }
+  32% {
+    background-position: 75% 25%;
+  }
+  36% {
+    background-position: 100% 25%;
+  }
+  40% {
+    background-position: 0% 50%;
+  }
+  44% {
+    background-position: 25% 50%;
+  }
+  48% {
+    background-position: 50% 50%;
+  }
+  52% {
+    background-position: 75% 50%;
+  }
+  56% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 0% 75%;
+  }
+  64% {
+    background-position: 25% 75%;
+  }
+  68% {
+    background-position: 50% 75%;
+  }
+  72% {
+    background-position: 75% 75%;
+  }
+  76% {
+    background-position: 100% 75%;
+  }
+  80% {
+    background-position: 0% 100%;
+  }
+  84% {
+    background-position: 25% 100%;
+  }
+  88% {
+    background-position: 50% 100%;
+  }
+  92% {
+    background-position: 75% 100%;
+  }
+  96% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes dogWalk {
+  0% {
+    background-position: 0% 0%;
+  }
+  4% {
+    background-position: 25% 0%;
+  }
+  8% {
+    background-position: 50% 0%;
+  }
+  12% {
+    background-position: 75% 0%;
+  }
+  16% {
+    background-position: 100% 0%;
+  }
+  20% {
+    background-position: 0% 25%;
+  }
+  24% {
+    background-position: 25% 25%;
+  }
+  28% {
+    background-position: 50% 25%;
+  }
+  32% {
+    background-position: 75% 25%;
+  }
+  36% {
+    background-position: 100% 25%;
+  }
+  40% {
+    background-position: 0% 50%;
+  }
+  44% {
+    background-position: 25% 50%;
+  }
+  48% {
+    background-position: 50% 50%;
+  }
+  52% {
+    background-position: 75% 50%;
+  }
+  56% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 0% 75%;
+  }
+  64% {
+    background-position: 25% 75%;
+  }
+  68% {
+    background-position: 50% 75%;
+  }
+  72% {
+    background-position: 75% 75%;
+  }
+  76% {
+    background-position: 100% 75%;
+  }
+  80% {
+    background-position: 0% 100%;
+  }
+  84% {
+    background-position: 25% 100%;
+  }
+  88% {
+    background-position: 50% 100%;
+  }
+  92% {
+    background-position: 75% 100%;
+  }
+  96% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 100% 100%;
   }
 }
