@@ -206,7 +206,6 @@ export function Header() {
       </div>
 
       {isNavOpened && (
-        // biome-ignore lint/a11y/noStaticElementInteractions: backdrop tap-to-close; keyboard users close via Escape
         // biome-ignore lint/a11y/useKeyWithClickEvents: the Escape handler is the keyboard equivalent of the backdrop tap
         <nav
           ref={navRef}
