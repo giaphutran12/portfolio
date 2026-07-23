@@ -26,7 +26,7 @@ They are automatically rendered when you use `<Wrapper>`.
 | Component | Purpose |
 |-----------|---------|
 | `wrapper/` | Page container with theme, Lenis, WebGL support. **Includes Header + Footer** |
-| `header/` | Site navigation. Mobile menu opens via the `isNavOpened` store (locks scroll through Lenis), traps focus, and closes on Escape, backdrop tap, or resize to desktop |
+| `header/` | Site navigation. Mobile menu opens via the `isNavOpened` store (scroll locks while the Lenis provider is mounted), keeps Tab focus within the menu and its toggle, and closes on Escape, backdrop tap, or resize to desktop |
 | `footer/` | Site footer |
 | `lenis/` | Smooth scroll provider |
 | `theme/` | Theme context provider |

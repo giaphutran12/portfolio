@@ -158,7 +158,7 @@ export function MyComponent({ variant = 'primary', className, ...props }: MyComp
 
 | Package | Purpose |
 |---------|---------|
-| `lenis` | Smooth scroll (configured in layout) |
+| `lenis` | Smooth scroll (mounted by `<Wrapper>`) |
 | `gsap` | Complex animations |
 | `tempus` | RAF management |
 | `hamo` | Performance hooks (`useRect`, etc.) |
