@@ -45,7 +45,7 @@ import { Link } from '@/components/ui/link'
 
 ### Lenis for Scrolling
 
-Configured in `app/layout.tsx`. ScrollTrigger uses Lenis automatically.
+Mounted by `<Wrapper>` (`components/layout/wrapper`) when its `lenis` prop is enabled (the default). ScrollTrigger uses Lenis automatically. The Lenis provider also owns the mobile-nav scroll lock: it toggles `overflow-hidden` on `<html>` from the `isNavOpened` store.
 
 ### Optional Features Pattern
 

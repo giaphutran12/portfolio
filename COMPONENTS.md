@@ -36,7 +36,7 @@ Quick-reference for every component, hook, and utility in the Satus starter kit.
 | Component | Import | Type | Description |
 |-----------|--------|------|-------------|
 | Wrapper | `@/components/layout/wrapper` | Client | Page wrapper: theme + Lenis + WebGL. Includes Header/Footer |
-| Header | `@/components/layout/header` | Client | Fixed navigation header |
+| Header | `@/components/layout/header` | Client | Fixed navigation header; mobile menu drives `isNavOpened` (scroll locks while the Lenis provider is mounted), keeps Tab focus within the menu and its toggle, closes on Escape/backdrop/desktop resize |
 | Footer | `@/components/layout/footer` | Server | Site footer |
 | Lenis | `@/components/layout/lenis` | Client | Smooth scroll provider synced with Tempus |
 | Theme | `@/components/layout/theme` | Client | Theme context provider (`useTheme` hook) |

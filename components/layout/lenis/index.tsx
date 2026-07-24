@@ -44,6 +44,11 @@ export function Lenis({
       'overflow-hidden',
       isOverflowHidden
     )
+    // without this teardown, unmounting while the nav is open leaves the
+    // scroll-lock class stuck on <html> with nothing left to remove it
+    return () => {
+      document.documentElement.classList.remove('overflow-hidden')
+    }
   }, [isNavOpened])
 
   return (
