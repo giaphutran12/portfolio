@@ -104,7 +104,7 @@ export async function fetchSiteConfig(): Promise<SiteConfig> {
 /**
  * Default hardcoded projects (fallback)
  */
-function getDefaultProjects(): Project[] {
+export function getDefaultProjects(): Project[] {
   return [
     {
       _id: 'x-recommendation-algo',
