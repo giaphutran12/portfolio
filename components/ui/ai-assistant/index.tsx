@@ -1,11 +1,25 @@
 'use client'
 
+import { Chat, useChat } from '@ai-sdk/react'
+import { DefaultChatTransport } from 'ai'
 import cn from 'clsx'
+import type Lenis from 'lenis'
+import { useLenis } from 'lenis/react'
 import { useEffect, useRef, useState } from 'react'
 import s from './ai-assistant.module.css'
 import { AnimatedDog } from './animated-dog'
-import { ChatPanel, type Message } from './chat-panel'
+import { ChatPanel } from './chat-panel'
+import { hasPendingConfirmation, shouldResend } from './chat-state'
 import { getDogTargetPosition } from './dog-motion'
+import { showOnPage } from './page-actions'
+import { formatSlotTime, slotContextText } from './slot-format'
+import {
+  dropUnsettledTurns,
+  loadStoredMessages,
+  saveMessages,
+  trimHistory,
+} from './storage'
+import type { AssistantUIMessage } from './types'
 
 const BUBBLE_MESSAGES = [
   'ask me anything',
@@ -16,33 +30,66 @@ const BUBBLE_MESSAGES = [
 const DOG_SIZE = 104
 const DOG_FOLLOW_DISTANCE = 220
 const MARGIN = 16
-const STORAGE_KEY = 'edward-portfolio-chat'
 
 function isTouchDevice() {
   if (typeof window === 'undefined') return false
   return 'ontouchstart' in window || navigator.maxTouchPoints > 0
 }
 
-function getStoredMessages(): Message[] {
-  if (typeof window === 'undefined') {
-    return []
-  }
-
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (!saved) return []
-
-    const parsed = JSON.parse(saved) as Message[]
-    return Array.isArray(parsed) ? parsed : []
-  } catch {
-    return []
-  }
-}
-
 export function AiAssistant() {
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>(getStoredMessages)
-  const [isLoading, setIsLoading] = useState(false)
+  const lenis = useLenis()
+  const lenisRef = useRef<Lenis | undefined>(undefined)
+  const hydratedRef = useRef(false)
+
+  // One Chat for the page's lifetime. Its callbacks are created once, so they
+  // read the Lenis instance through a ref instead of closing over it.
+  const chatRef = useRef<Chat<AssistantUIMessage> | null>(null)
+  if (!chatRef.current) {
+    const chat: Chat<AssistantUIMessage> = new Chat<AssistantUIMessage>({
+      transport: new DefaultChatTransport<AssistantUIMessage>({
+        api: '/api/chat',
+        // The server takes at most 40 messages: send the recent, settled tail.
+        prepareSendMessagesRequest: ({ messages }) => ({
+          body: { messages: trimHistory(messages) },
+        }),
+      }),
+      sendAutomaticallyWhen: shouldResend,
+      onToolCall: ({ toolCall }) => {
+        if (toolCall.dynamic || toolCall.toolName !== 'show_on_page') return
+
+        const { toolCallId } = toolCall
+        // Not awaited on purpose: awaiting addToolOutput inside onToolCall can deadlock.
+        showOnPage(toolCall.input, lenisRef.current)
+          .then((output) =>
+            chat.addToolOutput({ tool: 'show_on_page', toolCallId, output })
+          )
+          .catch(() =>
+            chat.addToolOutput({
+              tool: 'show_on_page',
+              toolCallId,
+              state: 'output-error',
+              errorText: 'The page could not be moved.',
+            })
+          )
+      },
+      onError: () => {
+        // A half-finished turn would make the next request invalid: drop it.
+        chat.messages = dropUnsettledTurns(chat.messages)
+      },
+    })
+    chatRef.current = chat
+  }
+
+  const {
+    messages,
+    sendMessage,
+    setMessages,
+    addToolApprovalResponse,
+    status,
+    error,
+  } = useChat<AssistantUIMessage>({ chat: chatRef.current })
+  const isLoading = status === 'submitted' || status === 'streaming'
 
   const [dogX, setDogX] = useState(0)
   const [dogY, setDogY] = useState(0)
@@ -53,8 +100,6 @@ export function AiAssistant() {
   const prevDogPosRef = useRef({ x: 0, y: 0 })
   const rafRef = useRef<number | null>(null)
   const touchDeviceRef = useRef(false)
-  const messagesRef = useRef<Message[]>(messages)
-  const isSendingRef = useRef(false)
   const heroVisibleRef = useRef(true)
   const isFrozenRef = useRef(false)
 
@@ -66,17 +111,22 @@ export function AiAssistant() {
   }, [])
 
   useEffect(() => {
-    messagesRef.current = messages
-  }, [messages])
+    lenisRef.current = lenis
+  }, [lenis])
 
-  // Persist messages to localStorage
+  // Restore the saved chat after mount (never during render: the server has no
+  // localStorage, and a different first render would break hydration).
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
-    } catch {
-      // ignore
-    }
-  }, [messages])
+    const stored = loadStoredMessages()
+    if (stored.length > 0) setMessages(stored)
+    hydratedRef.current = true
+  }, [setMessages])
+
+  // Persist messages to localStorage once a reply settles
+  useEffect(() => {
+    if (!hydratedRef.current || isLoading) return
+    saveMessages(messages)
+  }, [messages, isLoading])
 
   // Initialize dog position at bottom-right
   useEffect(() => {
@@ -250,51 +300,28 @@ export function AiAssistant() {
     }
   }, [isOpen])
 
-  const handleSend = async (text: string) => {
+  const awaitingConfirmation = hasPendingConfirmation(messages)
+
+  const handleSend = (text: string) => {
     const trimmed = text.trim()
-    if (!trimmed || isSendingRef.current) return
+    if (!trimmed || isLoading || awaitingConfirmation) return
+    void sendMessage({ text: trimmed })
+  }
 
-    isSendingRef.current = true
+  const handlePickSlot = (startIso: string) => {
+    if (isLoading || awaitingConfirmation) return
+    // The visitor sees "Book Tue, Nov 10, 9:00 AM PST"; the second part carries
+    // the exact instant so the model never has to convert time zones.
+    void sendMessage({
+      parts: [
+        { type: 'text', text: `Book ${formatSlotTime(startIso)}` },
+        { type: 'text', text: slotContextText(startIso) },
+      ],
+    })
+  }
 
-    const userMessage: Message = { role: 'user', content: trimmed }
-    const nextMessages: Message[] = [...messagesRef.current, userMessage]
-    messagesRef.current = nextMessages
-    setMessages(nextMessages)
-    setIsLoading(true)
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: nextMessages }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch response')
-      }
-
-      const text = await response.text()
-      setMessages((prev) => {
-        const assistantMessage: Message = { role: 'assistant', content: text }
-        const updated = [...prev, assistantMessage]
-        messagesRef.current = updated
-        return updated
-      })
-    } catch {
-      setMessages((prev) => {
-        const fallbackMessage: Message = {
-          role: 'assistant',
-          content:
-            'Sorry, my brain is a little fuzzy right now. Try emailing me directly!',
-        }
-        const updated = [...prev, fallbackMessage]
-        messagesRef.current = updated
-        return updated
-      })
-    } finally {
-      setIsLoading(false)
-      isSendingRef.current = false
-    }
+  const handleApproval = (approvalId: string, approved: boolean) => {
+    void addToolApprovalResponse({ id: approvalId, approved })
   }
 
   return (
@@ -327,8 +354,12 @@ export function AiAssistant() {
           open={isOpen}
           messages={messages}
           isLoading={isLoading}
+          hasError={Boolean(error)}
+          awaitingConfirmation={awaitingConfirmation}
           onClose={() => setIsOpen(false)}
           onSend={handleSend}
+          onPickSlot={handlePickSlot}
+          onApproval={handleApproval}
         />
       </div>
     </>

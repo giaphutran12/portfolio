@@ -253,6 +253,175 @@
   gap: 4px;
 }
 
+.assistantTurn {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 88%;
+  min-width: 0;
+}
+
+.assistantTurn .message {
+  max-width: 100%;
+}
+
+.toolLine {
+  margin: 0;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-secondary), transparent 45%);
+}
+
+.receipt {
+  margin: 0;
+  padding: 6px 10px;
+  border-left: 2px solid rgb(200 169 126 / 0.5);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-secondary), transparent 15%);
+}
+
+.errorLine {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-secondary), transparent 35%);
+}
+
+.slotChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slotChip {
+  appearance: none;
+  border: 1px solid rgb(200 169 126 / 0.3);
+  background: rgb(200 169 126 / 0.1);
+  color: var(--color-secondary);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.slotChip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (--hover) {
+  .slotChip:hover:not(:disabled) {
+    background: rgb(200 169 126 / 0.2);
+    border-color: rgb(200 169 126 / 0.5);
+  }
+}
+
+.approvalCard {
+  display: grid;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgb(200 169 126 / 0.08);
+  border: 1px solid rgb(200 169 126 / 0.28);
+  color: var(--color-secondary);
+}
+
+.approvalTitle {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.approvalRows {
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.approvalRow {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.approvalLabel {
+  color: color-mix(in srgb, var(--color-secondary), transparent 45%);
+}
+
+.approvalValue {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.approvalMessage {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 0.25);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  font-size: 12.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.approvalActions {
+  display: flex;
+  gap: 8px;
+}
+
+.approvalConfirm,
+.approvalCancel {
+  appearance: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.approvalConfirm {
+  border: 1px solid rgb(200 169 126 / 0.45);
+  background: rgb(200 169 126 / 0.2);
+  color: var(--color-secondary);
+}
+
+.approvalCancel {
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: transparent;
+  color: color-mix(in srgb, var(--color-secondary), transparent 20%);
+}
+
+.approvalConfirm:disabled,
+.approvalCancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (--hover) {
+  .approvalConfirm:hover:not(:disabled) {
+    background: rgb(200 169 126 / 0.3);
+  }
+
+  .approvalCancel:hover:not(:disabled) {
+    background: rgb(255 255 255 / 0.06);
+  }
+}
+
 .quickPrompts {
   display: flex;
   flex-wrap: wrap;
