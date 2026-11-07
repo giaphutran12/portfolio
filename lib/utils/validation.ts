@@ -119,6 +119,30 @@ export const analyticsEnvSchema = z
     }
   )
 
+/**
+ * Environment variables required by the AI assistant (chat model).
+ * Optional extras: `ASSISTANT_MODEL`, `ASSISTANT_APPROVAL_SECRET`.
+ */
+export const assistantEnvSchema = z.object({
+  OPENAI_API_KEY: z.string().min(1, { error: 'OPENAI_API_KEY is required' }),
+})
+
+/** Environment variables for the assistant's call booking (Tower booking page). */
+export const bookingEnvSchema = z.object({
+  BOOKING_PAGE_URL: z.url({ error: 'BOOKING_PAGE_URL must be a valid URL' }),
+})
+
+/**
+ * Environment variables for the assistant's "message Edward" email (Resend).
+ * Optional: `CONTACT_TO_EMAIL` (defaults to Edward's address).
+ */
+export const contactEmailEnvSchema = z.object({
+  RESEND_API_KEY: z.string().min(1, { error: 'RESEND_API_KEY is required' }),
+  CONTACT_FROM_EMAIL: z
+    .string()
+    .min(1, { error: 'CONTACT_FROM_EMAIL is required' }),
+})
+
 /** Core environment variables required by the application. */
 export const coreEnvSchema = z.object({
   NEXT_PUBLIC_BASE_URL: z.url({
