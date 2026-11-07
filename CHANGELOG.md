@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.0.0] - 2026-11-07
+
+### Added
+- Added a real agent behind the dog. It answers from a fixed knowledge base about Edward and says it does not know instead of guessing.
+- Added page actions: the assistant can scroll to a section or open a project's detail dialog.
+- Added call booking in chat: it shows Edward's real open times as buttons in your local time, and books the one you pick after you press Confirm. The invite arrives by email.
+- Added "message Edward" in chat: it shows exactly what will be sent and sends only after you press Confirm.
+- Added a Confirm/Cancel card for every action that reaches a real person, one-line receipts, and neutral messages when something fails.
+- Added limits: 3 booking or message actions an hour per visitor IP, 40 messages per chat, and 4000 characters per message part.
+- Added structured `[ASSISTANT]` log lines (ids, counts and reasons only) and `docs/assistant.md`.
+
+### Changed
+- Switched the chat to the Vercel AI SDK with OpenAI as the only provider (`ASSISTANT_MODEL`, default `gpt-6-luna`). Without `OPENAI_API_KEY` it answers with one line that points to the contact section.
+- Replaced the quick prompts with "What is Tower?", "What's Edward building right now?", "Show me his best project" and "Book a call with Edward".
+- Chat history now lives under a new storage key, so old plain-text conversations are cleared on first visit.
+
+### Removed
+- Removed Kimi/Moonshot support, the provider failover layer, the `openai` package and the keyword fallback answers.
+
 ## [0.0.2.0] - 2026-07-23
 
 ### Fixed

@@ -6,6 +6,7 @@ Server-side API endpoints for integrations and webhooks.
 
 | Route | Method | Purpose |
 |-------|--------|---------|
+| `/api/chat` | POST | Site assistant agent (AI SDK UI message stream). See `docs/assistant.md` |
 | `/api/draft-mode/enable` | GET | Enable Sanity draft mode |
 | `/api/draft-mode/disable` | GET | Disable Sanity draft mode |
 | `/api/revalidate` | POST | Webhook for content revalidation |
