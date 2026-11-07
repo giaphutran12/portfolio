@@ -9,6 +9,7 @@ Quick-reference for every component, hook, and utility in the Satus starter kit.
 | Component | Import | Type | Description |
 |-----------|--------|------|-------------|
 | Accordion | `@/components/ui/accordion` | Client, Compound | Collapsible sections with Base UI Collapsible + Activity |
+| AiAssistant | `@/components/ui/ai-assistant` | Client | Animated dog + chat agent (`useChat`): text, slot chips, Confirm/Cancel cards, page actions. Mounted by `Wrapper`. See `docs/assistant.md` |
 | AlertDialog | `@/components/ui/alert-dialog` | Client, Compound | Confirmation dialogs for destructive actions |
 | Checkbox | `@/components/ui/checkbox` | Client, Compound | Toggle checkbox with optional label |
 | Dropdown | `@/components/ui/dropdown` | Client | Simple dropdown selector with Activity |

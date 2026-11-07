@@ -54,6 +54,15 @@ const envSchema = z.object({
   // Analytics
   NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string().optional(),
   NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: z.string().optional(),
+
+  // AI assistant (server-only; the assistant reads these at call time, see lib/assistant/config.ts)
+  OPENAI_API_KEY: z.string().optional(),
+  ASSISTANT_MODEL: z.string().optional(),
+  ASSISTANT_APPROVAL_SECRET: z.string().optional(),
+  BOOKING_PAGE_URL: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
+  CONTACT_FROM_EMAIL: z.string().optional(),
+  CONTACT_TO_EMAIL: z.string().optional(),
 })
 
 type Env = z.infer<typeof envSchema>

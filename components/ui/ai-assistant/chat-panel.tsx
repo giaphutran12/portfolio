@@ -4,32 +4,61 @@ import cn from 'clsx'
 import { useEffect, useRef } from 'react'
 import s from './ai-assistant.module.css'
 import { MessageContent } from './message-content'
-
-export interface Message {
-  role: 'user' | 'assistant'
-  content: string
-}
+import { isSlotContextText } from './slot-format'
+import { ToolPartView } from './tool-parts'
+import type { AssistantMessagePart, AssistantUIMessage } from './types'
 
 interface ChatPanelProps {
   open: boolean
-  messages: Message[]
+  messages: AssistantUIMessage[]
+  /** A reply is on its way (sent or streaming). */
   isLoading: boolean
+  /** The last request failed. */
+  hasError?: boolean
+  /** A confirm card is waiting for Confirm or Cancel. */
+  awaitingConfirmation?: boolean
   onClose: () => void
   onSend: (text: string) => void
+  onPickSlot?: (startIso: string) => void
+  onApproval?: (approvalId: string, approved: boolean) => void
 }
 
 type ChatScrollState = {
   open: boolean
   messageCount: number
   isLoading: boolean
+  /** Parts in the newest message: grows as a reply streams in. */
+  partCount?: number
 }
 
 const QUICK_PROMPTS = [
-  "What's your stack?",
-  'Tell me about X Rec Algo',
-  'What did you build at TinyFish?',
-  'How can I contact you?',
+  'What is Tower?',
+  "What's Edward building right now?",
+  'Show me his best project',
+  'Book a call with Edward',
 ]
+
+function isToolPart(
+  part: AssistantMessagePart
+): part is Extract<AssistantMessagePart, { type: `tool-${string}` }> {
+  return part.type.startsWith('tool-')
+}
+
+function hasVisibleContent(message: AssistantUIMessage | undefined) {
+  if (!message) return false
+  return message.parts.some(
+    (part) =>
+      (part.type === 'text' && part.text.trim().length > 0) || isToolPart(part)
+  )
+}
+
+function userText(message: AssistantUIMessage): string {
+  return message.parts
+    .flatMap((part) =>
+      part.type === 'text' && !isSlotContextText(part.text) ? [part.text] : []
+    )
+    .join('\n')
+}
 
 function TypingIndicator() {
   return (
@@ -58,7 +87,8 @@ export function shouldAutoScroll(
   return (
     (!previous.open && next.open) ||
     previous.messageCount !== next.messageCount ||
-    previous.isLoading !== next.isLoading
+    previous.isLoading !== next.isLoading ||
+    previous.partCount !== next.partCount
   )
 }
 
@@ -66,18 +96,26 @@ export function ChatPanel({
   open,
   messages,
   isLoading,
+  hasError = false,
+  awaitingConfirmation = false,
   onClose,
   onSend,
+  onPickSlot = () => undefined,
+  onApproval = () => undefined,
 }: ChatPanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const previousScrollStateRef = useRef<ChatScrollState | undefined>(undefined)
+
+  const lastMessage = messages[messages.length - 1]
+  const partCount = lastMessage?.parts.length ?? 0
 
   useEffect(() => {
     const nextState = {
       open,
       messageCount: messages.length,
       isLoading,
+      partCount,
     }
 
     if (shouldAutoScroll(previousScrollStateRef.current, nextState)) {
@@ -85,13 +123,18 @@ export function ChatPanel({
     }
 
     previousScrollStateRef.current = nextState
-  }, [open, messages.length, isLoading])
+  }, [open, messages.length, isLoading, partCount])
 
   useEffect(() => {
     if (open) {
       inputRef.current?.focus()
     }
   }, [open])
+
+  const inputLocked = isLoading || awaitingConfirmation
+  const showTyping =
+    isLoading &&
+    !(lastMessage?.role === 'assistant' && hasVisibleContent(lastMessage))
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -136,22 +179,56 @@ export function ChatPanel({
       </div>
 
       <div className={s.messages} data-lenis-prevent="">
-        {messages.map((message, index) => (
-          <div
-            key={`${message.role}-${index}`}
-            className={cn(
-              s.message,
-              message.role === 'user' ? s.messageUser : s.messageAssistant
-            )}
-          >
-            {message.role === 'assistant' ? (
-              <MessageContent content={message.content} />
-            ) : (
-              message.content
-            )}
-          </div>
-        ))}
-        {isLoading && <TypingIndicator />}
+        {messages.map((message) => {
+          if (message.role === 'user') {
+            const text = userText(message)
+            if (!text) return null
+            return (
+              <div key={message.id} className={cn(s.message, s.messageUser)}>
+                {text}
+              </div>
+            )
+          }
+
+          if (!hasVisibleContent(message)) return null
+
+          return (
+            <div key={message.id} className={s.assistantTurn}>
+              {message.parts.map((part, index) => {
+                if (part.type === 'text') {
+                  if (!part.text.trim()) return null
+                  return (
+                    <div
+                      key={`${message.id}-text-${index}`}
+                      className={cn(s.message, s.messageAssistant)}
+                    >
+                      <MessageContent content={part.text} />
+                    </div>
+                  )
+                }
+                if (isToolPart(part)) {
+                  return (
+                    <ToolPartView
+                      key={part.toolCallId}
+                      part={part}
+                      busy={isLoading}
+                      onApproval={onApproval}
+                      onPickSlot={onPickSlot}
+                    />
+                  )
+                }
+                return null
+              })}
+            </div>
+          )
+        })}
+        {showTyping && <TypingIndicator />}
+        {hasError && !isLoading && (
+          <p className={s.errorLine} role="alert">
+            Something went wrong on my side. Try again, or use the contact
+            section below.
+          </p>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -162,7 +239,7 @@ export function ChatPanel({
             type="button"
             className={s.quickPrompt}
             onClick={() => onSend(prompt)}
-            disabled={isLoading}
+            disabled={inputLocked}
           >
             {prompt}
           </button>
@@ -174,14 +251,19 @@ export function ChatPanel({
           ref={inputRef}
           type="text"
           className={s.input}
-          placeholder="Ask anything..."
-          disabled={isLoading}
+          placeholder={
+            awaitingConfirmation
+              ? 'Confirm or cancel above…'
+              : 'Ask anything...'
+          }
+          disabled={inputLocked}
+          maxLength={1000}
           aria-label="Message"
         />
         <button
           type="submit"
           className={s.sendButton}
-          disabled={isLoading}
+          disabled={inputLocked}
           aria-label="Send message"
         >
           Send

@@ -13,6 +13,9 @@
 import type { z } from 'zod'
 import {
   analyticsEnvSchema,
+  assistantEnvSchema,
+  bookingEnvSchema,
+  contactEmailEnvSchema,
   hubspotEnvSchema,
   mailchimpEnvSchema,
   sanityEnvSchema,
@@ -59,6 +62,20 @@ export const integrations = {
     name: 'Analytics',
     envSchema: analyticsEnvSchema,
     docsUrl: 'https://developers.google.com/analytics',
+  },
+  assistant: {
+    name: 'AI Assistant',
+    envSchema: assistantEnvSchema,
+    docsUrl: 'https://ai-sdk.dev/docs',
+  },
+  booking: {
+    name: 'Assistant Call Booking',
+    envSchema: bookingEnvSchema,
+  },
+  contactEmail: {
+    name: 'Assistant Contact Email',
+    envSchema: contactEmailEnvSchema,
+    docsUrl: 'https://resend.com/docs/api-reference/emails/send-email',
   },
 } as const satisfies Record<string, IntegrationEntry>
 
