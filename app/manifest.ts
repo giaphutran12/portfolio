@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next'
-import AppData from '@/package.json'
+import { defaultSiteConfig, SITE_DESCRIPTION } from '@/lib/content/site-content'
 import { themes } from '@/styles/colors'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: AppData.name,
-    short_name: AppData.name,
-    description: AppData.description,
+    name: defaultSiteConfig.name,
+    short_name: defaultSiteConfig.name,
+    description: SITE_DESCRIPTION,
     start_url: '/',
     display: 'standalone',
     background_color: themes.dark.primary,

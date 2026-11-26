@@ -1,7 +1,7 @@
 {
   "name": "@darkroom.engineering/satus",
   "description": "Next.js 16 starter by darkroom.engineering — React 19, TypeScript strict, Tailwind v4, Zod validation, and production-ready integrations",
-  "version": "0.0.2.0",
+  "version": "0.0.3.0",
   "license": "MIT",
   "type": "module",
   "sideEffects": [

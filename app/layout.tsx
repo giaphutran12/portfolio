@@ -7,6 +7,7 @@ import { type PropsWithChildren, Suspense } from 'react'
 import { ReactTempus } from 'tempus/react'
 import { Link } from '@/components/ui/link'
 import { RealViewport } from '@/components/ui/real-viewport'
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/lib/content/site-content'
 import { OptionalFeatures } from '@/lib/features'
 import { TransformProvider } from '@/lib/hooks/use-transform'
 import { isSanityConfigured } from '@/lib/integrations/check-integration'
@@ -17,10 +18,9 @@ import AppData from '@/package.json'
 import '@/lib/styles/css/index.css'
 
 const APP_NAME = 'Edward Tran'
-const APP_DEFAULT_TITLE = 'Edward Tran — AI Engineer'
+const APP_DEFAULT_TITLE = SITE_TITLE
 const APP_TITLE_TEMPLATE = '%s — Edward Tran'
-const APP_DESCRIPTION =
-  'Portfolio of Edward Tran — AI engineer shipping enterprise-grade apps that solve real problems.'
+const APP_DESCRIPTION = SITE_DESCRIPTION
 const APP_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? 'https://localhost:3000'
 

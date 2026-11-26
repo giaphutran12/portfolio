@@ -5,6 +5,7 @@ import { HoverImageReveal } from '@/components/effects/hover-image-reveal'
 import { Image } from '@/components/ui/image'
 import { Link } from '@/components/ui/link'
 import { Marquee } from '@/components/ui/marquee'
+import { defaultExperience, SIDE_QUESTS_LINE } from '@/lib/content/site-content'
 import s from './experience.module.css'
 
 interface ExperienceEntry {
@@ -20,49 +21,6 @@ interface ExperienceEntry {
 interface ExperienceProps {
   experiences?: ExperienceEntry[]
 }
-
-const defaultExperiences: ExperienceEntry[] = [
-  {
-    _id: 'bli',
-    company: 'Build Launch Iterate',
-    role: 'Software Engineer',
-    startDate: '2025-08',
-    endDate: null,
-    current: true,
-    description:
-      'Audited backend auth, secured 7 unprotected API routes, and enforced RLS across 15 CRM tables. Built a Loan Proposal Generator to save brokers 2h/day. Rebuilt company website to convert 3x better and load 2x faster.',
-  },
-  {
-    _id: 'tinyfish',
-    company: 'TinyFish',
-    role: 'Software Engineering Intern',
-    startDate: '2026-03',
-    endDate: null,
-    current: true,
-    description:
-      "Shipped 1-2 apps/week using TinyFish browser agents to automate what scrapers can't — logins, paywalls, multi-step forms. Built Viet Bike Scout — parallel browser agents scraping 18+ rental shops with real-time pricing.",
-  },
-  {
-    _id: 'headstarter',
-    company: 'Headstarter',
-    role: 'Software Engineer Resident',
-    startDate: '2025-07',
-    endDate: null,
-    current: true,
-    description:
-      'Built 5+ AI engineering and fullstack projects in a fast-paced team. Implemented LLM-chaining, hyperparameter tuning, and fine-tuning on 5+ models. Coached by Google ML, Two Sigma, Tesla, and Figma engineers.',
-  },
-  {
-    _id: 'douglas-college',
-    company: 'Douglas College',
-    role: 'Software Engineering Intern',
-    startDate: '2024-04',
-    endDate: '2024-12',
-    current: false,
-    description:
-      'Built and maintained White Board ITS, a work day management web app used by 117 IT staffs. Deployed 11 new features, reducing task delegation time by 75% for daily users.',
-  },
-]
 
 const MONTH_NAMES = [
   'Jan',
@@ -103,10 +61,10 @@ function formatDateRange(
 }
 
 export function Experience({
-  experiences = defaultExperiences,
+  experiences = defaultExperience,
 }: ExperienceProps) {
   const displayExperiences =
-    experiences.length > 0 ? experiences : defaultExperiences
+    experiences.length > 0 ? experiences : defaultExperience
 
   return (
     <section
@@ -375,7 +333,7 @@ export function Experience({
               MTU Aero Engines · May 2022–Jun 2022
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-              I help taking apart a HUGE airplane engine and putting it back
+              I helped take apart a HUGE airplane engine and put it back
               together.
             </p>
           </div>
@@ -398,7 +356,7 @@ export function Experience({
               Vancouver.dev · Oct 2023-Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-              Helped hosted 10+ technical community events with speakers from
+              Helped host 10+ technical community events with speakers from
               FAANG and Fortune 500
             </p>
           </div>
@@ -408,17 +366,13 @@ export function Experience({
               AI Tinkerers · Feb 2026-Present
             </p>
             <p className={cn(s.otherDescription, 'body-sm')}>
-              Helped hosted 3+ events within 1 month, vetted speakers from FAANG
+              Helped host 3+ events within 1 month, vetted speakers from FAANG
               and Fortune 500
             </p>
           </div>
         </div>
 
-        <p className={cn(s.activitiesLine, 'label')}>
-          Insider scoop: Building NotionCode - let your whole team ship code
-          without ever leaving Notion. Building TrueWeapon - Block NSFW content
-          on X and Reddit without blocking the entire sites
-        </p>
+        <p className={cn(s.activitiesLine, 'label')}>{SIDE_QUESTS_LINE}</p>
       </div>
     </section>
   )

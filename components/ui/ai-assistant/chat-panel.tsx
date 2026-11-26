@@ -25,8 +25,8 @@ type ChatScrollState = {
 }
 
 const QUICK_PROMPTS = [
+  'What is Tower?',
   "What's your stack?",
-  'Tell me about X Rec Algo',
   'What did you build at TinyFish?',
   'How can I contact you?',
 ]

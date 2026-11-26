@@ -2,6 +2,7 @@
 
 import cn from 'clsx'
 import { Link } from '@/components/ui/link'
+import { CONTACT_HEADING, defaultSiteConfig } from '@/lib/content/site-content'
 import s from './contact.module.css'
 
 interface ContactProps {
@@ -11,9 +12,9 @@ interface ContactProps {
 }
 
 export function Contact({
-  email = 'edward@edwardtran.ca',
-  githubUrl = 'https://github.com/edwardtran',
-  linkedinUrl = 'https://linkedin.com/in/edwardtran',
+  email = defaultSiteConfig.email,
+  githubUrl = defaultSiteConfig.githubUrl,
+  linkedinUrl = defaultSiteConfig.linkedinUrl,
 }: ContactProps) {
   return (
     <section
@@ -24,7 +25,7 @@ export function Contact({
       )}
       data-testid="contact-section"
     >
-      <h2 className={cn(s.heading, 'heading-lg')}>Let's Connect</h2>
+      <h2 className={cn(s.heading, 'heading-lg')}>{CONTACT_HEADING}</h2>
 
       <div className={cn(s.links, 'flex flex-col items-center gap-6')}>
         <Link href={`mailto:${email}`} className={cn(s.link, 'body-lg')}>
