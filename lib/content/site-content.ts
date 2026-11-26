@@ -33,7 +33,7 @@ export const defaultSiteConfig: SiteConfig = {
   tagline: 'Software engineer. I ship by directing coding agents.',
   aboutText: [
     "**I'm a software engineer at Build Launch Iterate, where I lead a team of 6 engineers.** Tower is the software the company runs on: tickets, docs, chat, mail, calendar, meeting notes and an assistant called JARVIS, on one backend. I built most of it.",
-    '**Coding agents write most of my code. I direct them and answer for what ships.** Tower carries 3,800+ test files, 34 CI workflows and 518 database migrations. My GitHub shows 14,000+ contributions in 2026.',
+    '**Coding agents write most of my code. I direct them and answer for what ships.** Tower carries 3,800+ test files, 30+ CI workflows and 500+ database migrations. My GitHub shows 14,000+ contributions in 2026.',
     '**In July 2025 an 11-hour TypeScript tutorial took me about 60 hours, line by line.** Before that: a 60-hour Unreal Engine C++ course, and PHP for Douglas College IT. Now I direct agents on Tower and lead the team.',
   ].join('\n\n'),
   email: 'giaphutran012@gmail.com',
@@ -63,7 +63,7 @@ export const defaultProjects: Project[] = [
     title: 'BigSet',
     slug: { current: 'bigset' },
     description:
-      "TinyFish's open-source dataset builder (1.7k stars). Type one sentence, get a live dataset researched by web agents. I fixed how it reports a run, and I'm making it work on the Claude or ChatGPT plan you already pay for.",
+      "TinyFish's open-source dataset builder (1.7k stars): one sentence in, a live dataset out. I fixed how it reports a run, and I'm making it run on your Claude or ChatGPT plan.",
     techStack: ['TypeScript', 'Mastra', 'Convex', 'TinyFish'],
     githubUrl: 'https://github.com/tinyfish-io/bigset-oss',
     order: 2,
@@ -160,7 +160,7 @@ export const projectProof: Record<string, string[]> = {
   tower: [
     '2,500+ of its 3,100+ merged pull requests since April 2026 are mine.',
     'What a person can click, a coding agent can call: the web app, a CLI, Slack and 400+ MCP tools.',
-    '3,800+ test files, 34 CI workflows and 518 database migrations.',
+    '3,800+ test files, 30+ CI workflows and 500+ database migrations.',
     'One fix I like: a production query went from 22 seconds to 73 milliseconds by making it use an index that already existed.',
     "A collector on each teammate's laptop masks secrets on the machine. An LLM judge then turns their Codex and Claude Code sessions into coaching.",
     'The code is private. Ask me for a demo.',

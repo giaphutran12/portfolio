@@ -88,7 +88,7 @@ TOWER (his main work; the code is private):
 - The software Build Launch Iterate runs on: tickets, docs, chat, mail, calendar, meeting notes and an assistant called JARVIS, on one backend.
 - Every feature works from the web app, a CLI, Slack and 400+ MCP tools, so coding agents use the same features people do.
 - 2,500+ of its 3,100+ merged pull requests since April 2026 are Edward's.
-- 3,800+ test files, 34 CI workflows, 518 database migrations.
+- 3,800+ test files, 30+ CI workflows, 500+ database migrations.
 - One fix: a production query went from 22 seconds to 73 milliseconds by making it use an index that already existed.
 - A collector on each teammate's laptop masks secrets on the machine, then an LLM judge turns their Codex and Claude Code sessions into coaching.
 - Anyone who wants to see Tower should ask Edward for a demo.
