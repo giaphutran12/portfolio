@@ -3,6 +3,7 @@
 import cn from 'clsx'
 import { Link } from '@/components/ui/link'
 import { ProjectDetailDialog } from '@/components/ui/project-detail-dialog'
+import { projectProof } from '@/lib/content/site-content'
 import { setProjectDetailDialogOpen } from '@/lib/hooks/use-project-detail-dialog-open'
 import { ProjectCardVideoMedia } from './project-card-video-media'
 import s from './project-detail-content.module.css'
@@ -26,60 +27,12 @@ export interface ProjectCard {
   githubUrl?: string | undefined
 }
 
-const IMPACT_BULLETS: Record<string, string[]> = {
-  'x-recommendation-algo': [
-    'Reverse-engineered X recommendation behavior using real engagement data.',
-    'Built a full ML pipeline in PyTorch and exported to ONNX for inference.',
-    'Proved algorithmic patterns that correlate with viral content distribution.',
-  ],
-  'viet-bike-scout': [
-    'Aggregated real-time pricing across 18+ motorcycle rental shops in Vietnam.',
-    'Handled login walls and dynamic content that break traditional scrapers.',
-    'Normalized messy, unstructured marketplace data into clean, comparable listings.',
-  ],
-  'autoresearch-macos': [
-    'Native macOS app built in Swift that browses, reads, and synthesizes research.',
-    'Turns 10+ hours of manual reading into structured reports in minutes.',
-    'Designed for deep-work researchers who need synthesized knowledge fast.',
-  ],
-  'stocktwits-clone-2': [
-    'Real-time WebSocket feeds for live market data and social sentiment.',
-    'Built for traders who want to gauge crowd opinion before executing trades.',
-    'Full-stack implementation with auth, database, and realtime infrastructure.',
-  ],
-  'self-improving-prompt': [
-    'Averaged +42% score lift across 10K+ prompts via automated eval loops.',
-    'Multi-agent feedback pipeline that evaluates failures and iterates prompts.',
-    'Effectively CI/CD for prompts — deploy, measure, improve, repeat.',
-  ],
-  'lovable-clone': [
-    'Full-stack AI code generator with sandboxed preview environment.',
-    'Wired auth, payments, background jobs, Postgres, and type safety end-to-end.',
-    'Demonstrates ability to ship complete product surfaces, not just demos.',
-  ],
-  'ai-customer-support': [
-    'Context-aware support agent for fintech using Firecrawl and Pinecone RAG.',
-    'Handles voice calls via VAPI and reduces support overhead by ~80%.',
-    'Scrapes docs, indexes vectors, and resolves issues autonomously.',
-  ],
-  'serverless-style-transfer': [
-    'Runs neural style transfer entirely in-browser using Rust and WebAssembly.',
-    'Zero backend compute required — 95% cost reduction vs server-side inference.',
-    'Proof of performance-minded engineering and low-level systems curiosity.',
-  ],
-  'intelligent-llm-router': [
-    'Smart intent analysis routes requests to the optimal model for the task.',
-    '~100ms routing overhead with significant quality and cost improvements.',
-    'Coding tasks to Claude, simple chat to free models, complex reasoning to GPT.',
-  ],
-}
-
 export function ProjectDetailContent({
   project,
   open,
   onOpenChange,
 }: ProjectDetailContentProps) {
-  const bullets = IMPACT_BULLETS[project.id] || []
+  const bullets = projectProof[project.id] ?? []
 
   const handleOpenChange = (nextOpen: boolean) => {
     setProjectDetailDialogOpen(nextOpen)
@@ -117,7 +70,7 @@ export function ProjectDetailContent({
 
           {bullets.length > 0 && (
             <div className={s.section}>
-              <h4 className={cn(s.sectionTitle, 'label')}>Impact</h4>
+              <h4 className={cn(s.sectionTitle, 'label')}>Proof</h4>
               <ul className={s.bullets}>
                 {bullets.map((bullet) => (
                   <li key={bullet} className={cn(s.bullet, 'body-sm')}>

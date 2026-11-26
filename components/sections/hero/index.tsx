@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { useEffect, useRef } from 'react'
 import { AnimatedGradient } from '@/components/effects/animated-gradient'
+import { defaultSiteConfig } from '@/lib/content/site-content'
 import s from './hero.module.css'
 
 const ANIM_DELAY = 0.3
@@ -17,8 +18,8 @@ interface HeroProps {
 }
 
 export function Hero({
-  name = 'Edward Tran',
-  tagline = 'AI Engineer. Ships Code.',
+  name = defaultSiteConfig.name,
+  tagline = defaultSiteConfig.tagline,
 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLSpanElement>(null)

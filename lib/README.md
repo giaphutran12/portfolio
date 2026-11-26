@@ -36,6 +36,7 @@ import { useOrchestra } from '@/lib/dev/orchestra'
 
 | Directory | Purpose | Optional? |
 |-----------|---------|-----------|
+| `content/site-content.ts` | Every word of fallback copy on the site: hero, about, projects, experience, metadata. Change copy here, not in components | ❌ Core |
 | [hooks/](hooks/README.md) | React hooks + Zustand store | ❌ Core |
 | [styles/](styles/README.md) | CSS & Tailwind config | ❌ Core |
 | [utils/](utils/README.md) | Pure utilities (math, fetch, metadata, strings, animation, validation) | ❌ Core |

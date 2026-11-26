@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.3.0] - 2026-11-26
+
+### Changed
+- Rewrote the site copy around what is checkable: Tower and BigSet lead the projects, every number has a source, and the unverifiable percentages are gone.
+- Moved every word of fallback copy into `lib/content/site-content.ts`, so the hero, about, projects, experience, contact, page metadata and web manifest read from one file instead of two drifting copies.
+- Project pictures and videos are now matched to projects by id instead of by list position, so reordering projects can no longer attach the wrong video to a card.
+- Projects without a screen recording get a generated cover with the project name and one line of proof.
+- The project dialog section "Impact" is now "Proof", and cards link to their repo and live site.
+- The assistant's facts match the new copy, and it no longer states where Edward is based.
+
+### Fixed
+- Fixed the contact section's default links, which pointed at an email address and profiles that do not exist.
+- Fixed the web manifest showing the starter template's package name instead of the site owner's name.
+- Removed the AutoResearch macOS card: it described a Swift app, but the repo is a fork of a Python project.
+
 ## [0.0.2.0] - 2026-07-23
 
 ### Fixed
